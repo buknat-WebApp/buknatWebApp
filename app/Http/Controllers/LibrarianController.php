@@ -134,8 +134,12 @@ class LibrarianController extends Controller
         // $qrCode = QrCode::size(250)->generate($file_ID);
 
         //Save QR code as image in a specific folder
-        $path = 'storage/BookQRCodes/'; // path to folder where image will be saved
+        $path = public_path('storage/BookQRCodes/'); // path to folder where image will be saved
         $filename = $file_ID . '.png'; // name of the image file
+
+        if(!File::exists($path)) {
+            File::makeDirectory($path, $mode = 0777, true, true);
+        }
         // QrCode::format('png')->size(250)->generate($file_ID, public_path($path . $filename));
 //        QrCode::format('png')
 //            ->size(400)
@@ -153,7 +157,7 @@ class LibrarianController extends Controller
             ->format('png')
 //            ->merge('https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-google-icon-logo-png-transparent-svg-vector-bie-supply-14.png', .3, true)
             ->merge(public_path('logo.png'), 0.12, true) // Merge the cat image with QR code
-            ->generate($file_ID, public_path($path . $filename));
+            ->generate($file_ID, ($path . $filename));
 
         return redirect()->back()->with('success', 'Book created successfully!');
     }
@@ -244,7 +248,11 @@ class LibrarianController extends Controller
         // $qrCode = QrCode::size(250)->generate($file_ID);
 
         // //Save QR code as image in a specific folder
-        $path = 'storage/StudentQrCodes/'; // path to folder where image will be saved
+        $path = public_path('storage/StudentQrCodes/'); // path to folder where image will be saved
+
+        if(!File::exists($path)) {
+            File::makeDirectory($path, $mode = 0777, true, true);
+        }
         $filename = $user->id . '.png'; // name of the image file
         // QrCode::format('svg')->size(250)->generate($file_ID, public_path($path . $filename));
         // QrCode::format('svg')->size(400)->margin(10)->color(0, 0, 0)->backgroundColor(255, 255, 255)
@@ -260,7 +268,7 @@ class LibrarianController extends Controller
             ->format('png')
 //            ->merge('https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-google-icon-logo-png-transparent-svg-vector-bie-supply-14.png', .3, true)
             ->merge(public_path('logo.png'), 0.12, true) // Merge the cat image with QR code
-            ->generate($file_ID, public_path($path . $filename));
+            ->generate($file_ID, ($path . $filename));
 
         return redirect()->back()->with('successApprove', 'User Approved successfully.');
     }
