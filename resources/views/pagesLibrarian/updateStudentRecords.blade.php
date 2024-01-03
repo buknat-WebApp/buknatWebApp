@@ -57,8 +57,7 @@
                                                 <div class="form-group">
                                                     <div class="form-group">
                                                         <label for="gender-select">Grade Level:</label>
-                                                        <select class="form-select form-control" id="gender-select"
-                                                            name="grade_levelA">
+                                                        <select class="form-select form-control" id="grade_levelA" name="grade_levelA" onchange="toggleGradeLevelB()">
                                                             <option value="Grade-7" selected>Grade-7</option>
                                                             <option value="Grade-8" selected>Grade-8</option>
                                                             <option value="Grade-9" selected>Grade-9</option>
@@ -72,8 +71,7 @@
                                             <div class="col">
                                                 <div class="form-group">
                                                     <label for="gender-select">Grade Level to be Promoted:</label>
-                                                    <select class="form-select form-control" id="gender-select"
-                                                        name="grade_levelB">
+                                                    <select class="form-select form-control" id="grade_levelB" name="grade_levelB" disabled>
                                                         <option value="Grade-7" selected>Grade-7</option>
                                                         <option value="Grade-8" selected>Grade-8</option>
                                                         <option value="Grade-9" selected>Grade-9</option>
@@ -102,5 +100,15 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function toggleGradeLevelB() {
+            var gradeLevelA = document.getElementById('grade_levelA');
+            var gradeLevelB = document.getElementById('grade_levelB');
+
+            // Enable or disable Grade Level to be Promoted based on the selected Grade Level
+            gradeLevelB.disabled = (gradeLevelA.value === 'Grade-12');
+        }
+    </script>
 
 @endsection
