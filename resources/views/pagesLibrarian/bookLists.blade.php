@@ -72,7 +72,12 @@
                                                             Book Status</th>
                                                         <th
                                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                            Book Section</th>
+                                                            Book Section
+                                                        </th>
+                                                        <th
+                                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                            Book Location
+                                                        </th>
                                                         <th class="text-secondary opacity-7"></th>
                                                         <th class="text-secondary opacity-7"></th>
 
@@ -117,6 +122,10 @@
                                                                 <td class="align-middle text-center">
                                                                     <span
                                                                         class="text-secondary text-xs font-weight-bold">{{ $book->section->section_name }}</span>
+                                                                </td>
+                                                                <td class="align-middle text-center">
+                                                                    <span
+                                                                        class="text-secondary text-xs font-weight-bold">{{ $book->location->name }}</span>
                                                                 </td>
                                                                 @if ($book->section_id === 8)
                                                                 <td>
