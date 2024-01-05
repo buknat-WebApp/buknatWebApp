@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BookLocation;
 use Mpdf\Mpdf;
 use Carbon\Carbon;
 use App\Models\Book;
@@ -73,8 +74,10 @@ class LibrarianController extends Controller
     public function addForm() //adding A Book FORM
     {
         $sections = BookSection::all();
+        $locations = BookLocation::all();
         return view('pagesLibrarian.bookAdd', [
             'sections' => $sections, //section is addded to the page
+            'locations' => $locations,
         ]);
     }
 
@@ -115,7 +118,7 @@ class LibrarianController extends Controller
         $book->genre = $request->input('genre');
         $book->language = $request->input('language');
         $book->number_of_pages = $request->input('number_of_pages');
-        $book->location = $request->input('location');
+        $book->location_id = $request->input('location');
         $book->summary = $request->input('summary');
         $book->added_by = Auth::user()->name; //THIS WOULD RECORD THE NAME OF THE LIBRARIAN WHO ADDED THE RECOR
 
@@ -177,9 +180,11 @@ class LibrarianController extends Controller
 
         $book = Book::where('id', '=', $book)->first();
         $sections = BookSection::all();
+        $locations = BookLocation::all();
         return view('pagesLibrarian.bookInfo', [
             'book' =>  $book,
             'sections' => $sections,
+            'locations' => $locations,
         ]);
     }
 
@@ -194,7 +199,7 @@ class LibrarianController extends Controller
             'publisher' => $request->publisher,
             'number_of_pages' => $request->number_of_pages,
             'isbn' => $request->isbn,
-            'location' => $request->location,
+            'location_id' => $request->location,
             'publication_year' => $request->publication_year,
             'book_condition' => $request->book_condition,
             'summary' => $request->summary,

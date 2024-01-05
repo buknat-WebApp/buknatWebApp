@@ -173,8 +173,18 @@
                                                 <div class="form-group">
                                                     <label for="example-text-input"
                                                         class="form-control-label">Location</label>
-                                                    <input class="form-control" name="location" type="text"
-                                                        value="{{ $book->location }}">
+                                                    <select class="form-select form-control" id="gender-select"
+                                                            name="location">
+                                                        @foreach ($locations as $location)
+                                                            @if ($book->location->id == $location->id)
+                                                                <option value="{{ $location->id }}" selected>
+                                                                    {{ $location->name }}
+                                                                </option>
+                                                            @endif
+                                                            <option value="{{ $location->id }}">
+                                                            {{ $location->name }}
+                                                        @endforeach
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="col">

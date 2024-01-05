@@ -48,6 +48,10 @@ class Book extends Model
     {
         return $this->belongsTo(BookSection::class, 'section_id');
     }
+    public function location()
+    {
+        return $this->belongsTo(BookLocation::class, 'location_id');
+    }
 
 
     //   public function transactions()

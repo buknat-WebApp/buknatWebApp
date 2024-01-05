@@ -223,8 +223,12 @@
                                             <div class="col">
                                                 <div class="form-group">
                                                     <label for="exampleInputText1">Location</label>
-                                                    <input type="text" class="form-control" id="exampleInputText1"
-                                                         name="location" required>
+                                                    <select class="form-select form-control" id="gender-select" name="location">
+                                                        @foreach ($locations as $location)
+                                                            <option value="{{ $location->id }}">{{ $location->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
