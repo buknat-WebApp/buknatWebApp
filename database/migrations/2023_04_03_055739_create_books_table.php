@@ -33,7 +33,8 @@ return new class extends Migration
            $table->string('genre');
            $table->string('language');
            $table->string('number_of_pages');
-           $table->string('location')->nullable();
+            $table->unsignedBigInteger('location_id');
+            $table->foreign('location_id')->references('id')->on('book_locations');
            $table->text('summary')->nullable();
            $table->string('added_by')->nullable(); //the name sa nag add sa book
            $table->tinyInteger('is_available')->default(1); //current state of the book

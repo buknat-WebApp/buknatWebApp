@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Book;
 use App\Models\Author;
+use App\Models\BookLocation;
 use App\Models\BookSection;
 
 use Faker\Factory as Faker;
@@ -71,6 +72,15 @@ class AllTableSeeder extends Seeder
             ]);
         }
 
+        //BOOK LOCATION
+        $locationArrays = ['Rack 1', 'Rack 2', 'Rack 3', 'Rack 4'];
+
+        foreach ($locationArrays as $array) {
+            BookLocation::create([
+                'name' => $array,
+            ]);
+        }
+
         //BOOK
         $faker = Faker::create();
         foreach (range(1, 50) as $index) {
@@ -91,7 +101,7 @@ class AllTableSeeder extends Seeder
                 'genre' => $faker->word,
                 'language' => $faker->languageCode,
                 'number_of_pages' => $faker->randomDigitNotNull,
-                'location' => $faker->word,
+                'location_id' => $faker->randomElement(['1', '2', '3']),
                 'summary' => $faker->paragraph,
                 'added_by' => $faker->name,
                 'is_available' => 1,

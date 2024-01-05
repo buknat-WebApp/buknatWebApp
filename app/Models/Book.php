@@ -28,7 +28,7 @@ class Book extends Model
         'genre',
         'language',
         'number_of_pages',
-        'location',
+        'location_id',
         'summary',
         'added_by',
         'available_copies'
