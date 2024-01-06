@@ -16,6 +16,10 @@
     <link href="{{ url('assets/assets/css/nucleo-svg.css') }}" rel="stylesheet" />
     <!-- Font Awesome Icons -->
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+
+    <!-- Recaptcha -->
+    {!! htmlScriptTagJsApi() !!}
+
     <link href="{{ url('assets/assets/css/nucleo-svg.css') }}" rel="stylesheet" />
     <!-- CSS Files -->
     <link id="pagestyle" href="{{ url('assets/assets/css/argon-dashboard.css?v=2.0.4') }}" rel="stylesheet" />
@@ -60,8 +64,8 @@
             </div>
         </div>
         <div class="container">
-            <div class="row mt-lg-n10 mt-md-n11 mt-n10 justify-content-center">
-                <div class="col-xl-4 col-lg-5 col-md-7 mx-auto">
+            <div class="row mt-lg-n10 mt-md-n11 mt-n10 mb-4 justify-content-center">
+                <div class="col-xl-6 col-lg-5 col-md-7 mx-auto">
                     <div class="card z-index-0">
                         <div class="card-header text-center pt-4">
                             <h5>Register with your ID</h5>
@@ -86,68 +90,90 @@
 
                                     </div>
                                 @endif
-                                <form method="POST" action="{{ route('signup') }}" enctype="multipart/form-data">
-                                    @csrf
-                                    <label for="id">Picture of your Student ID</label>
-                                    <input type="file" class="form-control" name="id_pic" id="id" required>
-                                    <p
-                                        class="text-sm font-weight-bold mb-2 text-secondary text-border d-inline z-index-2 bg-white px-3">
-                                        and
-                                    </p>
-                            </div>
-                        </div>
-                        <div class="card-body">
+                                    <form method="POST" action="{{ route('signup') }}" enctype="multipart/form-data">
+                                        @csrf
 
-                            <div class="mb-3">
-                                <input type="text" class="form-control" aria-label="name" name="name"
-                                    placeholder="Firstname M.I Lastname">
-                            </div>
-                            <div class="mb-3">
+                                        <div class="mb-3">
+                                            <label for="id">Picture of your Student ID</label>
+                                            <input type="file" class="form-control @if ($errors->has('id_pic')) is-invalid @endif"
+                                                   name="id_pic" id="id_pic" value="{{ old('id_pic') }}">
+                                            @if ($errors->has('id_pic'))
+                                                <div class="invalid-feedback">
+                                                    {{ $errors->first('id_pic') }}
+                                                </div>
+                                            @endif
+                                            <p class="text-sm font-weight-bold mb-2 text-secondary text-border d-inline z-index-2 bg-white px-3">
+                                                and
+                                            </p>
+                                        </div>
 
-                                <input type="number"
-                                    class="form-control @if ($errors->has('id_number')) is-invalid @endif"
-                                    placeholder="ID Number" name="id_number" id="id_number"
-                                    value="{{ old('id_number') }}">
-                                @if ($errors->has('id_number'))
-                                    <div class="invalid-feedback">
-                                        {{ $errors->first('id_number') }}
-                                    </div>
-                                @endif
-                            </div>
-                            <div class="mb-3">
-                                <label for="cars">Grade Level</label>
-                                <select name="grade_and_section" id="cars" class="form-control">
-                                    <option value="Grade-7">I am Grade 7</option>
-                                    <option value="Grade-8">I am Grade 8</option>
-                                    <option value="Grade-9">I am Grade 9</option>
-                                    <option value="Grade-10">I am Grade 10</option>
-                                    <option value="Grade-11">I am Grade 11</option>
-                                    <option value="Grade-12">I am Grade 12</option>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="password">Default Pass is: "password"</label>
-                                <input type="text" class="form-control" value="password" name="password"
-                                    id="password" aria-label="Password" disabled>
-                            </div>
-                            <div class="form-check form-check-info text-start">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
-                                    checked>
-                                <label class="form-check-label" for="flexCheckDefault">
-                                    I agree the <a href="javascript:;" class="text-dark font-weight-bolder">Terms and
-                                        Conditions</a>
-                                </label>
-                            </div>
-                            <div class="text-center">
-                                <button type="submit" class="btn bg-gradient-primary w-100">Register</button>
-                                <a href="/" class="btn bg-gradient-dark w-100 mb-2">Back</a>
+
+                                            <div class="mb-3">
+                                                <input type="text" class="form-control @if ($errors->has('name')) is-invalid @endif" aria-label="name" name="name"
+                                                       id="name" placeholder="Firstname M.I Lastname" value="{{ old('name') }}">
+                                                @if('name')
+                                                <div class="invalid-feedback">
+                                                    {{ $errors->first('name') }}
+                                                </div>
+                                                @endif
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <input type="number" class="form-control @if('id_number') is-invalid @endif" placeholder="ID Number"
+                                                       name="id_number" id="id_number" value="{{ old('id_number') }}">
+                                                @if ($errors->has('id_number'))
+                                                    <div class="invalid-feedback">
+                                                        {{ $errors->first('id_number') }}
+                                                    </div>
+                                                @endif
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label for="cars">Grade Level</label>
+                                                <select name="grade_and_section" id="cars" class="form-control">
+                                                    <option value="Grade-7">I am Grade 7</option>
+                                                    <option value="Grade-8">I am Grade 8</option>
+                                                    <option value="Grade-9">I am Grade 9</option>
+                                                    <option value="Grade-10">I am Grade 10</option>
+                                                    <option value="Grade-11">I am Grade 11</option>
+                                                    <option value="Grade-12">I am Grade 12</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <label for="password">Default Pass is: "password"</label>
+                                                <input type="text" class="form-control" value="password" name="password" id="password" aria-label="Password"
+                                                       disabled>
+                                            </div>
+
+                                            <div class="form-check form-check-info text-start">
+                                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked>
+                                                <label class="form-check-label" for="flexCheckDefault">
+                                                    I agree to the <a href="javascript:;" class="text-dark font-weight-bolder">Terms and Conditions</a>
+                                                </label>
+                                            </div>
+
+                                            <div class="d-flex justify-content-center py-2">
+                                                {!! htmlFormSnippet() !!}
+                                                @if($errors->has('g-recaptcha-response'))
+                                                    <div>
+                                                        <small class="text-danger">
+                                                            {{ $errors->first('g-recaptcha-response') }}
+                                                        </small>
+                                                    </div>
+                                                @endif
+                                            </div>
+
+                                            <div class="text-center">
+                                                <button type="submit" class="btn bg-gradient-primary w-100">Register</button>
+                                                <a href="/" class="btn bg-gradient-dark w-100 mb-2">Back</a>
+                                            </div>
+
+                                            <p class="text-sm mt-3 mb-0">Already have an account? <a href="{{ route('loginForm') }}"
+                                                                                                     class="text-dark font-weight-bolder">Sign in</a></p>
+                                    </form>
 
                             </div>
-
-                            <p class="text-sm mt-3 mb-0">Already have an account? <a href="{{ route('loginForm') }}"
-                                    class="text-dark font-weight-bolder">Sign in</a></p>
-                            </form>
-                        </div>
                     </div>
                 </div>
             </div>

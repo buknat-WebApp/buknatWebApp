@@ -71,10 +71,19 @@ class AccountController extends Controller
 
 
     public function registerUser(Request $request){
+
         $count = User::where('id_number', '=', $request->input('id_number'))->count();
         if ($count > 0) {
-        return redirect()->route('signupForm')->withErrors(['id_number' => 'ID number can only have one account.']);
+            return redirect()->route('signupForm')->withErrors(['id_number' => 'ID number can only have one account.']);
         } else {
+
+            $request->validate([
+                'g-recaptcha-response' => 'required|recaptcha',
+                'name' => 'required',
+                'id_number' => 'required|unique:users,id_number',
+                'grade_and_section' => 'required',
+                'id_pic' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            ]);
 
         $user = new User();
         $user->name = $request->input('name');
@@ -90,7 +99,11 @@ class AccountController extends Controller
             $file->move(public_path('storage/IDPic'), $fileName);
             $user->id_pic =  $fileName; //storing in DB
         }
-        $user->save();
+
+
+
+            $user->save();
+
 
          return redirect()->back()->with('success', 'Account created successfully. The Librarian will have to confirm it first, before you can use it');
          }

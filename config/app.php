@@ -186,6 +186,7 @@ return [
         /*
          * Package Service Providers...
          */
+        Biscolab\ReCaptcha\ReCaptchaServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -210,6 +211,7 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
+        'ReCaptcha' => Biscolab\ReCaptcha\Facades\ReCaptcha::class,
         // 'ExampleClass' => App\Example\ExampleClass::class,
     ])->toArray(),
     'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
