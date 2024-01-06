@@ -90,6 +90,7 @@ class AccountController extends Controller
                 'id_number' => 'required|unique:users,id_number',
                 'grade_and_section' => 'required',
                 'id_pic' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+                'terms' => 'required'
             ]);
 
         $user = new User();

@@ -4,25 +4,28 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-    <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="{{ url('assets/assets/img/apple-icon.png') }}">
+    <link rel="icon" type="image/png" href="{{ url('assets/assets/img/favicon.png') }}">
     <title>
         BukNat - LMIS
     </title>
+
+    @vite('resources/css/app.css')
+
     <!--     Fonts and icons     -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
     <!-- Nucleo Icons -->
     <link href="{{ url('assets/assets/css/nucleo-icons.css') }}" rel="stylesheet" />
     <link href="{{ url('assets/assets/css/nucleo-svg.css') }}" rel="stylesheet" />
-    <!-- Font Awesome Icons -->
-    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+    <link href="{{ url('assets/assets/css/nucleo-svg.css') }}" rel="stylesheet" />
 
     <!-- Recaptcha -->
     {!! htmlScriptTagJsApi() !!}
-
-    <link href="{{ url('assets/assets/css/nucleo-svg.css') }}" rel="stylesheet" />
+    {{-- <link href="{{ url('assets/assets/css/bootstrap.min.css') }}"> --}}
     <!-- CSS Files -->
     <link id="pagestyle" href="{{ url('assets/assets/css/argon-dashboard.css?v=2.0.4') }}" rel="stylesheet" />
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 </head>
 
 <body class="">
@@ -131,13 +134,14 @@
                                             <div class="mb-3">
                                                 <label for="cars">Grade Level</label>
                                                 <select name="grade_and_section" id="cars" class="form-control">
-                                                    <option value="Grade-7">I am Grade 7</option>
-                                                    <option value="Grade-8">I am Grade 8</option>
-                                                    <option value="Grade-9">I am Grade 9</option>
-                                                    <option value="Grade-10">I am Grade 10</option>
-                                                    <option value="Grade-11">I am Grade 11</option>
-                                                    <option value="Grade-12">I am Grade 12</option>
+                                                    <option value="Grade-7" {{ old('grade_and_section') == 'Grade-7' ? 'selected' : '' }}>I am Grade 7</option>
+                                                    <option value="Grade-8" {{ old('grade_and_section') == 'Grade-8' ? 'selected' : '' }}>I am Grade 8</option>
+                                                    <option value="Grade-9" {{ old('grade_and_section') == 'Grade-9' ? 'selected' : '' }}>I am Grade 9</option>
+                                                    <option value="Grade-10" {{ old('grade_and_section') == 'Grade-10' ? 'selected' : '' }}>I am Grade 10</option>
+                                                    <option value="Grade-11" {{ old('grade_and_section') == 'Grade-11' ? 'selected' : '' }}>I am Grade 11</option>
+                                                    <option value="Grade-12" {{ old('grade_and_section') == 'Grade-12' ? 'selected' : '' }}>I am Grade 12</option>
                                                 </select>
+
                                             </div>
 
                                             <div class="mb-3">
@@ -147,10 +151,16 @@
                                             </div>
 
                                             <div class="form-check form-check-info text-start">
-                                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked>
-                                                <label class="form-check-label" for="flexCheckDefault">
-                                                    I agree to the <a href="javascript:;" class="text-dark font-weight-bolder">Terms and Conditions</a>
+                                                <input class="form-check-input @if('terms') is-invalid @endif" type="checkbox" name="terms" id="terms"
+                                                       value="1" {{ old('terms') ? 'checked' : '' }}>
+                                                <label class="form-check-label text-dark" for="flexCheckDefault">
+                                                    I agree to the <a href="#termsModal" data-bs-toggle="modal" class="text-dark font-weight-bolder text-decoration-underline">Terms and Conditions</a>
                                                 </label>
+                                                @if ($errors->has('terms'))
+                                                    <div class="invalid-feedback">
+                                                        {{ $errors->first('terms') }}
+                                                    </div>
+                                                @endif
                                             </div>
 
                                             <div class="d-flex justify-content-center py-2">
@@ -169,16 +179,140 @@
                                                 <a href="/" class="btn bg-gradient-dark w-100 mb-2">Back</a>
                                             </div>
 
-                                            <p class="text-sm mt-3 mb-0">Already have an account? <a href="{{ route('loginForm') }}"
-                                                                                                     class="text-dark font-weight-bolder">Sign in</a></p>
+                                            <p class="text-sm mt-3 mb-0">Already have an account? <a href="{{ route('loginForm') }}" class="text-dark font-weight-bolder">Sign in</a></p>
                                     </form>
-
+                            </div>
                             </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="termsModal" tabindex="-1" role="dialog"
+             aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-md" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Terms and Conditions - School Library System</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                            <div class="mb-4">
+                                <h4>1. Library Membership</h4>
+                                <p>
+                                    <strong>1.1. Eligibility:</strong> The library services are available to all registered students, faculty, and staff of [School Name].
+                                </p>
+                                <p>
+                                    <strong>1.2. Library Card:</strong> To borrow materials, users must present a valid school identification card, which serves as the library card.
+                                </p>
+                            </div>
+
+                            <div class="mb-4">
+                                <h4>2. Borrowing and Returning</h4>
+                                <p>
+                                    <strong>2.1. Loan Period:</strong> The standard loan period for books is [X] days, and for other materials, it may vary. Users are responsible for returning items on or before the due date.
+                                </p>
+                                <p>
+                                    <strong>2.2. Renewal:</strong> Borrowed items may be renewed unless there is a hold on the material or it has reached the maximum renewal limit.
+                                </p>
+                                <p>
+                                    <strong>2.3. Overdue Items:</strong> Users are responsible for returning items on time. Overdue fines may be imposed for late returns.
+                                </p>
+                                <p>
+                                    <strong>2.4. Lost or Damaged Items:</strong> Users are responsible for the replacement cost of lost or damaged materials. A processing fee may also apply.
+                                </p>
+                            </div>
+
+                            <div class="mb-4">
+                                <h4>3. Conduct and Responsibilities</h4>
+                                <p>
+                                    <strong>3.1. Respectful Behavior:</strong> Users must maintain a quiet and respectful environment within the library. Disruptive behavior may result in suspension of library privileges.
+                                </p>
+                                <p>
+                                    <strong>3.2. Computer Use:</strong> Library computers are to be used for educational purposes. Users must comply with the school's acceptable use policy.
+                                </p>
+                                <p>
+                                    <strong>3.3. Personal Belongings:</strong> The library is not responsible for the loss or theft of personal belongings. Users are advised to keep their belongings secure.
+                                </p>
+                            </div>
+
+                            <div class="mb-4">
+                                <h4>4. Privacy and Data Security</h4>
+                                <p>
+                                    <strong>4.1. Confidentiality:</strong> The library respects the privacy of users. Personal information collected is used solely for library services and is kept confidential.
+                                </p>
+                                <p>
+                                    <strong>4.2. Data Security:</strong> Users are advised to log out of library accounts and computers to ensure the security of their personal information.
+                                </p>
+                            </div>
+
+                            <div class="mb-4">
+                                <h4>5. Library Programs and Events</h4>
+                                <p>
+                                    <strong>5.1. Participation:</strong> Users are encouraged to participate in library programs, events, and workshops to enhance their educational experience.
+                                </p>
+                                <p>
+                                    <strong>5.2. Registration:</strong> Some programs may require pre-registration. Details will be communicated in advance.
+                                </p>
+                            </div>
+
+                            <div class="mb-4">
+                                <h4>6. Policy Changes</h4>
+                                <p>
+                                    <strong>6.1. Updates:</strong> The library reserves the right to update or modify these terms and conditions. Users will be notified of any changes.
+                                </p>
+                            </div>
+
+                            <p>By using the School Library System, you acknowledge and agree to these terms and conditions. Violation of these terms may result in the suspension of library privileges.</p>
+
+                            <p class="mb-5">For any questions or concerns, please contact the library staff.</p>
+
+                            <p class="text-center">Thank you for your cooperation!</p>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
+    <script>
+        // Trigger the modal on page load
+        $(document).ready(function () {
+            $("#myModal").modal("hide");
+        });
+
+        // Close the modal when the "Close" button is clicked
+        $("#closeModalBtn").click(function () {
+            $("#myModal").modal("hide");
+        });
+
+        $("#openModalBtn").click(function () {
+            $("#myModal").modal("show");
+        });
+
+    </script>
+
+    <!--   Core JS Files   -->
+    <!-- Font Awesome Icons -->
+    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+    {{-- <script src="{{ url('assets/assets/js/core/popper.min.js') }}"></script> --}}
+    {{-- <script src="{{ url('assets/assets/js/core/bootstrap.min.js') }}"></script> --}}
+    {{-- <script src="{{ url('assets/assets/js/plugins/perfect-scrollbar.min.js') }}"></script> --}}
+    {{-- <script src="{{ url('assets/assets/js/plugins/smooth-scrollbar.min.js') }}"></script> --}}
+    {{-- <script src="{{ url('assets/assets/js/plugins/chartjs.min.js') }}"></script> --}}
+
+    <!-- Github buttons -->
+    {{-- <script async defer src="https://buttons.github.io/buttons.js"></script> --}}
+    <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
+    <script src="{{ url('assets/assets/js/argon-dashboard.min.js?v=2.0.4') }}"></script>
+
+    {{-- <script src="{{ url('assets/assets/js/bootstrap.min.js') }}"></script>
+    <script src="{{ url('assets/assets/js/jquery.min.js') }}"></script> --}}
+    @vite('resources/js/app.js')
 </body>
 
 </html>
