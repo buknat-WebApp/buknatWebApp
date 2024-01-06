@@ -26,28 +26,35 @@ class AccountController extends Controller
     public function loginUser(Request $request)
     {
         $credentials = $request->only('id_number', 'password');
+        $user = User::where('id_number', $credentials['id_number'])->first();
 
-        if (Auth::attempt($credentials)) {
-
-            if (auth()->user()->role == 0) {
-                return redirect()->intended('Student/dashboard'); // Authentication for SuperAdmin
-
-            } else if (auth()->user()->role == 1)  {
-                return redirect()->intended('Librarian/dashboard'); // Authentication for Librarian
-                // echo "kjsahjksah";
-            } else if (auth()->user()->role == 2)  {
-                return redirect()->intended('Teacher/dashboard'); // Authentication for Teacher
-                // echo "kjsahjksah";
+        if ($user) {
+            // Check if the password is correct
+            if (Hash::check($credentials['password'], $user->password)) {
+                Auth::attempt($credentials);
+                if ($user->role == 0) {
+                    return redirect()->intended('Student/dashboard'); // Authentication for SuperAdmin
+                } else if ($user->role == 1) {
+                    return redirect()->intended('Librarian/dashboard'); // Authentication for Librarian
+                } else if ($user->role == 2) {
+                    return redirect()->intended('Teacher/dashboard'); // Authentication for Teacher
+                } else {
+                    return redirect()->route('loginForm')->withErrors(['id_number' => 'Your Account has not yet confirmed by the Librarian.']);
+                }
             } else {
-            return redirect()->route('loginForm')->withErrors(['id_number' => 'Your Account has not yet confirmed by the Librarian.']);
+                // Password is incorrect
+                return back()->withErrors([
+                    'password' => 'Incorrect password'
+                ]);
             }
         } else {
-
+            // User with provided id_number not found
             return back()->withErrors([
-                'id_number' => 'The provided credentials do not match our records.',
+                'id_number' => 'The provided ID number does not match our records.'
             ]);
         }
     }
+
 
 
     public function inquireBooks(){

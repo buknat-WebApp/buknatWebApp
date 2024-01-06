@@ -103,7 +103,13 @@
                         @endif
                       </div>
                       <div class="mb-3">
-                        <input type="password" class="form-control form-control-lg" name="password" placeholder="Password" aria-label="Password" required>
+                        <input type="password" class="form-control @if ($errors->has('password')) is-invalid @endif" placeholder="Password" name="password" id="password" value="{{ old('password') }}">
+                        @if ($errors->has('password'))
+                            <div class=" invalid-feedback ">
+                                {{ $errors->first('password') }}
+                            </div>
+                      @endif
+
                       </div>
 
                       <div class="text-center">
