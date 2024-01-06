@@ -17,6 +17,10 @@ return new class extends Migration
             $table->string('id_number')->unique();
             $table->string('grade_and_section')->nullable();
             $table->string('office_or_department')->nullable();
+            $table->date('birthdate')->nullable();
+            $table->string('contact_number')->nullable();
+            $table->string('address')->nullable();
+            $table->string('email')->nullable();
             $table->string('password');
             $table->smallInteger('role')->default(0);
             $table->string('id_pic')->nullable();

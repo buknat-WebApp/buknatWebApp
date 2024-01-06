@@ -88,7 +88,7 @@ class AccountController extends Controller
          return redirect()->back()->with('success', 'Account created successfully. The Librarian will have to confirm it first, before you can use it');
          }
     }
-    
+
     public function signupForms()
     {
         return view('pagesAuth.signup_teacher');
@@ -126,7 +126,39 @@ class AccountController extends Controller
         return view('layouts.profile');
     }
 
-    public function updateProfile(Request $request){
+    public function updateProfile(Request $request) {
+
+//        dd($request);
+        function LibrarianError(){
+            return redirect()->route('profile')->with('error', 'Pass');
+        }
+        function StudentError(){
+            return redirect()->route('profile')->with('error', 'Pass');
+        }
+        function TeacherError(){
+            return redirect()->route('profile')->with('error', 'Pass');
+        }
+
+        $user = Auth::user();
+
+        $user->update([
+            'email' => $request->email,
+            'contact_number' => $request->contact_number,
+            'birthdate' => $request->birthdate,
+            'address' => $request->address,
+        ]);
+
+        if (Auth::user()->role == 0){
+            return redirect()->route('userProfile')->with('success', 'Pass');
+
+        }elseif (Auth::user()->role == 1){
+            return redirect()->route('userProfile')->with('success', 'Pass');
+        }elseif (Auth::user()->role == 2){
+            return redirect()->route('userProfile')->with('success', 'Pass');
+        }
+    }
+
+    public function updatePassword(Request $request) {
 
         function LibrarianError(){
         return redirect()->route('librarianDashboard')->with('error', 'Pass');
@@ -163,7 +195,7 @@ class AccountController extends Controller
                     return redirect()->route('studentDashboard')->with('success', 'Pass');
 
                 }elseif (Auth::user()->role == 1){
-                    return redirect()->route('libraryDashboard')->with('success', 'Pass');
+                    return redirect()->route('librarianDashboard')->with('success', 'Pass');
                 }elseif (Auth::user()->role == 2){
                     return redirect()->route('teacherDashboard')->with('success', 'Pass');
                 }
