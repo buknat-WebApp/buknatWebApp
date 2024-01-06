@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use function Laravel\Prompts\alert;
 
 
 class AccountController extends Controller
@@ -27,6 +28,12 @@ class AccountController extends Controller
     {
         $credentials = $request->only('id_number', 'password');
         $user = User::where('id_number', $credentials['id_number'])->first();
+
+        $request->validate([
+            'g-recaptcha-response' => 'required|recaptcha',
+            'password' => 'required',
+            'id_number' => 'required',
+        ]);
 
         if ($user) {
             // Check if the password is correct
