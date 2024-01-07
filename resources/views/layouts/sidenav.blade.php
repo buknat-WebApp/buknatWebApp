@@ -5,7 +5,7 @@
             aria-hidden="true" id="iconSidenav"></i>
         <a class="navbar-brand m-0" href="" >
             <img src="{{ url('assets/assets/img/logo.png') }}" class="navbar-brand-img h-100" alt="main_logo">
-            <span class="ms-1 font-weight-bold">BukNat - LMIS</span>
+            <span class="ms-1 font-weight-bold">BukNat - LMS</span>
         </a>
     </div>
     <hr class="horizontal dark mt-0">
