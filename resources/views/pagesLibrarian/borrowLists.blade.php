@@ -112,6 +112,10 @@
                                                                             <strong>ID No.</strong>
                                                                             {{ $transaction->user->id_number }}
                                                                         </p>
+                                                                        <p class="text-xs text-secondary mb-0">
+                                                                            <strong>ID No.</strong>
+                                                                            {{ $transaction->user->contact_number }}
+                                                                        </p>
 
                                                                     </div>
                                                                 </div>
