@@ -104,116 +104,241 @@
 
     <div class="row mt-4">
         <div class="col-lg-8 mb-lg-0 mb-4">
-            <div class="card ">
-                <div class="card-header pb-0 p-3">
-                    <div class="d-flex justify-content-between">
-                        <h6 class="mb-2">Due Today & Pass Due Books</h6>
+            <div class="col-lg-12 d-flex justify-content-center align-items-center" data-aos="fade-up" data-aos-delay="100">
+                <ul class="nav nav-pills my-4 fs-6 light-bg" id="pills-tab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link rounded-left active" id="pills-education-tab" data-bs-toggle="pill" data-bs-target="#pills-education" type="button" role="tab" aria-controls="pills-education" aria-selected="true">Overdue</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link rounded-right" id="pills-work-tab" data-bs-toggle="pill" data-bs-target="#pills-work" type="button" role="tab" aria-controls="pills-work" aria-selected="false">Unreturned</button>
+                    </li>
+                </ul>
+            </div>
+            <div class="tab-content" id="pills-tabContent">
+                <div class="tab-pane fade show active" id="pills-education" role="tabpanel" aria-labelledby="pills-education-tab">
+                    <div class="card ">
+                        <div class="card-header pb-0 p-3">
+                            <div class="d-flex justify-content-between">
+                                <h6 class="mb-2">Overdue Books</h6>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table align-items-center ">
+                                <thead>
+                                <tr>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        Borrower's Name</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Date Borrowed</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        Expected Return Date</th>
+                                    <th class="text-start text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        Borrowed Book/s</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @php
+                                    $today = date('Y-m-d');
+                                    $dueCounter = 0; $newAccountCounter =0;
+                                @endphp
+                                @if ($overdueTransactions)
+                                    @foreach ($overdueTransactions as $overdueTransaction)
+                                        @if ($overdueTransaction->expected_return_date !== null)
+                                            @php
+                                                $dueCounter++;
+                                            @endphp
+                                            <tr>
+
+                                                <td>
+
+                                                    <div class="d-flex px-2 py-1 text-primary">
+                                                        <div class="d-flex flex-column justify-content-center">
+                                                            <h6 class="mb-0 text-sm">
+                                                                {{ $overdueTransaction->user->name }}
+                                                            </h6>
+                                                            <p class="text-xs text-secondary mb-0">
+                                                                <strong>ID No.</strong>
+                                                                {{ $overdueTransaction->user->id_number }}
+                                                            </p>
+                                                            <p class="text-xs text-secondary mb-0">
+                                                                <strong>Contact No. </strong>
+                                                                {{ $overdueTransaction->user->contact_number }}
+                                                            </p>
+                                                            <p class="text-xs text-secondary mb-0">
+                                                                <strong>Email </strong>
+                                                                {{ $overdueTransaction->user->email }}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+
+                                                </td>
+
+                                                <td>
+                                                    <p class="text-xs font-weight-bold mb-2">
+                                                        {{ $overdueTransaction->borrowed_at }}</p>
+                                                </td>
+
+                                                <td class="align-middle text-center text-sm">
+                                                    <p class="text-xs font-weight-bold mb-2">
+                                                        {{ $overdueTransaction->expected_return_date }}</p>
+                                                </td>
+
+                                                <td class="text-start">
+                                                        <?php $count = 1; ?>
+                                                    @foreach ($overdueTransaction->bookTransactions as $bookTransaction)
+                                                        @foreach ($books as $book)
+                                                            @if (is_null($bookTransaction->returned_at))
+                                                                @if ($bookTransaction->book_id == $book->id)
+                                                                    <p class="text-xs font-weight-bold mb-2">
+                                                                        {{ $count }} .
+                                                                        {{ $book->book_title }} </p>
+                                                                    <p class="text-xs text-secondary mb-0"></p>
+                                                                        <?php $count++; ?>
+                                                                @endif
+                                                            @endif
+                                                        @endforeach
+                                                    @endforeach
+
+                                                </td>
+                                                <td class="text-center">
+                                                    <a href="{{ route('updateBorrow', ['transaction' => $overdueTransaction->id]) }}"
+                                                       ddata-bs-toggle="tooltip" data-bs-placement="top"
+                                                       title="Update Borrow">
+                                                        <span class="fas fa-edit"></span>
+                                                    </a>
+
+                                                </td>
+
+                                            </tr>
+
+                                        @endif
+                                    @endforeach
+                                @endif
+                                </tbody>
+                            </table>
+                            @if ($dueCounter == 0)
+                                <div class="alert text-center alert-success text-white" role="alert">
+                                    No overdue books!.
+                                </div>
+                            @endif
+                        </div>
                     </div>
                 </div>
-                <div class="table-responsive">
-                    <table class="table align-items-center ">
-                        <thead>
-                            <tr>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                    Borrower's Name</th>
-                                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                    Date Borrowed</th>
-                                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                    Expected Return Date</th>
-                                <th class="text-start text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                    Borrowed Book/s</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @php
-                                $today = date('Y-m-d');
-                                $dueCounter = 0; $newAccountCounter =0;
-                            @endphp
-                            @if ($transactions)
-                                @foreach ($transactions as $transaction)
-                                    @if ($transaction->expected_return_date !== null)
-                                    @php
-                                        $dueCounter++;
-                                    @endphp
-                                        <tr>
 
-                                            <td>
+                <div class="tab-pane fade" id="pills-work" role="tabpanel" aria-labelledby="pills-work-tab">
+                    <div class="card ">
+                        <div class="card-header pb-0 p-3">
+                            <div class="d-flex justify-content-between">
+                                <h6 class="mb-2">Unreturned Books</h6>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table align-items-center ">
+                                <thead>
+                                <tr>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        Borrower's Name</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        Date Borrowed</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        Expected Return Date</th>
+                                    <th class="text-start text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        Borrowed Book/s</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @php
+                                    $today = date('Y-m-d');
+                                    $dueCounter = 0; $newAccountCounter =0;
+                                @endphp
+                                @if ($transactions)
+                                    @foreach ($transactions as $transaction)
+                                        @if ($transaction->expected_return_date !== null)
+                                            @php
+                                                $dueCounter++;
+                                            @endphp
+                                            <tr>
 
-                                                <div class="d-flex px-2 py-1 text-primary">
-                                                    <div class="d-flex flex-column justify-content-center">
-                                                        <h6 class="mb-0 text-sm">
-                                                            {{ $transaction->user->name }}
-                                                        </h6>
-                                                        <p class="text-xs text-secondary mb-0">
-                                                            <strong>ID No.</strong>
-                                                            {{ $transaction->user->id_number }}
-                                                        </p>
-                                                        <p class="text-xs text-secondary mb-0">
-                                                            <strong>Contact No. </strong>
-                                                            {{ $transaction->user->contact_number }}
-                                                        </p>
-                                                        <p class="text-xs text-secondary mb-0">
-                                                            <strong>Email </strong>
-                                                            {{ $transaction->user->email }}
-                                                        </p>
+                                                <td>
+
+                                                    <div class="d-flex px-2 py-1 text-primary">
+                                                        <div class="d-flex flex-column justify-content-center">
+                                                            <h6 class="mb-0 text-sm">
+                                                                {{ $transaction->user->name }}
+                                                            </h6>
+                                                            <p class="text-xs text-secondary mb-0">
+                                                                <strong>ID No.</strong>
+                                                                {{ $transaction->user->id_number }}
+                                                            </p>
+                                                            <p class="text-xs text-secondary mb-0">
+                                                                <strong>Contact No. </strong>
+                                                                {{ $transaction->user->contact_number }}
+                                                            </p>
+                                                            <p class="text-xs text-secondary mb-0">
+                                                                <strong>Email </strong>
+                                                                {{ $transaction->user->email }}
+                                                            </p>
+                                                        </div>
                                                     </div>
-                                                </div>
 
-                                            </td>
+                                                </td>
 
-                                            <td>
-                                                <p class="text-xs font-weight-bold mb-2">
-                                                    {{ $transaction->borrowed_at }}</p>
-                                            </td>
+                                                <td>
+                                                    <p class="text-xs font-weight-bold mb-2">
+                                                        {{ $transaction->borrowed_at }}</p>
+                                                </td>
 
-                                            <td class="align-middle text-center text-sm">
-                                                <p class="text-xs font-weight-bold mb-2">
-                                                    {{ $transaction->expected_return_date }}</p>
-                                            </td>
+                                                <td class="align-middle text-center text-sm">
+                                                    <p class="text-xs font-weight-bold mb-2">
+                                                        {{ $transaction->expected_return_date }}</p>
+                                                </td>
 
-                                            <td class="text-start">
-                                                <?php $count = 1; ?>
-                                                @foreach ($transaction->bookTransactions as $bookTransaction)
-                                                    @foreach ($books as $book)
-                                                        @if (is_null($bookTransaction->returned_at))
-                                                            @if ($bookTransaction->book_id == $book->id)
-                                                                <p class="text-xs font-weight-bold mb-2">
-                                                                    {{ $count }} .
-                                                                    {{ $book->book_title }} </p>
-                                                                <p class="text-xs text-secondary mb-0"></p>
-                                                                <?php $count++; ?>
+                                                <td class="text-start">
+                                                        <?php $count = 1; ?>
+                                                    @foreach ($transaction->bookTransactions as $bookTransaction)
+                                                        @foreach ($books as $book)
+                                                            @if (is_null($bookTransaction->returned_at))
+                                                                @if ($bookTransaction->book_id == $book->id)
+                                                                    <p class="text-xs font-weight-bold mb-2">
+                                                                        {{ $count }} .
+                                                                        {{ $book->book_title }} </p>
+                                                                    <p class="text-xs text-secondary mb-0"></p>
+                                                                        <?php $count++; ?>
+                                                                @endif
                                                             @endif
-                                                        @endif
+                                                        @endforeach
                                                     @endforeach
-                                                @endforeach
 
-                                            </td>
-                                            <td class="text-center">
-                                                <a href="{{ route('updateBorrow', ['transaction' => $transaction->id]) }}"
-                                                    ddata-bs-toggle="tooltip" data-bs-placement="top"
-                                                    title="Update Borrow">
-                                                    <span class="fas fa-edit"></span>
-                                                </a>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a href="{{ route('updateBorrow', ['transaction' => $transaction->id]) }}"
+                                                       ddata-bs-toggle="tooltip" data-bs-placement="top"
+                                                       title="Update Borrow">
+                                                        <span class="fas fa-edit"></span>
+                                                    </a>
 
-                                            </td>
+                                                </td>
 
-                                        </tr>
+                                            </tr>
 
-                                    @endif
-                                @endforeach
+                                        @endif
+                                    @endforeach
+                                @endif
+                                </tbody>
+                            </table>
+                            @if ($dueCounter == 0)
+                                <div class="alert text-center alert-success text-white" role="alert">
+                                    Hooray! No Books Due Today.
+                                </div>
                             @endif
-                        </tbody>
-                    </table>
-                    @if ($dueCounter == 0)
-                    <div class="alert text-center alert-success text-white" role="alert">
-                      Hooray! No Books Due Today.
-                      </div>
-                    @endif
+                        </div>
+                    </div>
                 </div>
             </div>
-
         </div>
+
         <div class="col-lg-4">
             <div class="card">
                 <div class="card-header pb-0 p-3">
@@ -256,6 +381,8 @@
             </div>
         </div>
     </div>
+
+
 
     </div>
 

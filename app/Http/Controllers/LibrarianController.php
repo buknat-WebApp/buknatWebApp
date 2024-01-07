@@ -31,9 +31,19 @@ class LibrarianController extends Controller
         $books = Book::all();
 
         $unreturnedBooks = BookTransaction::whereNull('returned_at')->count();
+
         $transactions = Transaction::with(['user'])
             ->whereHas('bookTransactions', function ($query) {
                 $query->whereNull('returned_at');
+            })
+            ->orderBy('expected_return_date', 'asc')
+            ->get();
+
+        // Fetch overdue transactions with associated users and filter by overdue books
+        $overdueTransactions = Transaction::with(['user'])
+            ->whereHas('bookTransactions', function ($query) {
+                $query->whereNull('returned_at')
+                    ->where('expected_return_date', '<', now()); // Assuming 'expected_return_date' is a date field
             })
             ->orderBy('expected_return_date', 'asc')
             ->get();
@@ -63,6 +73,7 @@ class LibrarianController extends Controller
             'noOfPending' =>  $noOfPending,
             'pendingStudents' => $pendingStudents,
             'transactions' => $transactions,
+            'overdueTransactions' => $overdueTransactions,
             'booksTransacted' => $transact,
             'books' => $books,
             'unreturnedBooks' => $unreturnedBooks
