@@ -160,6 +160,10 @@
         </div>
 
         @yield('content')
+        <div class="d-flex justify-content-center py-4 fw-bold lh-lg fst-italic">
+            <p>Library Management System</p>
+        </div>
+
 
     </main>
 
