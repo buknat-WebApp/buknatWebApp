@@ -87,18 +87,16 @@
                     <ul class="navbar-nav  justify-content-end">
                         <li class="nav-item d-flex align-items-center">
                             @if (Auth::user())
-                            <a
-                            id="openModalBtn"
-                            class="nav-link text-white font-weight-bold px-0" title="Notifications">
-                         <i class="fa fa-bell"><span class="badge badge-warning"> </span></i>&nbsp;&nbsp;&nbsp;</a>
-                            <span class="d-sm-inline d-none"> </span>
-                                <a href="{{ route('logout') }}"
-                                onclick="event.preventDefault();
-                                          document.getElementById('logout-form').submit();"
-                                    class="nav-link text-white font-weight-bold px-0" title="Logout?">
-                                    <i class="fa fa-user me-sm-1"></i>
-                                    <span class="d-sm-inline d-none"></span>
-                                </a>
+                            <a id="openModalBtn"
+                                class="nav-link text-white font-weight-bold cursor-pointer" title="Notifications">
+                                <i class="fa fa-bell"></i>&nbsp;&nbsp;
+                            </a>
+
+                            <a href="{{ route('logout') }}" onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();"
+                                class="nav-link text-white font-weight-bold" title="Logout?">
+                                <i class="fa fa-user me-sm-1"></i>
+                            </a>
 
 
                             @else
@@ -130,7 +128,7 @@
             @csrf
         </form>
 
-            <!-- The Modal -->
+        <!-- The Modal -->
         <div class="modal" id="myModal">
             <div class="modal-dialog">
                 <div class="modal-content">
