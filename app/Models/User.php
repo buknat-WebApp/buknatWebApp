@@ -47,6 +47,11 @@ class User extends Authenticatable
         return $this->hasMany(Transaction::class);
     }
 
+    public function books(): \Illuminate\Database\Eloquent\Relations\HasManyThrough
+    {
+        return $this->hasManyThrough(BookTransaction::class, Transaction::class);
+    }
+
     /**
      * The attributes that should be cast.
      *

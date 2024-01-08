@@ -80,6 +80,17 @@
                                                                         data-bs-dismiss="alert"
                                                                         aria-label="Close">x</button>
                                                                 </div>
+                                                            @elseif(session('error'))
+                                                                <div class="alert-danger alert-dismissible fade show"
+                                                                     role="alert">
+
+                                                                    <p class="text-center text-white">
+                                                                        {{ session('error') }}
+                                                                    </p>
+                                                                    <button type="button" class="btn-close"
+                                                                            data-bs-dismiss="alert"
+                                                                            aria-label="Close">x</button>
+                                                                </div>
                                                             @else
                                                                 <div class="alert alert-light" role="alert">
                                                                     Student should be Added First Before it can be searched

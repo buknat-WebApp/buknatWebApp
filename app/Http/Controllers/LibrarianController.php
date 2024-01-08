@@ -330,20 +330,30 @@ class LibrarianController extends Controller
         $transaction->save();
         $insertedId = $transaction->id;
 
-        foreach ($request->input('books') as $book) {
-            $bookTransactions = new BookTransaction();
-            $bookTransactions->transaction_id = $insertedId;
-            $bookTransactions->book_id = $book;
+        $user = User::find($transaction->user_id);
+        $hasUnreturned = User::find($transaction->user_id)->books->where('returned_at', null)->toArray();
 
-            Book::where('id', '=', $book)->decrement('available_copies', 1); //books copy will be subtracted by 1
-            $bookInfo = Book::where('id', '=', $book)->first();
-            $bookTransactions->borrowed_book_condition = $bookInfo->book_condition;
-            $bookTransactions->returned_at = (null);
-            $bookTransactions->return_book_condition = (null);
-            $bookTransactions->remarks = (null);
-            $bookTransactions->save();
+        if ($hasUnreturned) {
+            return redirect()->back()->with('error', 'Error. '. $user->name . ' has an unreturned book!');
+        } else {
+            foreach ($request->input('books') as $book) {
+                $bookTransactions = new BookTransaction();
+                $bookTransactions->transaction_id = $insertedId;
+                $bookTransactions->book_id = $book;
+
+                Book::where('id', '=', $book)->decrement('available_copies', 1); //books copy will be subtracted by 1
+                $bookInfo = Book::where('id', '=', $book)->first();
+                $bookTransactions->borrowed_book_condition = $bookInfo->book_condition;
+                $bookTransactions->returned_at = (null);
+                $bookTransactions->return_book_condition = (null);
+                $bookTransactions->remarks = (null);
+                $bookTransactions->save();
+            }
+            return redirect()->back()->with('success', 'Borrowing Recorded Successfully!');
+
         }
-        return redirect()->back()->with('success', 'Borrowing Recorded Successfully!');
+
+
     }
 
     public function borrowerLists()
