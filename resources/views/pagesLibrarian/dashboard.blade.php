@@ -7,7 +7,7 @@
                 <div class="card">
                     <div class="card-body p-3">
                         <div class="row">
-                            <a href="{{ route('bookLists') }}">
+                            <a href="{{ route('bookLists') }}" class="text-decoration-none text-black">
                                 <div class="col-8">
                                     <div class="numbers">
                                         <p class="text-sm mb-0 text-uppercase font-weight-bold">Total Books</p>
@@ -32,7 +32,7 @@
         <div class="card">
             <div class="card-body p-3">
                 <div class="row">
-                    <a href="{{ route('accountLists') }}">
+                    <a href="{{ route('accountLists') }}" class="text-decoration-none text-black">
                         <div class="col-8">
                             <div class="numbers">
                                 <p class="text-sm mb-0 text-uppercase font-weight-bold">Number Of Students</p>
@@ -45,7 +45,7 @@
             </div>
             <div class="col-4 text-end">
                 <div class="icon icon-shape bg-gradient-danger shadow-danger text-center rounded-circle">
-                    <a href="{{ route('accountLists') }}"> <i class="ni ni-circle-08 text-lg opacity-10"
+                    <a href="{{ route('accountLists') }}" > <i class="ni ni-circle-08 text-lg opacity-10"
                             aria-hidden="true"></i></a>
                 </div>
             </div>
@@ -57,7 +57,7 @@
         <div class="card">
             <div class="card-body p-3">
                 <div class="row">
-                    <a href="{{ route('accountPending') }}">
+                    <a href="{{ route('accountPending') }}" class="text-decoration-none text-black">
                         <div class="col-8">
                             <div class="numbers">
                                 <p class="text-sm mb-0 text-uppercase font-weight-bold">Pending Students</p>
