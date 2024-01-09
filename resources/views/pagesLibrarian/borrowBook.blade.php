@@ -69,27 +69,24 @@
                                                     @csrf
                                                     <div class="row">
                                                         <div class="col">
+                                                            @if ($errors->any())
+                                                                <div class="alert alert-danger">
+                                                                    <ul>
+                                                                        @foreach ($errors->all() as $error)
+                                                                            <li class="text-white">{{ $error }}</li>
+                                                                        @endforeach
+                                                                    </ul>
+                                                                </div>
+                                                            @endif
                                                             @if (session('success'))
-                                                                <div class="alert-success alert-dismissible fade show"
+                                                                <div class="alert alert-success alert-dismissible fade show text-white"
                                                                     role="alert">
-
-                                                                    <p class="text-center text-white">
-                                                                        {{ session('success') }}
-                                                                    </p>
-                                                                    <button type="button" class="btn-close"
-                                                                        data-bs-dismiss="alert"
-                                                                        aria-label="Close">x</button>
+                                                                    {{ session('success') }}
                                                                 </div>
                                                             @elseif(session('error'))
-                                                                <div class="alert-danger alert-dismissible fade show"
+                                                                <div class="alert alert-danger alert-dismissible fade show text-white"
                                                                      role="alert">
-
-                                                                    <p class="text-center text-white">
-                                                                        {{ session('error') }}
-                                                                    </p>
-                                                                    <button type="button" class="btn-close"
-                                                                            data-bs-dismiss="alert"
-                                                                            aria-label="Close">x</button>
+                                                                     {{ session('error') }}
                                                                 </div>
                                                             @else
                                                                 <div class="alert alert-light" role="alert">
@@ -143,9 +140,12 @@
                                                                             <td>{{ $user->id_number }}</td>
                                                                             <td> &nbsp; &nbsp; &nbsp;
                                                                                 {{ $user->name }}</td>
-                                                                            <td class="text-center"> <input type="radio"
-                                                                                    name="user_id"
-                                                                                    value="{{ $user->id }}" required>
+                                                                            <td class="text-center">
+                                                                                <input type="radio"
+                                                                                       name="user_id"
+                                                                                       value="{{ $user->id }}"
+                                                                                    {{ old('user_id', '') == $user->id ? 'checked' : '' }}>
+
                                                                             </td>
                                                                         </tr>
                                                                     @endforeach
@@ -181,8 +181,11 @@
                                                                                 {{ $book->author->author }}</td>
 
                                                                             <td>
-                                                                                <input type="checkbox" name="books[]"
-                                                                                    value="{{ $book->id }}">
+                                                                                <input type="checkbox"
+                                                                                       name="books[]"
+                                                                                       value="{{ $book->id }}"
+                                                                                    {{ in_array($book->id, old('books', [])) ? 'checked' : '' }}>
+
 
                                                                             </td>
 

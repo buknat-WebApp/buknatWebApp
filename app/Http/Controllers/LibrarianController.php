@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\BookLocation;
+use Illuminate\Support\Facades\Hash;
 use Mpdf\Mpdf;
 use Carbon\Carbon;
 use App\Models\Book;
@@ -70,7 +71,7 @@ class LibrarianController extends Controller
         return view('pagesLibrarian.dashboard', [
             'noOfBooks' => $booksCounter,
             'noOfStudents' => $noOfStudents,
-            'noOfPending' =>  $noOfPending,
+            'noOfPending' => $noOfPending,
             'pendingStudents' => $pendingStudents,
             'transactions' => $transactions,
             'overdueTransactions' => $overdueTransactions,
@@ -151,7 +152,7 @@ class LibrarianController extends Controller
         $path = public_path('storage/BookQRCodes/'); // path to folder where image will be saved
         $filename = $file_ID . '.png'; // name of the image file
 
-        if(!File::exists($path)) {
+        if (!File::exists($path)) {
             File::makeDirectory($path, $mode = 0777, true, true);
         }
         // QrCode::format('png')->size(250)->generate($file_ID, public_path($path . $filename));
@@ -193,7 +194,7 @@ class LibrarianController extends Controller
         $sections = BookSection::all();
         $locations = BookLocation::all();
         return view('pagesLibrarian.bookInfo', [
-            'book' =>  $book,
+            'book' => $book,
             'sections' => $sections,
             'locations' => $locations,
         ]);
@@ -258,15 +259,14 @@ class LibrarianController extends Controller
         ]);
 
 
-
         // // Generate QR code with given data
-        $file_ID =  $user->id_number;
+        $file_ID = $user->id_number;
         // $qrCode = QrCode::size(250)->generate($file_ID);
 
         // //Save QR code as image in a specific folder
         $path = public_path('storage/StudentQrCodes/'); // path to folder where image will be saved
 
-        if(!File::exists($path)) {
+        if (!File::exists($path)) {
             File::makeDirectory($path, $mode = 0777, true, true);
         }
         $filename = $user->id . '.png'; // name of the image file
@@ -306,55 +306,65 @@ class LibrarianController extends Controller
     public function borrowingForm()
     {
         $users = User::where('role', '=', 0) //GET ONLY THE ROLE "0" or the students
-            ->orderBy('name', 'ASC')
+        ->orderBy('name', 'ASC')
             ->get();
         $books = Book::where('is_available', '!=', 0) //get only the available && copies available && FUNCTIONAL
-            ->where('available_copies', '>', 0)
+        ->where('available_copies', '>', 0)
             ->where('book_condition', '=', 'functional')
             ->orderBy('book_title', 'ASC')
             ->get();
 
         return view('pagesLibrarian.borrowBook', [
-            'users' =>  $users,
+            'users' => $users,
             'books' => $books,
         ]);
     }
 
     public function registerBorrower(Request $request)
     {
-        $transaction = new Transaction();
-        $transaction->user_id = $request->input('user_id');
-        $transaction->borrowed_at = date('Y-m-d');
-        $transaction->remarks = $request->input('remarks');
-        $transaction->expected_return_date = $request->input('expected_return_date');
-        $transaction->save();
-        $insertedId = $transaction->id;
+        $request->validate([
+            'user_id'              => 'required|exists:users,id',
+            'expected_return_date' => 'required|date',
+            'books'                => 'required|array|min:1',
+            'books.*'              => 'exists:books,id',
+        ]);
 
-        $user = User::find($transaction->user_id);
-        $hasUnreturned = User::find($transaction->user_id)->books->where('returned_at', null)->toArray();
+        $user = User::find($request->input('user_id'));
 
-        if ($hasUnreturned) {
-            return redirect()->back()->with('error', 'Error. '. $user->name . ' has an unreturned book!');
-        } else {
-            foreach ($request->input('books') as $book) {
-                $bookTransactions = new BookTransaction();
-                $bookTransactions->transaction_id = $insertedId;
-                $bookTransactions->book_id = $book;
+        $hasUnreturnedBooks = $user->books->where('returned_at', null)->isNotEmpty();
+//        $hasUnreturnedBooks1 = $user->books->where('returned_at', null)->toArray();
 
-                Book::where('id', '=', $book)->decrement('available_copies', 1); //books copy will be subtracted by 1
-                $bookInfo = Book::where('id', '=', $book)->first();
-                $bookTransactions->borrowed_book_condition = $bookInfo->book_condition;
-                $bookTransactions->returned_at = (null);
-                $bookTransactions->return_book_condition = (null);
-                $bookTransactions->remarks = (null);
-                $bookTransactions->save();
-            }
-            return redirect()->back()->with('success', 'Borrowing Recorded Successfully!');
 
+        if ($hasUnreturnedBooks) {
+            return redirect()->back()->with('error', 'Error. ' . $user->name . ' has an unreturned book!');
         }
 
+        $transaction = Transaction::create([
+            'user_id'              => $request->input('user_id'),
+            'borrowed_at'          => now(),
+            'remarks'              => $request->input('remarks'),
+            'expected_return_date' => $request->input('expected_return_date'),
+        ]);
 
+        foreach ($request->input('books') as $bookId) {
+            $bookTransaction = new BookTransaction();
+            $bookTransaction->fill([
+                'transaction_id'          => $transaction->id,
+                'book_id'                 => $bookId,
+                'borrowed_book_condition' => Book::find($bookId)->book_condition,
+                'returned_at'             => null,
+                'return_book_condition'   => null,
+                'remarks'                 => null,
+            ]);
+
+            $bookTransaction->save();
+
+            Book::where('id', $bookId)->decrement('available_copies', 1);
+        }
+
+        return redirect()->back()->with('success', 'Borrowing Recorded Successfully!');
     }
+
 
     public function borrowerLists()
     {
@@ -383,7 +393,7 @@ class LibrarianController extends Controller
             ->get();
 
         return view('pagesLibrarian.borrowUpdate', [
-            'user' =>  $user,
+            'user' => $user,
             'bookTransactions' => $bookTransactions,
         ]);
     }
@@ -395,8 +405,8 @@ class LibrarianController extends Controller
 
                 $Book = BookTransaction::where('id', $request->transactionIDs[$i]);
                 $Book->update([
-                    'returned_at' =>  $request->returned_dates[$i],
-                    'return_book_condition' =>  $request->returned_book_conditions[$i],
+                    'returned_at' => $request->returned_dates[$i],
+                    'return_book_condition' => $request->returned_book_conditions[$i],
                     'remarks' => $request->remarks[$i],
                 ]);
 
@@ -448,20 +458,21 @@ class LibrarianController extends Controller
             ->with('bookTransactions', 'user')
             ->first();
 
-        if ($studentWTransactions ) {
+        if ($studentWTransactions) {
 
-        foreach ($studentWTransactions->bookTransactions as $bookTransaction) {
+            foreach ($studentWTransactions->bookTransactions as $bookTransaction) {
 
-            $book[] = Book::where('id', '=', $bookTransaction->book_id)->first();
-        }
-        return view('pagesLibrarian.transaction', [
-            'transaction' => $studentWTransactions,
-            'books' => $book,
-        ]);
+                $book[] = Book::where('id', '=', $bookTransaction->book_id)->first();
+            }
+            return view('pagesLibrarian.transaction', [
+                'transaction' => $studentWTransactions,
+                'books' => $book,
+            ]);
         }
 
         // return response()->json( $studentWTransactions);
     }
+
     public function updateStudents()
     {
         return view('pagesLibrarian.updateStudentrecords');
@@ -477,25 +488,26 @@ class LibrarianController extends Controller
     }
 
 
-    public function recordLogins(Request $request){
-       $qrID= $request->input('qr_code');
+    public function recordLogins(Request $request)
+    {
+        $qrID = $request->input('qr_code');
 
-       $user = User::where('id_number', $qrID)->first();
+        $user = User::where('id_number', $qrID)->first();
 
-       if($user){
-       RecordLogin::create([
-        'id_number' => $request->input('qr_code'),
-        'name' => $user->name
-       ]);
+        if ($user) {
+            RecordLogin::create([
+                'id_number' => $request->input('qr_code'),
+                'name' => $user->name
+            ]);
 
-    }
+        }
 
 
-       $records = RecordLogin::orderBy('created_at', 'desc')->get();
+        $records = RecordLogin::orderBy('created_at', 'desc')->get();
 
-       return view('pagesLibrarian.transactionLogs', compact('records'));
+        return view('pagesLibrarian.transactionLogs', compact('records'));
 
-    //    return response()->json($records);
+        //    return response()->json($records);
     }
 
     public function updateStudentsRecord(Request $request)
@@ -514,10 +526,8 @@ class LibrarianController extends Controller
       alert("The Records were SuccessFully updated");
       </script>';
 
-        return  view('pagesLibrarian.updateStudentrecords');
+        return view('pagesLibrarian.updateStudentrecords');
     }
-
-
 
 
     public function printGeneratedReport(Request $request)
@@ -540,12 +550,12 @@ class LibrarianController extends Controller
 
         $reportData = '<h4 style="text-align: center;">Bukidnon National High School Library Information System</h4>'
             . '<h5 style="text-align: center;">Main Campus Malaybalay City Bukidnon</h5>';
-        $reportData .= '<p style="text-align: center; font-style: italic;"> ' . $title . ' from '. date('F d, Y', strtotime($fromDate)) . ' to ' . date('F d, Y', strtotime($toDate)).'</p>';
+        $reportData .= '<p style="text-align: center; font-style: italic;"> ' . $title . ' from ' . date('F d, Y', strtotime($fromDate)) . ' to ' . date('F d, Y', strtotime($toDate)) . '</p>';
         $reportData .= '<table border="1" style="width: 100%; text-align: center;">
                         <thead>
                             <tr>
                                 <th>Grade Level</th>
-                                <th>'. $title. '</th>
+                                <th>' . $title . '</th>
                             </tr>
                         </thead>
                         <tbody>';
@@ -557,7 +567,7 @@ class LibrarianController extends Controller
 //                ->where('users.grade_and_section', $gradeLevel)
 //                ->count();
 
-            if ($reportType == 'borrowedBooks'){
+            if ($reportType == 'borrowedBooks') {
                 $bookCount = DB::table('transactions')
                     ->join('users', 'transactions.user_id', '=', 'users.id')
                     ->join('book_transactions', 'transactions.id', '=', 'book_transactions.transaction_id')
@@ -570,23 +580,22 @@ class LibrarianController extends Controller
                 $reportData .= '<td>' . $gradeLevel . '</td>';
                 $reportData .= '<td>' . $bookCount . '</td>';
                 $reportData .= '</tr>';
-                $totalCounter =  $totalCounter + $bookCount;
-            }
-            else {
-                    $loginCounts = DB::table('record_logins')
-                        ->join('users', 'record_logins.id_number', '=', 'users.id_number')
-                        ->whereBetween('record_logins.created_at', [$fromDate, $toDate])
-                        ->where('users.grade_and_section', $gradeLevel)
-                        ->select('users.grade_and_section', DB::raw('COUNT(DISTINCT record_logins.id_number) as login_count'))
-                        ->groupBy('users.grade_and_section')
-                        ->first(); // Use first() to get a single result object
+                $totalCounter = $totalCounter + $bookCount;
+            } else {
+                $loginCounts = DB::table('record_logins')
+                    ->join('users', 'record_logins.id_number', '=', 'users.id_number')
+                    ->whereBetween('record_logins.created_at', [$fromDate, $toDate])
+                    ->where('users.grade_and_section', $gradeLevel)
+                    ->select('users.grade_and_section', DB::raw('COUNT(DISTINCT record_logins.id_number) as login_count'))
+                    ->groupBy('users.grade_and_section')
+                    ->first(); // Use first() to get a single result object
 
-                    $reportData .= '<tr>';
-                    $reportData .= '<td>' . $gradeLevel . '</td>';
-                    $reportData .= '<td>' . ($loginCounts ? $loginCounts->login_count : 0) . '</td>'; // Access login_count property
-                    $reportData .= '</tr>';
-                    $totalCounter += $loginCounts ? $loginCounts->login_count : 0; // Increment totalCounter with login_count
-                }
+                $reportData .= '<tr>';
+                $reportData .= '<td>' . $gradeLevel . '</td>';
+                $reportData .= '<td>' . ($loginCounts ? $loginCounts->login_count : 0) . '</td>'; // Access login_count property
+                $reportData .= '</tr>';
+                $totalCounter += $loginCounts ? $loginCounts->login_count : 0; // Increment totalCounter with login_count
+            }
 
         }
 
@@ -595,7 +604,7 @@ class LibrarianController extends Controller
         $reportData .= '</tr>';
         $reportData .= '</tbody>';
         $reportData .= '</table>';
-        $reportData .= '<p style="text-align: right; padding-right: 50px;"> '. $totalText.': ' . $totalCounter . '</p>';
+        $reportData .= '<p style="text-align: right; padding-right: 50px;"> ' . $totalText . ': ' . $totalCounter . '</p>';
         $reportData .= '<br><br><br><br><br>';
         $reportData .= '<p style="text-align: left;">PREPARED BY:</p><br>';
         $reportData .= '<footer>

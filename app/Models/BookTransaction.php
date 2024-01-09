@@ -10,9 +10,12 @@ class BookTransaction extends Model
     use HasFactory;
 
     protected $fillable = [
+        'transaction_id',
+        'book_id',
         'borrowed_book_condition',
         'returned_at',
         'return_book_condition',
+        'remarks',
 
     ];
 
@@ -21,7 +24,7 @@ class BookTransaction extends Model
         return $this->belongsTo(Book::class, 'book_id');
     }
 
-    public function transactioned()
+    public function transaction(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Transaction::class, 'transaction_id');
     }
