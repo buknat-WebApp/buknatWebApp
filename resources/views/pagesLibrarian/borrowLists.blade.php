@@ -16,7 +16,7 @@
                     </div>
                 </div>
 
-                <div class="col-lg-4 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
+                <div class="col-lg-6 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
                     <div class="nav-wrapper position-relative end-0">
                         <ul class="nav nav-pills nav-fill p-1">
                             <li class="nav-item">
@@ -51,14 +51,9 @@
                     </div>
                 </div>
 
-
-
-
                 <div class="container-fluid py-4 mt-2">
                     <div class="row">
                         <div class="col-md-12">
-
-                            <div class="card mt-2"></div>
                             @if (session('success'))
                                 <div class="alert-success alert-dismissible fade show" role="alert">
                                     <p class="text-center text-white">
@@ -75,7 +70,7 @@
                                     </div>
                                     <div class="card-body px-0 pt-0 pb-2">
                                         <div class="table-responsive p-0">
-                                            <table class="table align-items-center mb-0" id="mytable">
+                                            <table id="mytable" class="table table-striped" style="width:100%">
                                                 <thead>
                                                     <tr>
                                                         <th
@@ -113,7 +108,7 @@
                                                                             {{ $transaction->user->id_number }}
                                                                         </p>
                                                                         <p class="text-xs text-secondary mb-0">
-                                                                            <strong>ID No.</strong>
+                                                                            <strong>Contact No.</strong>
                                                                             {{ $transaction->user->contact_number }}
                                                                         </p>
 

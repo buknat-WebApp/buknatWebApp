@@ -16,7 +16,7 @@
                     </div>
                 </div>
 
-                <div class="col-lg-4 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
+                <div class="col-lg-6 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
                     <div class="nav-wrapper position-relative end-0">
                         <ul class="nav nav-pills nav-fill p-1">
                             <li class="nav-item">
@@ -54,8 +54,6 @@
                 <div class="container-fluid py-4 mt-2">
                     <div class="row">
                         <div class="col-md-12">
-
-                            <div class="card mt-2"></div>
                             @if (session('successApprove'))
                                 <div class="alert-success alert-dismissible fade show" role="alert">
                                     <p class="text-center text-white">

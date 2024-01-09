@@ -5,9 +5,12 @@ import '../css/app.css';
 import $ from 'jquery';
 import 'datatables.net-bs4';
 
-$(document).ready(function () {
-  $('#mytable').DataTable();
-});
+
+// $(document).ready(function () {
+//   $('#mytable').DataTable();
+// });
+
+$('#mytable').DataTable();
 
 
 //table in searching the user in the borrrowing form
