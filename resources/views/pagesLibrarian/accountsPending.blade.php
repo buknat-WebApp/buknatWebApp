@@ -29,7 +29,7 @@
                             <li class="nav-item">
                                 <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center "
                                     href="{{ route('accountLists') }}">
-                                    <i class="ni ni-lock-circle-open"></i>
+                                    <i class="ni ni-bullet-list-67"></i>
                                     <span class="ms-2">All Lists</span>
                                 </a>
                             </li>

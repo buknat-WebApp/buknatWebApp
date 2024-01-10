@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="card shadow-lg mx-4 card-profile-bottom">
-        <div class="card-body p-3">
+    <div class="mx-5 mt-4">
+        <div class="card-body">
             <div class="row gx-4">
 
-                <div class="col-auto my-auto">
+                <div class="col-auto my-auto text-white">
                     <div class="h-100">
                         <h5 class="mb-1">
                             Borrowers Lists
@@ -63,11 +63,11 @@
                                         aria-label="Close">x</button>
                                 </div>
                             @endif
-                            <div class="col-12">
-                                <div class="card mb-4">
-                                    <div class="card-body px-0 pt-0 pb-2">
-                                        <div class="table-responsive p-0">
-                                            <table id="mytable" class="table table-striped" style="width:100%">
+                                <div class="col-12">
+                                    <div class="card mb-4 p-2">
+                                        <div class="card-body pb-2">
+                                            <div class="table-responsive ">
+                                            <table class="table align-items-center mb-0"  id="mytable">
                                                 <thead>
                                                     <tr>
                                                         <th

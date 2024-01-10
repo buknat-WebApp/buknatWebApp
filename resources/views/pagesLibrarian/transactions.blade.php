@@ -22,16 +22,16 @@
 
 
                             <li class="nav-item">
-                                <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center btn bg-secondary"
+                                <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center btn"
                                 href="{{ route('studentTransactions') }}">
-                                    <i class="ni ni-lock-circle-open"></i>
+                                    <i class="ni ni-archive-2"></i>
                                     <span class="ms-2">Transaction Lists</span>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="mb-0 px-0 py-1 d-flex align-items-center justify-content-center btn "
                          href="transaction/logs">
-                                    <i class="ni ni-lock-circle-open"></i>
+                                    <i class="ni ni-collection"></i>
                                     <span class="ms-2">Login Lists</span>
                                 </a>
                             </li>

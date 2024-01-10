@@ -55,11 +55,15 @@
 
 </head>
 
-<body class="g-sidenav-show   bg-gray-100">
-    <div class="min-height-300 bg-primary position-absolute w-100"
-        style="background-image: url('https://media.licdn.com/dms/image/C561BAQGoO3WWkMBcCQ/company-background_10000/0/1632665721223?e=1698660000&v=beta&t=6k32kzNxn8BdFEJuJdO_KjZZLwnUOPEX6V_cVMv5yDQ'); background-position-y: 50%;">
-        <span class="mask bg-primary opacity-6"></span>
+<body class="g-sidenav-show bg-gray-100">
+    <div class="min-height-300 position-absolute w-100" style="background-image: url('{{ asset('assets/assets/img/library.jpg') }}'); background-position-y: 60%; background-repeat: no-repeat; background-size: cover;">
+        <span class="mask bg-gradient-faded-dark opacity-6"></span>
     </div>
+
+{{--    <div class="min-height-300 bg-primary position-absolute w-100"--}}
+{{--        style="background-image: url('https://media.licdn.com/dms/image/C561BAQGoO3WWkMBcCQ/company-background_10000/0/1632665721223?e=1698660000&v=beta&t=6k32kzNxn8BdFEJuJdO_KjZZLwnUOPEX6V_cVMv5yDQ'); background-position-y: 50%;">--}}
+{{--        <span class="mask bg-warning opacity-6"></span>--}}
+{{--    </div>--}}
 
     @include('layouts.sidenav')
 
