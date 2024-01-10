@@ -94,26 +94,26 @@
                         </div>
                     </div>
                     <ul class="navbar-nav justify-content-end">
-                        <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link text-white font-weight-bold cursor-pointer " href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                <i class="fa fa-bell"></i>
-                                <span class="badge badge-light bg-dark badge-xs">{{auth()->user()->unreadNotifications->count()}}</span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                @if (auth()->user()->unreadNotifications)
-                                    <li class="d-flex justify-content-end mx-1 my-2">
-                                        <a href="{{route('mark-as-read')}}" class="btn btn-success btn-sm">Mark All as Read</a>
-                                    </li>
-                                @endif
+{{--                        <li class="nav-item dropdown">--}}
+{{--                            <a id="navbarDropdown" class="nav-link text-white font-weight-bold cursor-pointer " href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>--}}
+{{--                                <i class="fa fa-bell"></i>--}}
+{{--                                <span class="badge badge-light bg-dark badge-xs">{{auth()->user()->unreadNotifications->count()}}</span>--}}
+{{--                            </a>--}}
+{{--                            <ul class="dropdown-menu">--}}
+{{--                                @if (auth()->user()->unreadNotifications)--}}
+{{--                                    <li class="d-flex justify-content-end mx-1 my-2">--}}
+{{--                                        <a href="{{route('mark-as-read')}}" class="btn btn-success btn-sm">Mark All as Read</a>--}}
+{{--                                    </li>--}}
+{{--                                @endif--}}
 
-                                @foreach (auth()->user()->unreadNotifications as $notification)
-                                    <a href="#" class="text-success"><li class="p-1 text-success"> {{$notification->data['data']}}</li></a>
-                                @endforeach
-                                @foreach (auth()->user()->readNotifications as $notification)
-                                    <a href="#" class="text-secondary"><li class="p-1 text-secondary"> {{$notification->data['data']}}</li></a>
-                                @endforeach
-                            </ul>
-                        </li>
+{{--                                @foreach (auth()->user()->unreadNotifications as $notification)--}}
+{{--                                    <a href="#" class="text-success"><li class="p-1 text-success"> {{$notification->data['data']}}</li></a>--}}
+{{--                                @endforeach--}}
+{{--                                @foreach (auth()->user()->readNotifications as $notification)--}}
+{{--                                    <a href="#" class="text-secondary"><li class="p-1 text-secondary"> {{$notification->data['data']}}</li></a>--}}
+{{--                                @endforeach--}}
+{{--                            </ul>--}}
+{{--                        </li>--}}
                         <li class="nav-item dropdown pe-2 d-flex align-items-center">
                             <a href="javascript:;" class="nav-link text-body p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="fa fa-bell cursor-pointer text-white"></i>
@@ -131,11 +131,14 @@
                                             <a class="dropdown-item border-radius-md bg-gradient-faded-info" href="javascript:;">
                                                 <div class="d-flex py-1">
                                                     <div class="my-auto">
-                                                        <img src="../assets/img/team-2.jpg" class="avatar avatar-sm  me-3 ">
+                                                        <img src="../assets/assets/img/logo.png" class="avatar avatar-sm  me-3 ">
                                                     </div>
                                                     <div class="d-flex flex-column justify-content-center">
                                                         <h6 class="text-sm font-weight-normal mb-1">
-                                                            <span class="font-weight-bold">{{$notification->data['data']}}</span> from Laur
+                                                            <span class="font-weight-bold">{{$notification->data['data']}}</span>
+                                                            @if(isset($notification->data['message']))
+                                                                {{$notification->data['message']}}
+                                                            @endif
                                                         </h6>
                                                         <p class="text-xs text-secondary mb-0">
                                                             <i class="fa fa-clock me-1"></i>
@@ -151,11 +154,14 @@
                                             <a class="dropdown-item border-radius-lg " href="javascript:;">
                                                 <div class="d-flex py-1">
                                                     <div class="my-auto">
-                                                        <img src="../assets/img/team-2.jpg" class="avatar avatar-sm  me-3 ">
+                                                        <img src="../assets/assets/img/logo.png" class="avatar avatar-sm  me-3 ">
                                                     </div>
                                                     <div class="d-flex flex-column justify-content-center">
                                                         <h6 class="text-sm font-weight-normal mb-1">
-                                                            <span class="font-weight-bold">{{$notification->data['data']}}</span> from Laur
+                                                            <span class="font-weight-bold">{{$notification->data['data']}}</span>
+                                                            @if(isset($notification->data['message']))
+                                                                {{$notification->data['message']}}
+                                                            @endif
                                                         </h6>
                                                         <p class="text-xs text-secondary mb-0">
                                                             <i class="fa fa-clock me-1"></i>
