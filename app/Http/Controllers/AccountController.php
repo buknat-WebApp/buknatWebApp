@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use App\Models\User;
+use App\Notifications\RegisterUser;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -110,9 +111,13 @@ class AccountController extends Controller
 
 
 
-            $user->save();
+        $user->save();
 
+        $librarians = $user->isLibrarian();
 
+        foreach ($librarians as $admin){
+            $admin->notify(new RegisterUser());
+        }
          return redirect()->back()->with('success', 'Account created successfully. The Librarian will have to confirm it first, before you can use it');
          }
     }
@@ -252,4 +257,6 @@ class AccountController extends Controller
         $request->session()->regenerateToken();
         return redirect('/');
     }
+
+
 }

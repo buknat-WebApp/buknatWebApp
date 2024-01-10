@@ -64,6 +64,7 @@ Route::prefix('Teacher')->middleware(['auth', 'isTeacher'])->group(function(){
 
 //LIBRARIAN
 Route::prefix('Librarian')->middleware(['auth', 'isLibrarian'])->group(function(){
+    Route::get('/mark-as-read', [LibrarianController::class,'markAsRead'])->name('mark-as-read');
     Route::get('/dashboard',[LibrarianController::class, 'dashboard'])->name('librarianDashboard');
     Route::get('/borrow/form',[LibrarianController::class, 'borrowingForm'])->name('borrowingForm');
     Route::post('/borrow/form',[LibrarianController::class, 'registerBorrower'])->name('registerBorrower');

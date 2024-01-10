@@ -621,4 +621,9 @@ class LibrarianController extends Controller
         $mpdf->WriteHTML($reportData);
         $mpdf->Output('report.pdf', 'I');
     }
+
+    public function markAsRead(){
+        Auth::user()->unreadNotifications->markAsRead();
+        return redirect()->back();
+    }
 }
