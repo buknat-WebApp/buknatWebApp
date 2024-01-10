@@ -159,7 +159,7 @@ class AccountController extends Controller
         return view('layouts.profile');
     }
 
-    public function updateProfile(Request $request) {
+    public function updateProfile(Request $request, User $user) {
 
 //        dd($request);
         function LibrarianError(){
@@ -171,15 +171,46 @@ class AccountController extends Controller
         function TeacherError(){
             return redirect()->route('profile')->with('error', 'Pass');
         }
-
         $user = Auth::user();
 
-        $user->update([
-            'email' => $request->email,
-            'contact_number' => $request->contact_number,
-            'birthdate' => $request->birthdate,
-            'address' => $request->address,
-        ]);
+        $input = $request->all();
+        $profileImage = '';
+        if ($avatar = $request->file('avatar')) {
+            $destinationPath = 'storage/avatar/';
+            $profileImage = date('Ymd') . "." . $avatar->getClientOriginalExtension();
+            $avatar->move($destinationPath, $profileImage);
+            $input['avatar'] = "$profileImage";
+        }else{
+            unset($input['avatar']);
+        }
+
+        $user->update($input);
+
+//        $user->update([
+//            'email' => $request->email,
+//            'contact_number' => $request->contact_number,
+//            'birthdate' => $request->birthdate,
+//            'address' => $request->address,
+//            'avatar' => $profileImage,
+//        ]);
+
+//        $user = Auth::user();
+//
+////        dd($request);
+//        $fileName = '';
+//        if ($request->hasFile('avatar')) {
+//            $file = $request->file('avatar');
+//            $fileName = $file->getClientOriginalName();
+//            $file->move(public_path('storage/avatar'), $fileName);
+////            $user->avatar =  $fileName; //storing in DB
+//        }
+//        $user->update([
+//            'email' => $request->email,
+//            'contact_number' => $request->contact_number,
+//            'birthdate' => $request->birthdate,
+//            'address' => $request->address,
+//            'avatar' => $request->avatar,
+//        ]);
 
         if (Auth::user()->role == 0){
             return redirect()->route('userProfile')->with('success', 'Pass');

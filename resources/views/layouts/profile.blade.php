@@ -4,19 +4,31 @@
     <div class="card shadow-lg mx-4 card-profile-bottom">
         <div class="card-body p-3">
             <div class="row gx-4">
-
+                <div class="col-auto">
+                    <div class="avatar avatar-xl position-relative">
+                        @if( Auth::user()->avatar)
+                            <img src="{{ asset('storage/avatar/' . Auth::user()->avatar) }}" alt="profile_image" class="w-100 h-100 border-radius-lg shadow-sm object-fit-cover border rounded">
+                        @else
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGhmTe4FGFtGAgbIwVBxoD3FmED3E5EE99UGPItI0xnQ&s" class="w-100 h-100 border-radius-lg shadow-sm object-fit-cover border rounded" />
+                        @endif
+                    </div>
+                </div>
                 <div class="col-auto my-auto">
                     <div class="h-100">
-                        <h5 class="mb-1">
-                            {{-- {{ $user->name }} --}}
+                        <h5 class="mb-1 font-weight-bold">
+                            {{ Auth::user()->name }}
                         </h5>
                         <p class="mb-0 font-weight-bold text-sm">
-                            {{-- {{ $user->id_number }} &nbsp; {{ $user->grade_and_section }} --}}
+                            @if (Auth::user()->role == 1)
+                                Librarian
+                            @elseif (Auth::user()->role == 0)
+                                Student
+                            @elseif (Auth::user()->role == 2)
+                                Teacher
+                            @endif
+{{--                             {{ Auth::user()->id_number }} &nbsp; {{ Auth::user()->grade_and_section }}--}}
                         </p>
                     </div>
-                    <p class="mb-0 font-weight-bold text-sm"><strong> Profile </strong>
-                         &nbsp; {{ Auth::user()->name }}
-                    </p>
                 </div>
 
 
@@ -25,7 +37,7 @@
         </div>
     </div>
 
-    <form method="POST" action="{{ route('updateProfile') }}">
+    <form method="POST" action="{{ route('updateProfile') }}" enctype="multipart/form-data">>
         @csrf
         @method('PUT')
 
@@ -43,14 +55,20 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6">
-
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="avatar">
+                                            Photo
+                                        </label>
+                                        <input class="form-control" type="file" name="avatar" id="avatar">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="form-control-label" for="check1">
                                             ID Number
                                         </label>
                                         <input class="form-control" type="text" id="check1" value="{{ Auth::user()->id_number }}" disabled>
                                     </div>
-
                                 </div>
 
                                 <div class="col-md-6">
@@ -89,7 +107,7 @@
 
                                 </div>
 
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="example-text-input" class="form-control-label">Address</label>
                                         <input class="form-control" type="text" name="address" id="address" value="{{ Auth::user()->address }}" >

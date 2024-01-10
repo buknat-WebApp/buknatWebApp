@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('password');
             $table->smallInteger('role')->default(0);
             $table->string('id_pic')->nullable();
+            $table->string('avatar')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

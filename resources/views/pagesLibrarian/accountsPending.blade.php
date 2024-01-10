@@ -72,6 +72,9 @@
                                                     <tr>
                                                         <th
                                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                            Photo</th>
+                                                        <th
+                                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                             ID Picture</th>
                                                         <th
                                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
@@ -96,13 +99,26 @@
                                                         <tr>
                                                             <td class="align-middle text-center">
 
-                                                                <a target="_blank"
-                                                                    href="{{ Storage::url('IDPic/' . $student->id_pic) }}">
-                                                                    <img src="{{ Storage::url('IDPic/' . $student->id_pic) }}"
-                                                                        alt="Image" width="100px" height="100px">
-                                                                </a>
-                                                                <input type="text" id="id_pic" name="id_pic"
-                                                                    value="{{ $student->id_pic }}" hidden>
+                                                                @if($student->avatar)
+                                                                    <a target="_blank"
+                                                                       href="{{ Storage::url('avatar/' . $student->avatar) }}">
+                                                                        <img src="{{ Storage::url('avatar/' . $student->avatar) }}"
+                                                                             alt="Image" width="100px" height="100px">
+                                                                    </a>
+                                                                    <input type="text" id="avatar" name="avatar"
+                                                                           value="{{ $student->avatar }}" hidden>
+                                                                @endif
+                                                            </td>
+                                                            <td class="align-middle text-center">
+                                                                @if($student->id_pic)
+                                                                    <a target="_blank"
+                                                                        href="{{ Storage::url('IDPic/' . $student->id_pic) }}">
+                                                                        <img src="{{ Storage::url('IDPic/' . $student->id_pic) }}"
+                                                                            alt="Image" width="100px" height="100px">
+                                                                    </a>
+                                                                    <input type="text" id="id_pic" name="id_pic"
+                                                                        value="{{ $student->id_pic }}" hidden>
+                                                                @endif
 
                                                             </td>
                                                             <td>

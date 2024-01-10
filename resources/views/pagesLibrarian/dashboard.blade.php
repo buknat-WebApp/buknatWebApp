@@ -360,8 +360,12 @@
                         @foreach ($pendingStudents as $student)
                             <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
                                 <div class="d-flex align-items-center">
-                                    <div class="icon icon-shape icon-sm me-3 bg-gradient-dark shadow text-center">
-                                        <i class="ni ni-mobile-button text-white opacity-10"></i>
+                                    <div class="icon icon-shape icon-sm me-3 text-center">
+                                        @if($student->avatar)
+                                            <img src="{{ asset('storage/avatar/' . $student->avatar) }}" class="card-img-top rounded-circle" alt={elonMusk} />
+                                        @else
+                                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGhmTe4FGFtGAgbIwVBxoD3FmED3E5EE99UGPItI0xnQ&s" class="card-img-top rounded-circle" alt={elonMusk} />
+                                        @endif
                                     </div>
                                     <div class="d-flex flex-column">
                                         <h6 class="mb-1 text-dark text-sm">{{ $student->name }}</h6>
