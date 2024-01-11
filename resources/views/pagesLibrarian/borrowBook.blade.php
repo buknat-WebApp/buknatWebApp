@@ -100,7 +100,6 @@
                                     <div class="row">
                                         <div class="col">
                                             <div class="form-group">
-
                                                 <form method="POST" action="{{ route('registerBorrower') }}" id="form-borrow">
                                                     @csrf
 

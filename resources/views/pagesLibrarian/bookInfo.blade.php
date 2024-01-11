@@ -1,10 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="card shadow-lg mx-4 card-profile-bottom">
-        <div class="card-body p-3">
+    <div class="mx-5 mt-4">
+        <div class="card-body ">
             <div class="row gx-4">
-                <div class="col-auto my-auto">
+
+                <div class="col-auto my-auto text-white">
                     <div class="h-100">
                         <h5 class="mb-1">
                             {{ $book->book_title }}
