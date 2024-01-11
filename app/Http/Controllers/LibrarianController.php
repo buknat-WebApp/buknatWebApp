@@ -86,62 +86,117 @@ class LibrarianController extends Controller
     public function addForm() //adding A Book FORM
     {
         $sections = BookSection::all();
+        $authors = Author::all();
         $locations = BookLocation::all();
         return view('pagesLibrarian.bookAdd', [
             'sections' => $sections, //section is addded to the page
             'locations' => $locations,
+            'authors' => $authors,
         ]);
     }
 
-    public function registerBook(Request $request)
+    public function createAuthor(Request $request)
     {
-        $book = new Book();
-        $author = new Author();
-        $author_id = $request->input('author_id'); //for the ID of the Author to be validated
 
-        if ($request->input('author_id')) {
-            //fetching if the author ID exists
-            $result = count(DB::table('authors')
-                ->where('author_id', '=', $author_id)
-                ->get());
+    }
+    public function registerAuthor(Request $request)
+    {
+        $validated = $request->validate([
+            'author' => 'required|string|max:255',
+            'author_id' => 'nullable',
+        ]);
 
-            if ($result == 0) {
-                $author->author_id = $author_id;
-                $author->author = $request->input('author');
-                $author->save();
-                $book->author_id = $author->id; // use the recently saved ID
-            } else {
-                $book->author_id = $author_id;
-            }
-        }
-        $book->book_title = $request->input('book_title');
-        $book->class_no = $request->input('class_no');
-        $book->edition = $request->input('edition');
-        $book->section_id = $request->input('section');
-        $book->publication_year = $request->input('publication_year');
-        $book->date_acquired = $request->input('date_acquired');
-        $book->no_of_copies = $request->input('no_of_copies');
-        $book->available_copies = $request->input('no_of_copies'); // FOR COUNTING THE CURRENT AVAILABLE
-        $book->on_hand_per_count = $request->input('on_hand_per_count');
-        $book->book_status = $request->input('book_status');
-        $book->book_condition = $request->input('book_condition');
-        $book->isbn = $request->input('isbn');
-        $book->publisher = $request->input('publisher');
-        $book->genre = $request->input('genre');
-        $book->language = $request->input('language');
-        $book->number_of_pages = $request->input('number_of_pages');
-        $book->location_id = $request->input('location');
-        $book->summary = $request->input('summary');
-        $book->added_by = Auth::user()->name; //THIS WOULD RECORD THE NAME OF THE LIBRARIAN WHO ADDED THE RECOR
+//        $book->book_title = $request->input('book_title');
+//        $book->class_no = $request->input('class_no');
 
-        if ($request->hasFile('book_cover')) {
-            $file = $request->file('book_cover');
-            $fileName = $file->getClientOriginalName();
-            $file->move(public_path('storage/BookCovers'), $fileName);
-            $book->book_cover = $fileName; //Recording to DB the image
+        $book = Author::create(
+            $validated
+        );
 
-        }
-        $book->save();
+        return redirect()->back()->with('success', 'Author created successfully!');
+    }
+
+    public function registerBook(Request $request): \Illuminate\Http\RedirectResponse
+    {
+        $validated = $request->validate([
+            'book_title' => 'required|string|max:255',
+            'author_id' => 'required|exists:authors,id',
+            'class_no' => 'required|string|max:255',
+            'edition' => 'nullable|string|max:255',
+            'publication_year' => 'nullable|integer|min:1000|max:' . date('Y'),
+            'date_acquired' => 'nullable|date',
+            'no_of_copies' => 'required|integer|min:0',
+            'on_hand_per_count' => 'nullable|integer|min:0',
+            'book_status' => 'required|string',
+            'book_condition' => 'nullable|string|max:255',
+            'isbn' => 'nullable|string|max:20',
+            'publisher' => 'nullable|string|max:255',
+            'genre' => 'nullable|string|max:255',
+            'language' => 'nullable|string|max:255',
+            'number_of_pages' => 'nullable|integer|min:0',
+            'location_id' => 'nullable',
+            'section_id' => 'nullable|exists:book_sections,id',
+            'summary' => 'nullable|string',
+            'added_by' => 'nullable',
+            'available_copies' => 'nullable|integer|min:0|',
+        ]);
+
+//        $book = new Book();
+//        $author = new Author();
+//        $author_id = $request->input('author_id'); //for the ID of the Author to be validated
+//
+//        if ($request->input('author_id')) {
+//            //fetching if the author ID exists
+//            $result = count(DB::table('authors')
+//                ->where('author_id', '=', $author_id)
+//                ->get());
+//
+//            if ($result == 0) {
+//                $author->author_id = $author_id;
+//                $author->author = $request->input('author');
+//                $author->save();
+//                $book->author_id = $author->id; // use the recently saved ID
+//            } else {
+//                $book->author_id = $author_id;
+//            }
+//        }
+
+
+
+//        $book->book_title = $request->input('book_title');
+//        $book->class_no = $request->input('class_no');
+//        $book->edition = $request->input('edition');
+//        $book->section_id = $request->input('section');
+//        $book->publication_year = $request->input('publication_year');
+//        $book->date_acquired = $request->input('date_acquired');
+//        $book->no_of_copies = $request->input('no_of_copies');
+//        $book->available_copies = $request->input('no_of_copies'); // FOR COUNTING THE CURRENT AVAILABLE
+//        $book->on_hand_per_count = $request->input('on_hand_per_count');
+//        $book->book_status = $request->input('book_status');
+//        $book->book_condition = $request->input('book_condition');
+//        $book->isbn = $request->input('isbn');
+//        $book->publisher = $request->input('publisher');
+//        $book->genre = $request->input('genre');
+//        $book->language = $request->input('language');
+//        $book->number_of_pages = $request->input('number_of_pages');
+//        $book->location_id = $request->input('location');
+//        $book->summary = $request->input('summary');
+//        dd($validated, $request);
+        $validated['added_by'] = Auth::user()->name;
+        $book = Book::create(
+            $validated
+         );
+//        $book->added_by = ; //THIS WOULD RECORD THE NAME OF THE LIBRARIAN WHO ADDED THE RECOR
+//
+//        if ($request->hasFile('book_cover')) {
+//            $file = $request->file('book_cover');
+//            $fileName = $file->getClientOriginalName();
+//            $file->move(public_path('storage/BookCovers'), $fileName);
+//            $book->book_cover = $fileName; //Recording to DB the image
+//
+//        }
+//        $book->save($validated);
+//        $book->save();
         $file_ID = $book->id;
 
         // // Generate QR code with given data

@@ -74,6 +74,8 @@ Route::prefix('Librarian')->middleware(['auth', 'isLibrarian'])->group(function(
     Route::put('/borrow/update/', [LibrarianController::class, 'returnBook'])->name('returnBook');//getting the info of the book
     Route::get('/book/add',[LibrarianController::class, 'addForm'])->name('addBook');
     Route::post('/book/add',[LibrarianController::class, 'registerBook'])->name('registerBook');
+    Route::post('/book/add/registerAuthor', [LibrarianController::class, 'registerAuthor'])->name('registerAuthor');
+
     Route::get('/book/list',[LibrarianController::class, 'bookLists'])->name('bookLists');
     Route::get('/book/info/{book}', [LibrarianController::class, 'bookInfo'])->name('bookInfo');//getting the info of the book
     Route::put('/book/update', [LibrarianController::class, 'updateBook'])->name('updateBook');//updateBook
