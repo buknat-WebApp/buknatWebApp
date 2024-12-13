@@ -20,7 +20,7 @@
     <link href="{{ url('assets/assets/css/nucleo-svg.css') }}" rel="stylesheet" />
 
     <!-- Recaptcha -->
-    <!-- {!! htmlScriptTagJsApi() !!} -->
+    {!! htmlScriptTagJsApi() !!}
     <!-- CSS Files -->
     <link id="pagestyle" href="{{ url('assets/assets/css/argon-dashboard.css?v=2.0.4') }}" rel="stylesheet" />
     <!-- jQuery -->
@@ -156,7 +156,7 @@
                                                 @endif
                                             </div>
 
-                                            <!-- <div class="d-flex justify-content-center py-2">
+                                            <div class="d-flex justify-content-center py-2">
                                                 {!! htmlFormSnippet() !!}
                                                 @if($errors->has('g-recaptcha-response'))
                                                     <div>
@@ -165,7 +165,7 @@
                                                         </small>
                                                     </div>
                                                 @endif
-                                            </div> -->
+                                            </div>
 
                                             <div class="text-center">
                                                 <button type="submit" class="btn bg-gradient-primary w-100">Register</button>

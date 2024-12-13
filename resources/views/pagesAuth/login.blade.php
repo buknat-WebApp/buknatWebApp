@@ -31,7 +31,7 @@
     <!-- Font Awesome Icons -->
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
     <!-- Recaptcha -->
-    <!-- {!! htmlScriptTagJsApi() !!} -->
+    {!! htmlScriptTagJsApi() !!}
     <link href="{{ url('assets/assets/css/nucleo-svg.css') }}" rel="stylesheet" />
     <!-- CSS Files -->
     <link id="pagestyle" href="{{ url('assets/assets/css/argon-dashboard.css?v=2.0.4') }}" rel="stylesheet" />
@@ -112,7 +112,7 @@
                             </div>
                           @endif
                       </div>
-                        {{-- <div class="mb-3">
+                        <div class="mb-3">
                             {!! htmlFormSnippet() !!}
                             @if($errors->has('g-recaptcha-response'))
                                 <div>
@@ -121,7 +121,7 @@
                                     </small>
                                 </div>
                             @endif
-                        </div> --}}
+                        </div> 
                       <div class="text-center">
                         <button type="submit" class="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0">Sign in</button>
                       </div>

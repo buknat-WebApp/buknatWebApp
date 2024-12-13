@@ -30,11 +30,11 @@ class AccountController extends Controller
         $credentials = $request->only('id_number', 'password');
         $user = User::where('id_number', $credentials['id_number'])->first();
 
-        // $request->validate([
-        //     'g-recaptcha-response' => 'required|recaptcha',
-        //     'password' => 'required',
-        //     'id_number' => 'required',
-        // ]);
+        $request->validate([
+            'g-recaptcha-response' => 'required|recaptcha',
+            'password' => 'required',
+            'id_number' => 'required',
+        ]);
 
         if ($user) {
             // Check if the password is correct
@@ -87,7 +87,7 @@ public function registerUser(Request $request)
     } else {
 
         $request->validate([
-            // 'g-recaptcha-response' => 'required|recaptcha',
+            'g-recaptcha-response' => 'required|recaptcha',
             'name' => 'required',
             'id_number' => 'required|unique:users,id_number',
             'grade_and_section' => 'required',
@@ -135,8 +135,8 @@ public function registerUser(Request $request)
         } else {
 
             $request->validate([
-                // 'g-recaptcha-response' => 'required|recaptcha',
-                // 'name' => 'required',
+                'g-recaptcha-response' => 'required|recaptcha',
+                'name' => 'required',
                 'id_number' => 'required|unique:users,id_number',
                 'office_or_department' => 'required',  
                 'id_pic' => 'required|image|mimes:jpeg,png,jpg,gif|max:5120',
