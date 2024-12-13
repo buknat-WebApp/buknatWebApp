@@ -10,7 +10,7 @@
                             {{ $book->book_title }}
                         </h5>
                         <p class="mb-0 font-weight-bold text-sm">
-                            <strong> by </strong> : {{ $book->author->author }}.
+                            <strong> Author/s </strong> : {{ $book->author->author }}.
                         </p>
                     </div>
                 </div>
@@ -68,9 +68,9 @@
                                             <div class="col">
                                                 <div class="form-group">
                                                     <label for="example-text-input" class="form-control-label">Author
-                                                        ID</label>
-                                                    <input class="form-control" name="author_id" type="number"
-                                                        value="{{ $book->author->author_id }}" readonly>
+                                                        Number</label>
+                                                    <input class="form-control" name="author_no" type="text"
+                                                        value="{{ $book->author_no }}" readonly>
                                                 </div>
                                             </div>
 
@@ -122,6 +122,16 @@
                                         </div>
 
                                         <div class="row">
+
+                                        <div class="col">
+                                                <div class="form-group">
+                                                    <label for="example-text-input" class="form-control-label">Accession
+                                                        Number</label>
+                                                    <input class="form-control" name="accesion" type="text"
+                                                        value="{{ $book->accession }}" readonly>
+                                                </div>
+                                            </div>
+
                                             <div class="col">
                                                 <div class="form-group">
                                                     <label for="example-text-input" class="form-control-label">Number of
@@ -134,34 +144,40 @@
                                                 <div class="form-group">
                                                     <label for="example-text-input"
                                                         class="form-control-label">ISBN</label>
-                                                    <input class="form-control" name="isbn" type="number"
+                                                    <input class="form-control" name="isbn" type="text"
                                                         value="{{ $book->isbn }}" readonly>
                                                 </div>
                                             </div>
+
                                             <div class="col">
                                                 <div class="form-group">
                                                     <label for="example-text-input"
-                                                        class="form-control-label">Location</label>
-                                                    <input class="form-control" name="location" type="text"
-                                                        value="{{ $book->location }}" readonly>
+                                                        class="form-control-label">Subject/Location</label>
+                                                    <select class="form-select form-control" id="gender-select"
+                                                        name="location_id" disabled>
+                                                        @foreach ($location as $locate)
+                                                            @if ($book->location_id == $locate->id)
+                                                                <option value="{{ $locate->id }}" selected>
+                                                                    {{ $locate->name }}
+                                                                </option>
+                                                            @endif
+                                                            <option value="{{ $section->id }}">
+                                                                {{ $section->name }}
+                                                        @endforeach
+                                                    </select>
                                                 </div>
                                             </div>
+                                        </div>
+
+                                        <div class="row">
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label for="example-text-input" class="form-control-label">Publication
-                                                        Year</label>
+                                                    <label for="example-text-input" class="form-control-label">Date of Publication</label>
                                                     <input class="form-control" name="publication_year" type="number"
                                                         value="{{ $book->publication_year }}" readonly>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col col-6">
-                                                <div class="form-group">
-                                                    <label for="summary">Synopsis</label>
-                                                    <textarea rows="4" cols="50" id="summary" name="summary" class="form-control text-justify" readonly>{{ $book->summary }}</textarea>
-                                                </div>
-                                            </div>
+
                                             <div class="col">
                                                 <div class="form-group">
                                                     <label for="book_section" class="form-control-label">Book
@@ -187,6 +203,18 @@
                                                         value="{{ $book->available_copies }}" readonly>
                                                 </div>
                                             </div>
+                                        </div>
+
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col col-6">
+                                                <div class="form-group">
+                                                    <label for="summary">Synopsis</label>
+                                                    <textarea rows="4" cols="50" id="summary" name="summary" class="form-control text-justify" readonly>{{ $book->summary }}</textarea>
+                                                </div>
+                                            </div>
+                                        
 
 
                                         </div>

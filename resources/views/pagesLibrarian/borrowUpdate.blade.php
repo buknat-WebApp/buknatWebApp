@@ -81,15 +81,15 @@
                                             <input class="form-check-input" name="transactionIDs[]" type="checkbox"
                                                 value="{{ $bookTransaction->id }}" id="check1">
                                         </div>
-
                                     </div>
+                                    
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="example-text-input" class="form-control-label">Remarks /
-                                                Note</label>
+                                            <label for="example-text-input" class="form-control-label">Remarks / Note</label>
                                             <input class="form-control" type="text" name="remarks[]">
                                         </div>
                                     </div>
+                                    
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="example-text-input" class="form-control-label">Returned Date</label>
@@ -99,14 +99,21 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="example-text-input" class="form-control-label">Returned Book
-                                                Condition</label>
+                                            <label for="example-text-input" class="form-control-label">Returned Book Condition</label>
                                             <select name="returned_book_conditions[]" class="form-control">
                                                 <option value="functional">functional</option>
                                                 <option value="not-functional">not-functional</option>
                                             </select>
                                         </div>
                                     </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="exampleInputText1" class="form-control-label">Fines</label>
+                                            <input class="form-control" type="number" name="fines[]">
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>

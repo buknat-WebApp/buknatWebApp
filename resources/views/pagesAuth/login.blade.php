@@ -31,7 +31,7 @@
     <!-- Font Awesome Icons -->
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
     <!-- Recaptcha -->
-    {!! htmlScriptTagJsApi() !!}
+    <!-- {!! htmlScriptTagJsApi() !!} -->
     <link href="{{ url('assets/assets/css/nucleo-svg.css') }}" rel="stylesheet" />
     <!-- CSS Files -->
     <link id="pagestyle" href="{{ url('assets/assets/css/argon-dashboard.css?v=2.0.4') }}" rel="stylesheet" />
@@ -44,7 +44,7 @@
           <!-- Navbar -->
           <nav class="navbar navbar-expand-lg blur border-radius-lg top-0 z-index-3 shadow position-absolute mt-4 py-2 start-0 end-0 mx-4">
             <div class="container-fluid">
-              <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3 " href="">
+              <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3 text-wrap" href="">
                 Bukidnon National High School Library Management System
               </a>
               <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
@@ -64,7 +64,7 @@
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link me-2" href="{{ route('signupForm') }}">
+                    <a class="nav-link me-2" href="#" onclick="openModal()">
                       <i class="fas fa-user-circle opacity-6 text-dark me-1"></i>
                       Sign Up
                     </a>
@@ -97,7 +97,7 @@
                     <form role="form" method="POST" action="{{ route('login') }}">
                         @csrf
                       <div class="mb-3">
-                        <input type="number" class="form-control @if ($errors->has('id_number')) is-invalid @endif" placeholder="ID Number" name="id_number" id="id_number" value="{{ old('id_number') }}">
+                        <input type="number" class="form-control @if ($errors->has('id_number')) is-invalid @endif" placeholder="LRN Number/ID Number" name="id_number" id="id_number" value="{{ old('id_number') }}">
                         @if ($errors->has('id_number'))
                             <div class="invalid-feedback">
                                 {{ $errors->first('id_number') }}
@@ -112,7 +112,7 @@
                             </div>
                           @endif
                       </div>
-                        <div class="mb-3">
+                        {{-- <div class="mb-3">
                             {!! htmlFormSnippet() !!}
                             @if($errors->has('g-recaptcha-response'))
                                 <div>
@@ -121,7 +121,7 @@
                                     </small>
                                 </div>
                             @endif
-                        </div>
+                        </div> --}}
                       <div class="text-center">
                         <button type="submit" class="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0">Sign in</button>
                       </div>
@@ -130,18 +130,20 @@
                   <div class="card-footer text-center pt-0 px-lg-2 px-1">
                     <p class="mb-4 text-sm mx-auto">
                       Don't have an account?
-                      <a href="{{ route('signupForm') }}" class="text-primary text-gradient font-weight-bold">Sign up</a>
+                      <a href="#" onclick="openModal()" class="text-primary text-gradient font-weight-bold">Sign up</a>
                     </p>
                   </div>
+                  
                 </div>
               </div>
-              <div class="col-6 d-lg-flex d-none h-100 my-auto pe-0 position-absolute top-0 end-0 text-center justify-content-center flex-column">
+
+            <div class="col-6 d-lg-flex d-none h-100 my-auto pe-0 position-absolute top-0 end-0 text-center justify-content-center flex-column">
                 <div class="position-relative bg-gradient-primary h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center overflow-hidden" style="background-image: url('https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/assets/img/signin-ill.jpg');
             background-size: cover;">
                   <span class="mask bg-gradient-primary opacity-6"></span>
-                  <h4 class="mt-5 text-white font-weight-bolder position-relative text-justify">“A reader lives a thousand lives before he dies . . . The man who never reads lives only one.”</h4>
+                  <h4 class="mt-5 text-white font-weight-bolder position-relative text-justify">“The more that you read, the more things you will know. The more you learn, the more places you’ll go. <br>-Dr. Seuss, “I Can Read With My Eyes Shut!””</h4>
                   <hr>
-                  <p class="text-white position-relative">George R.R. Martin American novelist and short-story writer, screenwriter, and television producer. He is the author of the series of epic fantasy novels A Song of Ice and Fire, which was adapted into the Emmy Award-winning HBO series Game of Thrones</p>
+                  <p class="text-white position-relative">Dr. Seuss is probably best known for his books to help children learn to read, such as One Fish Two Fish Red Fish Blue Fish, Green Eggs and Ham, and Hop on Pop, his cautionary tales including The Lorax, and the inspirational Oh, the Places You'll Go!.</p>
                 </div>
               </div>
             </div>
@@ -150,10 +152,44 @@
       </section>
     </main>
 
+    <div id="signupModal" class="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-md" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">Choose User</h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                      <div class="modal-body" style="text-align:center;">
+                        <p class="text-center">
+                            Are you a Student or Teacher?
+                        </p>
+                          <a href="{{ route('signupForm') }}" role="button" class="btn btn-primary btn-lg">Student</a>
+                          <a href="{{ route('signupForms') }}" role="button" class="btn btn-secondary btn-lg">Teacher</a>
+                      </div>
+                    </div>
+                </div>
+
+    <script>
+    // Get the modal
+    var modal = document.getElementById('signupModal');
+
+    // Function to open the modal
+    function openModal() {
+        modal.style.display = 'block';
+    }
+
+    // Close the modal when user clicks outside of it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = 'none';
+        }
+    }
+</script>
+
        <!--   Core JS Files   -->
-    <script src="{{ url('assets/assets/js/core/popper.min.js') }}"></script>
+    
     <script src="{{ url('assets/assets/js/core/bootstrap.min.js') }}"></script>
-    <script src="{{ url('assets/assets/js/plugins/perfect-scrollbar.min.js') }}"></script>
+  
     <script src="{{ url('assets/assets/js/plugins/smooth-scrollbar.min.js') }}"></script>
     <script>
         var win = navigator.platform.indexOf('Win') > -1;
@@ -170,26 +206,4 @@
       <script src="{{ url('assets/assets/js/argon-dashboard.min.js?v=2.0.4') }}"></script>
     </body>
 </html>
-                    {{-- <form method="POST" action="{{ route('login') }}" class="forms-sample">
-                        @csrf
-
-                      <div class="form-group">
-                        <label for="exampleInputEmail1">ID Number</label>
-                        <input type="number" class="form-control" id="exampleInputEmail1" placeholder="20xxx" name="id_number">
-                      </div>
-                      <div class="form-group">
-                        <label for="exampleInputPassword1">Password</label>
-                        <input type="password" class="form-control" id="exampleInputPassword1" autocomplete="current-password" placeholder="Password" name="password">
-                      </div>
-
-                      <div class="mt-3">
-                        <button type="submit" class="btn btn-primary mr-2 mb-2 mb-md-0 text-white form-control">Login</button>
-                      </div>
-
-                      <div class="mt-1">
-                        <a href="{{ route('signupForm') }}" class="btn btn-secondary mr-2 mb-2 mb-md-0 text-white form-control">Signup</a>
-                      </div>
-
-                    </form> --}}
-
-
+                  

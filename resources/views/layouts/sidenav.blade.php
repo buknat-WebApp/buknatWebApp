@@ -81,7 +81,7 @@
                             class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="ni ni-credit-card text-success text-sm opacity-10"></i>
                         </div>
-                        <span class="nav-link-text ms-1">Book Forms</span>
+                        <span class="nav-link-text ms-1">Book/s Processing (Checkout)</span>
                     </a>
                 </li>
                 <hr>
@@ -91,7 +91,7 @@
                             class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="ni ni-app text-info text-sm opacity-10"></i>
                         </div>
-                        <span class="nav-link-text ms-1"> Accounts</span>
+                        <span class="nav-link-text ms-1"> Account's User List</span>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -149,7 +149,7 @@
                         <p class="text-xs font-weight-bold">Use the Scanner for Record Keeping of the Library Visitors.</p>
                         <a href="/Librarian/transaction/logs" target=""
                            data-toggle="tooltip" data-placement="top"
-                           title="Use the Scanner for Record Keeping of the Library Visitors." class="btn btn-white btn-sm bg-white w-100 mb-0">Scan Students' QR</a>
+                           title="Use the Scanner for Record Keeping of the Library Visitors." class="btn btn-white btn-sm bg-white w-100 mb-0">Scan User QR</a>
                     </div>
                 </div>
             </div>

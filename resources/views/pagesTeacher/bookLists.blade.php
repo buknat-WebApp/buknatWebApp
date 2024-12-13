@@ -24,7 +24,7 @@
                         <ul class="nav nav-pills nav-fill p-1">
                             <li class="nav-item">
                                 <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center btn"
-                                    href="{{ route('TeachertbookLists') }}">
+                                    href="{{ route('teacherbookLists') }}">
                                     <i class="ni ni-books"></i>
                                     <span class="ms-2">All Books</span>
                                 </a>
@@ -120,7 +120,7 @@
 
                                                                     @else
                                                                     {{-- <a href="/book/info/{{ $book->id }}" --}}
-                                                                        <a href="{{ route('bookInfoStudent', ['book' => $book->id]) }}"
+                                                                        <a href="{{ route('bookInfoteacher', ['book' => $book->id]) }}"
                                                                         class="text-secondary font-weight-bold text-xs btn"
                                                                         ddata-bs-toggle="tooltip" data-bs-placement="top" title="View Book">
                                                                         <span class="fas fa-eye"> view</span>

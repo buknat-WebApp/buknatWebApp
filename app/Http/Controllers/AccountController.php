@@ -30,11 +30,11 @@ class AccountController extends Controller
         $credentials = $request->only('id_number', 'password');
         $user = User::where('id_number', $credentials['id_number'])->first();
 
-        $request->validate([
-            'g-recaptcha-response' => 'required|recaptcha',
-            'password' => 'required',
-            'id_number' => 'required',
-        ]);
+        // $request->validate([
+        //     'g-recaptcha-response' => 'required|recaptcha',
+        //     'password' => 'required',
+        //     'id_number' => 'required',
+        // ]);
 
         if ($user) {
             // Check if the password is correct
@@ -72,33 +72,33 @@ class AccountController extends Controller
 }
 
 
-    public function signupForm()
-    {
-        return view('pagesAuth.signup');
-    }
+public function signupForm()
+{
+    return view('pagesAuth.signup');
+}
 
 
-    public function registerUser(Request $request){
+public function registerUser(Request $request)
+{
 
-        $count = User::where('id_number', '=', $request->input('id_number'))->count();
-        if ($count > 0) {
-            return redirect()->route('signupForm')->withErrors(['id_number' => 'ID number can only have one account.']);
-        } else {
+    $count = User::where('id_number', '=', $request->input('id_number'))->count();
+    if ($count > 0) {
+        return redirect()->route('signupForm')->withErrors(['id_number' => 'LRN Number can only have one account.']);
+    } else {
 
-            $request->validate([
-                'g-recaptcha-response' => 'required|recaptcha',
-                'name' => 'required',
-                'id_number' => 'required|unique:users,id_number',
-                'grade_and_section' => 'required',
-                'id_pic' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-                'terms' => 'required'
-            ]);
+        $request->validate([
+            // 'g-recaptcha-response' => 'required|recaptcha',
+            'name' => 'required',
+            'id_number' => 'required|unique:users,id_number',
+            'grade_and_section' => 'required',
+            'id_pic' => 'required|image|mimes:jpeg,png,jpg,gif|max:10120',
+            'terms' => 'required'
+        ]);
 
         $user = new User();
         $user->name = $request->input('name');
         $user->id_number = $request->input('id_number');
-        $user->grade_and_section = $request->input('grade_and_section');
-        $user->office_or_department = '';
+        $user->grade_and_section = $request->input('grade_and_section'); 
         $user->password = Hash::make('password');
         $user->role = -1;
 
@@ -115,12 +115,12 @@ class AccountController extends Controller
 
         $librarians = $user->isLibrarian();
 
-        foreach ($librarians as $admin){
+        foreach ($librarians as $admin) {
             $admin->notify(new RegisterUser());
         }
-         return redirect()->back()->with('success', 'Account created successfully. The Librarian will have to confirm it first, before you can use it');
-         }
+        return redirect()->back()->with('success', 'Account created successfully. The Librarian will have to confirm it first, before you can use it');
     }
+}
 
     public function signupForms()
     {
@@ -131,14 +131,22 @@ class AccountController extends Controller
     public function registerUsers(Request $request){
         $count = User::where('id_number', '=', $request->input('id_number'))->count();
         if ($count > 0) {
-        return redirect()->route('signupForms')->withErrors(['id_number' => 'ID number can only have one account.']);
+        return redirect()->route('signupForms')->withErrors(['id_number' => 'Library ID can only have one account.']);
         } else {
+
+            $request->validate([
+                // 'g-recaptcha-response' => 'required|recaptcha',
+                // 'name' => 'required',
+                'id_number' => 'required|unique:users,id_number',
+                'office_or_department' => 'required',  
+                'id_pic' => 'required|image|mimes:jpeg,png,jpg,gif|max:5120',
+                'terms' => 'required'
+            ]);
 
         $user = new User();
         $user->name = $request->input('name');
         $user->id_number = $request->input('id_number');
-        $user->grade_and_section ='';
-        $user->office_or_department = '';
+        $user->office_or_department = $request->input('office_or_department');
         $user->password = Hash::make('password');
         $user->role = -2;
 
@@ -186,31 +194,7 @@ class AccountController extends Controller
 
         $user->update($input);
 
-//        $user->update([
-//            'email' => $request->email,
-//            'contact_number' => $request->contact_number,
-//            'birthdate' => $request->birthdate,
-//            'address' => $request->address,
-//            'avatar' => $profileImage,
-//        ]);
 
-//        $user = Auth::user();
-//
-////        dd($request);
-//        $fileName = '';
-//        if ($request->hasFile('avatar')) {
-//            $file = $request->file('avatar');
-//            $fileName = $file->getClientOriginalName();
-//            $file->move(public_path('storage/avatar'), $fileName);
-////            $user->avatar =  $fileName; //storing in DB
-//        }
-//        $user->update([
-//            'email' => $request->email,
-//            'contact_number' => $request->contact_number,
-//            'birthdate' => $request->birthdate,
-//            'address' => $request->address,
-//            'avatar' => $request->avatar,
-//        ]);
 
         if (Auth::user()->role == 0){
             return redirect()->route('userProfile')->with('success', 'Pass');

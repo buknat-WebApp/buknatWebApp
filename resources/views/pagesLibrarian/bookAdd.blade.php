@@ -23,14 +23,14 @@
                                 <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center btn"
                                    href="{{ route('addBook') }}">
                                     <i class="ni ni-fat-add"></i>
-                                    <span class="ms-2">Add</span>
+                                    <span class="ms-2">Add Book</span>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center"
                                    href="{{ route('bookLists') }}">
                                     <i class="ni ni-books"></i>
-                                    <span class="ms-2">All</span>
+                                    <span class="ms-2">All Books</span>
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -98,10 +98,21 @@
                                                     <div class="col">
                                                         <div class="form-group">
                                                             <label for="exampleInputText1">Class Number</label>
-                                                            <input type="number" class="form-control" id="exampleInputText1"
+                                                            <input type="text" class="form-control" id="exampleInputText1"
                                                                    name="class_no">
                                                         </div>
                                                     </div>
+                                                    
+                                                    <div class="col">
+                                                        <div class="form-group">
+                                                            <label for="exampleInputText1">Author Number</label>
+                                                            <input type="text" class="form-control" id="exampleInputText1"
+                                                                name="author_no">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
                                                     <div class="col">
                                                         <div class="form-group">
                                                             <label for="gender-select">Section </label>
@@ -114,9 +125,7 @@
                                                             </select>
                                                         </div>
                                                     </div>
-                                                </div>
-
-                                                <div class="row">
+                                            
                                                     <div class="col">
                                                         <div class="form-group">
                                                             <div class="form-group">
@@ -128,10 +137,17 @@
                                                     </div>
                                                     <div class="col">
                                                         <div class="form-group">
+                                                            <label for="exampleInputText1">Publisher</label>
+                                                            <input type="text" class="form-control" id="exampleInputText1"
+                                                                   name="publisher">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="form-group">
                                                             <div class="form-group">
-                                                                <label for="exampleInputText1">Publication Year</label>
-                                                                <input type="number" class="form-control" id="exampleInputText1"
-                                                                       min="1900" max="2100"
+                                                                <label for="exampleInputText1">Year of Publication</label>
+                                                               <input type="number" class="form-control" id="exampleInputText1"
+                                                               min="1000" and max="9999"
                                                                        name="publication_year">
                                                             </div>
                                                         </div>
@@ -143,13 +159,25 @@
                                                                    name="date_acquired">
                                                         </div>
                                                     </div>
+
+                                                <div class="row">
+
+                                                     <div class="col">
+                                                        <div class="form-group">
+                                                            <label for="exampleInputText1">Accession Number</label>
+                                                            <input type="number" class="form-control" id="exampleInputText1"
+                                                                   name="accession">
+                                                        </div>
+                                                    </div>
+
                                                     <div class="col">
                                                         <div class="form-group">
-                                                            <label for="exampleInputText1">Number of Copies</label>
+                                                            <label for="exampleInputText1">Number of Copies Received</label>
                                                             <input type="number" class="form-control" id="exampleInputText1"
                                                                    name="no_of_copies">
                                                         </div>
                                                     </div>
+
                                                     <div class="col">
                                                         <div class="form-group">
                                                             <label for="exampleInputText1">Available Copies</label>
@@ -157,16 +185,7 @@
                                                                    name="available_copies">
                                                         </div>
                                                     </div>
-                                                    <div class="col">
-                                                        <div class="form-group">
-                                                            <label for="exampleInputText1">On-hand Per Count</label>
-                                                            <input type="number" class="form-control" id="exampleInputText1"
-                                                                   name="on_hand_per_count">
-                                                        </div>
-                                                    </div>
-                                                </div>
 
-                                                <div class="row">
                                                     <div class="col">
                                                         <div class="form-group">
                                                             <div class="form-group">
@@ -189,33 +208,30 @@
                                                             </select>
                                                         </div>
                                                     </div>
-                                                    <div class="col">
-                                                        <div class="form-group">
-                                                            <label for="exampleInputText1">Publisher</label>
-                                                            <input type="text" class="form-control" id="exampleInputText1"
-                                                                   name="publisher">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col">
-                                                        <div class="form-group">
-                                                            <div class="form-group">
-                                                                <label for="exampleInputText1">ISBN</label>
-                                                                <input type="text" class="form-control" id="exampleInputText1"
-                                                                       name="isbn">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col">
-                                                        <div class="form-group">
-                                                            <div class="form-group">
-                                                                <label for="exampleInputText1">Book Cover</label>
-                                                                <input type="file" class="form-control" id="exampleInputText1"
-                                                                       name="book_cover" accept="image/*">
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                    
 
                                                     <div class="row">
+
+                                                        <div class="col">
+                                                            <div class="form-group">
+                                                                <div class="form-group">
+                                                                    <label for="exampleInputText1">ISBN</label>
+                                                                    <input type="text" class="form-control" id="exampleInputText1"
+                                                                        name="isbn">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col">
+                                                            <div class="form-group">
+                                                                <div class="form-group">
+                                                                    <label for="exampleInputText1">Book Cover</label>
+                                                                    <input type="file" class="form-control" id="exampleInputText1"
+                                                                       name="book_cover" accept="image/*">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
                                                         <div class="col">
                                                             <div class="form-group">
                                                                 <div class="form-group">
@@ -225,32 +241,24 @@
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                        
                                                         <div class="col">
-                                                            <div class="form-group">
-                                                                <label for="exampleInputText1">Language</label>
-                                                                <input type="text" class="form-control" id="exampleInputText1"
-                                                                       name="language">
+                                                        <div class="form-group">
+                                                            <div class="d-flex justify-content-between">
+                                                                <label class="" for="gender-select">Subject/Location </label>
+                                                                <a href="#addLocation" class="text-sm" data-bs-toggle="modal">Add Subject </a>
                                                             </div>
+                                                           <select class="form-select form-control" id="gender-select"
+                                                                    name="location_id">
+                                                                @foreach ($locations as $book_location)
+                                                                    <option value="{{ $book_location->id }}">{{ $book_location->name }}</option>
+                                                                @endforeach
+                                                            </select>
                                                         </div>
-                                                        <div class="col">
-                                                            <div class="form-group">
-                                                                <label for="exampleInputText1">Genre</label>
-                                                                <input type="text" class="form-control" id="exampleInputText1"
-                                                                       name="genre">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col">
-                                                            <div class="form-group">
-                                                                <label for="exampleInputText1">Location</label>
-                                                                <select class="form-select form-control" id="gender-select"
-                                                                        name="location_id">
-                                                                    @foreach ($locations as $location)
-                                                                        <option value="{{ $location->id }}">{{ $location->name }}
-                                                                        </option>
-                                                                    @endforeach
-                                                                </select>
-                                                            </div>
-                                                        </div>
+                                                    </div>
+                                                        
+                                                    </div>
+                                                        
                                                     </div>
                                                     <hr class="horizontal dark">
                                                     <p class="text-uppercase text-sm">Synopsis</p>
@@ -283,7 +291,7 @@
                         <div class="modal-dialog modal-md" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Add new author</h5>
+                                    <h5 class="modal-title" id="exampleModalLabel">Add New Author</h5>
                                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                 </div>
@@ -295,13 +303,38 @@
                                                <input type="text" class="form-control" id="exampleInputText1"
                                                       name="author">
                                            </div>
-{{--                                           <div class="col">--}}
-{{--                                               <div class="form-group">--}}
-{{--                                                   <label for="exampleInputText1">ID</label>--}}
-{{--                                                   <input type="text" class="form-control" id="exampleInputText1"--}}
-{{--                                                          name="author_id">--}}
-{{--                                               </div>--}}
-{{--                                           </div>--}}
+                                       </div>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                    <button type="submit" class="btn btn-success">Save</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+
+                <div class="modal fade" id="addLocation" tabindex="-1" role="dialog"
+                     aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <form method="POST" action="{{ route('registerLocation') }}" enctype="multipart/form-data">
+                        @csrf
+                        <div class="modal-dialog modal-md" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Add New Subject</h5>
+                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+
+                                       <div class="col">
+                                           <div class="form-group">
+                                               <label for="exampleInputText1">Subject</label>
+                                               <input type="text" class="form-control" id="exampleInputText1"
+                                                      name="name">
+                                           </div>
                                        </div>
 
                                 </div>

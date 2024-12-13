@@ -30,8 +30,32 @@
                         </p>
                     </div>
                 </div>
+                @if(Auth::user()->role == 0)
+                <div class="col-auto my-auto">
+                    <div class="h-100">
+                        <h5 class="mb-1">
+                            <a class="" href="{{ asset('storage/StudentQrCodes/' . Auth::user()->id.'.png') }}"
+                                onclick="downloadQR('{{ asset('storage/StudentQrCodes/' . Auth::user()->id.'.png') }}'); return false;">
+                                <p class="text-muted fas fa-download"></p> Download QR
+                            </a>
+                        </h5>
+                    </div>
+                </div>
 
+                @elseif(Auth::user()->role == 2)
+                <div class="col-auto my-auto">
+                    <div class="h-100">
+                        <h5 class="mb-1">
+                            <a href="{{ asset('storage/TeacherQrCodes/' . Auth::user()->id.'.png') }}"
+                                onclick="downloadQR('{{ asset('storage/TeacherQrCodes/' . Auth::user()->id.'.png') }}'); return false;">
+                                <p class="fas fa-download"></p> Download QR
+                            </a>
+                        </h5>
+                    </div>
+                </div>
+                @else
 
+                @endif
 
             </div>
         </div>
@@ -54,6 +78,15 @@
                         </div>
                         <div class="card-body">
                             <div class="row">
+
+                            <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="example-text-input" class="form-control-label">Name</label>
+                                        <input class="form-control" type="text" name="name" id="name" value="{{ Auth::user()->name }}" >
+                                    </div>
+                                    
+                                </div>
+
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="form-control-label" for="avatar">
@@ -71,12 +104,33 @@
                                     </div>
                                 </div>
 
+                                @if(Auth::user()->role == 0)
+
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="example-text-input" class="form-control-label">Grade Level</label>
-                                        <input class="form-control" type="text" value="{{ Auth::user()->grade_and_section }}" disabled>
+                                        <label for="example-text-input" class="form-control-label"></label>
+                                        <input class="form-control" type="text" name="grade_and_section" id="grade_and_section" value="{{ Auth::user()->grade_and_section}}">
                                     </div>
                                 </div>
+
+                                @elseif(Auth::user()->role == 2)
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="example-text-input" class="form-control-label">Grade Level Teacher</label>
+                                        <input class="form-control" type="text" name="office_or_department" id="office_or_department" value="{{ Auth::user()->office_or_department}}">
+                                    </div>
+                                </div>
+
+                                @else
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="example-text-input" class="form-control-label"></label>
+                                        <input class="form-control" type="text" name="office_or_department" id="office_or_department" value="{{ Auth::user()->office_or_department}}">
+                                    </div>
+                                </div>
+                                @endif
 
                                 <div class="col-md-6">
 
@@ -107,7 +161,7 @@
 
                                 </div>
 
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="example-text-input" class="form-control-label">Address</label>
                                         <input class="form-control" type="text" name="address" id="address" value="{{ Auth::user()->address }}" >
@@ -238,6 +292,33 @@
             alert("Profile updated successfully.");
         </script>
     @endif
+
+    <script>
+    function downloadQR() {
+        var url = "{{ asset('storage/TeacherQrCodes/' . Auth::user()->id.'.png') }}";
+        var filename = "QR {{ Auth::user()->id_number }}";
+
+        var anotherUrl = "{{ asset('storage/StudentQrCodes/' . Auth::user()->id.'.png') }}";
+        var anotherFilename = "QR {{ Auth::user()->id_number }}";
+        if({{Auth::user()->role}} == 2){
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        }else{
+            
+        // Create another link for the second URL
+        var b = document.createElement('a');
+        b.href = anotherUrl;
+        b.download = anotherFilename;
+        document.body.appendChild(b);
+        b.click();
+        document.body.removeChild(b)
+        }
+    }
+</script>
 
 
 @endsection

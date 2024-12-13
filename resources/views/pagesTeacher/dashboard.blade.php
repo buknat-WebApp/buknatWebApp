@@ -21,9 +21,9 @@
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                         Date Borrowed</th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Expected Return Date</th>
+                                        Due Date</th>
                                     <th class="text-start text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Borrowed Book/s</th>
+                                        Title of Book/s  Borrowed</th>
                                     <th></th>
                                 </tr>
                             </thead>

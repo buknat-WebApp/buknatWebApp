@@ -21,6 +21,7 @@ return new class extends Migration
             $table->foreign('book_id')->references('id')->on('books');
             $table->date('returned_at')->nullable();
             $table->string('return_book_condition')->nullable();//condition of book in returning
+            $table->integer('fines')->nullable();
             $table->text('remarks')->nullable();
             $table->string('borrowed_book_condition');
             $table->timestamps();

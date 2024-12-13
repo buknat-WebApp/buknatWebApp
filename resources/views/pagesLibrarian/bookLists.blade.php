@@ -63,7 +63,7 @@
                                                             Publisher</th>
                                                         <th
                                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                            Book Status</th>
+                                                            Status</th>
                                                         <th
                                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                             Book Section

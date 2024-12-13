@@ -17,28 +17,31 @@
 
                 <div class="col-lg-4 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
                     <div class="nav-wrapper position-relative end-0">
-                        <ul class="nav nav-pills nav-fill p-1">
-                            <li class="nav-item">
-                                <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center"
-                                    href="{{ route('accountPending') }}">
-                                    <i class="ni ni-circle-08"></i>
-                                    <span class="ms-2">Pending</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center btn"
-                                    href="{{ route('accountLists') }}">
-                                    <i class="ni ni-bullet-list-67"></i>
-                                    <span class="ms-2">All Lists</span>
-                                </a>
-                            </li>
+                        <ul class="column-gap-4 nav nav-pills nav-fill p-1">
+                            <div class="dropdown">
+                                <button class="ni-circle-08 btn dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                    All Pending Users
+                                </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <li><a class="dropdown-item" href="{{ route('accountPending') }}">Pending Students</a></li>  
+                                        <li><a class="dropdown-item" href="{{ route('accountPendingTeacher') }}">Pending Teachers</a></li>  
+                                    </ul>
+                            </div>
+                            <div class="dropdown">
+                                <button class="ni ni-bullet-list-67 btn dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                All Students List   
+                                </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <li><a class="dropdown-item" href="{{ route('accountLists') }}">All Students List</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('accountListsTeacher') }}">All Teachers List</a></li>
+                                    </ul>
+                            </div>
 
                         </ul>
                     </div>
                 </div>
 
-
-                <div class="container-fluid py-4 mt-2">
+                <div class="container-fluid py-0 mt-2">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="col-12">
@@ -57,7 +60,7 @@
                                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                             ID Picture</th>
                                                         <th
-                                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                            class="text-start text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                             ID Number</th>
                                                         <th
                                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
@@ -108,11 +111,11 @@
                                                             <td>
                                                                 <div class="d-flex px-2 py-1">
                                                                     <div class="d-flex flex-column justify-content-center">
-                                                                        <h6 id="id_number" class="mb-0 text-sm">
-                                                                            {{ $student->id_number }}l
+                                                                        <h6 id="id_number" class="text-start mb-0 text-sm">
+                                                                            {{ $student->id_number }}
                                                                         </h6>
                                                                         <p id="id"
-                                                                            class="text-xs text-secondary mb-0">
+                                                                            class="text-start text-xs text-secondary mb-0">
                                                                             {{ $student->id }}
                                                                         </p>
                                                                     </div>
@@ -124,7 +127,7 @@
                                                                 </p>
                                                             </td>
                                                             <td>
-                                                                <p id="grade" class="text-xs font-weight-bold mb-0">
+                                                                <p id="grade" class="text-center text-xs font-weight-bold mb-0">
                                                                     {{ $student->grade_and_section }}
                                                                 </p>
                                                             </td>
@@ -141,7 +144,7 @@
                                                                     <span class="fas fa-print"></span> Print QR
                                                                  </a>
 
-                                                            </td>
+                                                            </td>   
 
                                                         </tr>
 

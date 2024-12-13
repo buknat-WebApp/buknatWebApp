@@ -25,6 +25,7 @@
     </title>
 
     @vite('resources/js/app.js')
+    
 
     <!--     Fonts and icons     -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -52,11 +53,12 @@
     <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
 
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
 </head>
 
 <body class="g-sidenav-show bg-gray-100">
-    <div class="min-height-300 position-absolute w-100" style="background-image: url('{{ asset('assets/assets/img/library.jpg') }}'); background-position-y: 60%; background-repeat: no-repeat; background-size: cover;">
+    <div class="min-height-300 position-absolute w-100" style="background-image: url('{{ asset('assets/assets/img/buknat9.jpg') }}'); background-position-y: 60%; background-repeat: no-repeat; background-size: cover;">
         <span class="mask bg-gradient-faded-dark opacity-6"></span>
     </div>
 
@@ -205,6 +207,15 @@
 
 
                         </li>
+                        <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
+                            <a href="javascript:;" class="nav-link text-white p-0" id="iconNavbarSidenav">
+                                <div class="sidenav-toggler-inner">
+                                    <i class="sidenav-toggler-line bg-white"></i>
+                                    <i class="sidenav-toggler-line bg-white"></i>
+                                    <i class="sidenav-toggler-line bg-white"></i>
+                                </div>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -255,7 +266,17 @@
             </div>
         </div>
 
+        
+
         @yield('content')
+        <div>
+        <button class="btn btn-primary btn-lg font-weight-bold mx-4 mt-4" onclick="goBack()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z"/>
+            </svg><i></i> Back    
+        </button>
+        </div>
+
         <div class="d-flex justify-content-center py-4 fw-bold lh-lg fst-italic">
             <p>Library Management System</p>
         </div>
@@ -263,7 +284,22 @@
 
     </main>
 
+    <script>
+    $(document).ready(function() {
+        $('#author-select').select2({
+            placeholder: "Search and select authors",
+            allowClear: true
+        });
+    });
+</script>
 
+    <script>
+        // Function to navigate back to the previous page
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+    
     <script>
         // Trigger the modal on page load
         $(document).ready(function () {
@@ -280,24 +316,24 @@
         });
 
     </script>
+    
 
     <!--   Core JS Files   -->
     <!-- Font Awesome Icons -->
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
-    {{-- <script src="{{ url('assets/assets/js/core/popper.min.js') }}"></script> --}}
-    {{-- <script src="{{ url('assets/assets/js/core/bootstrap.min.js') }}"></script> --}}
-    {{-- <script src="{{ url('assets/assets/js/plugins/perfect-scrollbar.min.js') }}"></script> --}}
-    {{-- <script src="{{ url('assets/assets/js/plugins/smooth-scrollbar.min.js') }}"></script> --}}
-    {{-- <script src="{{ url('assets/assets/js/plugins/chartjs.min.js') }}"></script> --}}
-
+    <!-- <script src="{{ url('assets/assets/js/core/popper.min.js') }}"></script> -->
+    <script src="{{ url('assets/assets/js/core/bootstrap.min.js') }}"></script>
+    <script src="{{ url('assets/assets/js/plugins/perfect-scrollbar.min.js') }}"></script>
+    <script src="{{ url('assets/assets/js/plugins/smooth-scrollbar.min.js') }}"></script>
+    <script src="{{ url('assets/assets/js/plugins/chartjs.min.js') }}"></script>
     <!-- Github buttons -->
-    {{-- <script async defer src="https://buttons.github.io/buttons.js"></script> --}}
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
     <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
     <script src="{{ url('assets/assets/js/argon-dashboard.min.js?v=2.0.4') }}"></script>
 
-    {{-- <script src="{{ url('assets/assets/js/bootstrap.min.js') }}"></script>
-    <script src="{{ url('assets/assets/js/jquery.min.js') }}"></script> --}}
-{{--    @vite('resources/js/app.js')--}}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    {{--@vite('resources/js/app.js')--}}
 </body>
 
 

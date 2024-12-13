@@ -27,9 +27,17 @@ class LibrarianController extends Controller
     {
         $booksCounter = count(Book::all());
         $noOfStudents = count(User::where('role', '=', 0)->get());
+        $noOfTeachers = count(User::where('role', '=',2)->get());
         $noOfPending = count(User::where('role', '=', -1)->get());
+        $noOfPendingTeacher = count(User::where('role', '=', -2)->get());
         $pendingStudents = User::where('role', '=', -1)->get();
+        $pendingTeachers = User::where('role', '=', -2)->get();
         $books = Book::all();
+
+        // $bookTransactions = DB::table('transactions')
+        // ->join('authors', 'books.author_id', '=', 'authors.id')
+        // ->select('authors.author')
+        // ->get();
 
         $unreturnedBooks = BookTransaction::whereNull('returned_at')->count();
 
@@ -66,19 +74,23 @@ class LibrarianController extends Controller
 
 
         // Get all items that are currently borrowed
-        // $borrowedBooks = BookTransaction::where('returned_date', false)->get();
+        //  = BookTransaction::where('returned_date', false)->get();
 
         return view('pagesLibrarian.dashboard', [
             'noOfBooks' => $booksCounter,
             'noOfStudents' => $noOfStudents,
+            'noOfTeachers' => $noOfTeachers,
             'noOfPending' => $noOfPending,
+            'noOfPendingTeacher' => $noOfPendingTeacher,
             'pendingStudents' => $pendingStudents,
+            'pendingTeachers' => $pendingTeachers,
             'transactions' => $transactions,
             'overdueTransactions' => $overdueTransactions,
             'booksTransacted' => $transact,
             'books' => $books,
             'unreturnedBooks' => $unreturnedBooks
         ]);
+
         // return response()->json($transact);
     }
 
@@ -115,88 +127,68 @@ class LibrarianController extends Controller
 
         return redirect()->back()->with('success', 'Author created successfully!');
     }
+    
+
+    public function registerLocation(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'location_id' => 'nullable',
+        ]);
+
+//        $book->book_title = $request->input('book_title');
+//        $book->class_no = $request->input('class_no');
+
+        $book = BookLocation::create(
+            $validated
+        );
+
+        return redirect()->back()->with('success', 'Subject created successfully!');
+    }
 
     public function registerBook(Request $request): \Illuminate\Http\RedirectResponse
     {
         $validated = $request->validate([
             'book_title' => 'required|string|max:255',
             'author_id' => 'required|exists:authors,id',
+            'author_no' => 'required|string|max:255',
             'class_no' => 'required|string|max:255',
             'edition' => 'nullable|string|max:255',
+            'accession' => 'nullable|string|max:255',
             'publication_year' => 'nullable|integer|min:1000|max:' . date('Y'),
             'date_acquired' => 'nullable|date',
             'no_of_copies' => 'required|integer|min:0',
-            'on_hand_per_count' => 'nullable|integer|min:0',
             'book_status' => 'required|string',
             'book_condition' => 'nullable|string|max:255',
             'isbn' => 'nullable|string|max:20',
             'publisher' => 'nullable|string|max:255',
-            'genre' => 'nullable|string|max:255',
-            'language' => 'nullable|string|max:255',
             'number_of_pages' => 'nullable|integer|min:0',
             'location_id' => 'nullable',
             'section_id' => 'nullable|exists:book_sections,id',
             'summary' => 'nullable|string',
             'added_by' => 'nullable',
             'available_copies' => 'nullable|integer|min:0|',
+            'book_cover' => '|image|mimes:jpeg,png,jpg,gif|max:12200',
         ]);
 
-//        $book = new Book();
-//        $author = new Author();
-//        $author_id = $request->input('author_id'); //for the ID of the Author to be validated
-//
-//        if ($request->input('author_id')) {
-//            //fetching if the author ID exists
-//            $result = count(DB::table('authors')
-//                ->where('author_id', '=', $author_id)
-//                ->get());
-//
-//            if ($result == 0) {
-//                $author->author_id = $author_id;
-//                $author->author = $request->input('author');
-//                $author->save();
-//                $book->author_id = $author->id; // use the recently saved ID
-//            } else {
-//                $book->author_id = $author_id;
-//            }
-//        }
+        // $book = new Book(); // Create a new instance of the Book model
 
+        // $book->book_cover = $request->input('book_cover');
 
+       
 
-//        $book->book_title = $request->input('book_title');
-//        $book->class_no = $request->input('class_no');
-//        $book->edition = $request->input('edition');
-//        $book->section_id = $request->input('section');
-//        $book->publication_year = $request->input('publication_year');
-//        $book->date_acquired = $request->input('date_acquired');
-//        $book->no_of_copies = $request->input('no_of_copies');
-//        $book->available_copies = $request->input('no_of_copies'); // FOR COUNTING THE CURRENT AVAILABLE
-//        $book->on_hand_per_count = $request->input('on_hand_per_count');
-//        $book->book_status = $request->input('book_status');
-//        $book->book_condition = $request->input('book_condition');
-//        $book->isbn = $request->input('isbn');
-//        $book->publisher = $request->input('publisher');
-//        $book->genre = $request->input('genre');
-//        $book->language = $request->input('language');
-//        $book->number_of_pages = $request->input('number_of_pages');
-//        $book->location_id = $request->input('location');
-//        $book->summary = $request->input('summary');
-//        dd($validated, $request);
+        //     if ($request->hasFile('book_cover')) {
+        //         $file = $request->file('book_cover');
+        //         $fileName = $file->getClientOriginalName();
+        //         $file->move(public_path('storage/BookCover'), $fileName);
+        //         $book->book_cover =  $fileName; // Assign the file name to book_cover property
+        //     }   
+
         $validated['added_by'] = Auth::user()->name;
         $book = Book::create(
             $validated
          );
-//        $book->added_by = ; //THIS WOULD RECORD THE NAME OF THE LIBRARIAN WHO ADDED THE RECOR
-//
-//        if ($request->hasFile('book_cover')) {
-//            $file = $request->file('book_cover');
-//            $fileName = $file->getClientOriginalName();
-//            $file->move(public_path('storage/BookCovers'), $fileName);
-//            $book->book_cover = $fileName; //Recording to DB the image
-//
-//        }
-//        $book->save($validated);
-//        $book->save();
+
         $file_ID = $book->id;
 
         // // Generate QR code with given data
@@ -210,13 +202,6 @@ class LibrarianController extends Controller
         if (!File::exists($path)) {
             File::makeDirectory($path, $mode = 0777, true, true);
         }
-        // QrCode::format('png')->size(250)->generate($file_ID, public_path($path . $filename));
-//        QrCode::format('png')
-//            ->size(400)
-//            ->margin(10)
-//            ->color(0, 0, 0)
-//            ->backgroundColor(255, 255, 255)
-//            ->generate($file_ID, public_path($path . $filename));
 
         QrCode::style('square')
             ->eye('circle')// Use PNG format for the merged image
@@ -278,7 +263,7 @@ class LibrarianController extends Controller
             'author' => $request->author_name,
             'author_id' => $request->author_id,
         ]);
-        return redirect()->back()->with('success', 'Book edited Successfully.');
+        return redirect()->back()->with('success', 'Book Updated Successfully.');
     }
 
 
@@ -287,8 +272,19 @@ class LibrarianController extends Controller
     {
 
         $pendingStudents = User::where('role', '=', -1)->get();
+
         return view('pagesLibrarian.accountsPending', [
             'pendingStudents' => $pendingStudents,
+        ]);
+    }
+
+    public function accountPendingTeacher()
+    {
+
+        $pendingTeachers = User::where('role', '=', -2)->get();
+
+        return view('pagesLibrarian.pendingTeacher', [
+            'pendingTeachers' => $pendingTeachers,
         ]);
     }
 
@@ -296,8 +292,17 @@ class LibrarianController extends Controller
     {
         $students = User::where('role', '=', 0)->get();
 
-        return view('pagesLibrarian.accountLists', [
+        return view('pagesLibrarian.accountLists', [ 
             'students' => $students
+        ]);
+    }
+
+    public function accountListsTeacher()
+    {
+        $teachers = User::where('role', '=', 2)->get();
+
+        return view('pagesLibrarian.accountListsTeacher', [
+            'teachers' => $teachers
         ]);
     }
 
@@ -310,7 +315,7 @@ class LibrarianController extends Controller
             'id_number' => $request->id_number,
             'name' => $request->name,
             'grade_and_section' => $request->grade_and_section,
-            'role' => 0
+            'role' => $request->role = 0,
         ]);
 
 
@@ -320,6 +325,49 @@ class LibrarianController extends Controller
 
         // //Save QR code as image in a specific folder
         $path = public_path('storage/StudentQrCodes/'); // path to folder where image will be saved
+
+        if (!File::exists($path)) {
+            File::makeDirectory($path, $mode = 0777, true, true);
+        }
+        $filename = $user->id . '.png'; // name of the image file
+        // QrCode::format('svg')->size(250)->generate($file_ID, public_path($path . $filename));
+        // QrCode::format('svg')->size(400)->margin(10)->color(0, 0, 0)->backgroundColor(255, 255, 255)
+        //     ->generate($file_ID, public_path($path . $filename));
+
+
+        QrCode::style('square')
+            ->eye('circle')// Use PNG format for the merged image
+            ->size(400)
+            ->margin(10)
+            ->color(0, 0, 0)
+            ->backgroundColor(255, 255, 255)
+            ->format('png')
+//            ->merge('https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-google-icon-logo-png-transparent-svg-vector-bie-supply-14.png', .3, true)
+            ->merge(public_path('logo.png'), 0.12, true) // Merge the cat image with QR code
+            ->generate($file_ID, ($path . $filename));
+
+        return redirect()->back()->with('successApprove', 'User Approved successfully.');
+    }
+
+    public function confirmAccountTeacher(Request $request)
+    {
+
+        // Update the user's fields in the database
+        $user = User::findOrFail($request->id_account);
+        $user->update([
+            'id_number' => $request->id_number,
+            'name' => $request->name,
+            'office_or_department' => $request->office_or_department,
+            'role' => $request->role = 2,
+        ]);
+
+
+        // // Generate QR code with given data
+        $file_ID = $user->id_number;
+        // $qrCode = QrCode::size(250)->generate($file_ID);
+
+        // //Save QR code as image in a specific folder
+        $path = public_path('storage/TeacherQrCodes/'); // path to folder where image will be saved
 
         if (!File::exists($path)) {
             File::makeDirectory($path, $mode = 0777, true, true);
@@ -355,14 +403,27 @@ class LibrarianController extends Controller
 
         return redirect()->back()->with('successDelete', 'User Deleted successfully.');
     }
+
+    public function deleteAccountTeacher(Request $request)
+    {
+        $filename = $request->idFile;
+        // Get the full path of the file
+        $path = storage_path('app/public/IDPic/' . $filename);
+        File::delete($path);  // Delete the file
+        $user = User::findOrFail($request->id_account);
+        $user->delete();
+
+        return redirect()->back()->with('successDelete', 'User Deleted successfully.');
+    }
     //END ACCOUNT OPTIONS
 
     //START Borrowing Options
     public function borrowingForm()
     {
-        $users = User::where('role', '=', 0) //GET ONLY THE ROLE "0" or the students
-        ->orderBy('name', 'ASC')
+        $users = User::whereIn('role', [0, 2]) //GET ONLY THE ROLE "0" or "2" (students or another role)
+            ->orderBy('name', 'ASC')
             ->get();
+
         $books = Book::where('is_available', '!=', 0) //get only the available && copies available && FUNCTIONAL
         ->where('available_copies', '>', 0)
             ->where('book_condition', '=', 'functional')
@@ -385,9 +446,10 @@ class LibrarianController extends Controller
         ]);
 
         $user = User::find($request->input('user_id'));
+        // $books = Book::find($id);
+
 
         $hasUnreturnedBooks = $user->books->where('returned_at', null)->isNotEmpty();
-//        $hasUnreturnedBooks1 = $user->books->where('returned_at', null)->toArray();
 
 
         if ($hasUnreturnedBooks) {
@@ -399,6 +461,7 @@ class LibrarianController extends Controller
             'borrowed_at'          => now(),
             'remarks'              => $request->input('remarks'),
             'expected_return_date' => $request->input('expected_return_date'),
+            // 'fines'                => $request->input('fines', 0),
         ]);
 
         foreach ($request->input('books') as $bookId) {
@@ -409,6 +472,7 @@ class LibrarianController extends Controller
                 'borrowed_book_condition' => Book::find($bookId)->book_condition,
                 'returned_at'             => null,
                 'return_book_condition'   => null,
+                'fines'                   => null,
                 'remarks'                 => null,
             ]);
 
@@ -417,7 +481,7 @@ class LibrarianController extends Controller
             Book::where('id', $bookId)->decrement('available_copies', 1);
         }
 
-        return redirect()->back()->with('success', 'Borrowing Recorded Successfully!');
+        return redirect()->back()->with('success', 'Book  Borrowed Recorded Successfully!');
     }
 
 
@@ -462,6 +526,7 @@ class LibrarianController extends Controller
                 $Book->update([
                     'returned_at' => $request->returned_dates[$i],
                     'return_book_condition' => $request->returned_book_conditions[$i],
+                    'fines' => $request->fines[$i],
                     'remarks' => $request->remarks[$i],
                 ]);
 
@@ -470,7 +535,7 @@ class LibrarianController extends Controller
                     Book::where('id', $bookToUpdate->book_id)->increment('available_copies', '1'); //returned book will be added to copies
                 }
             }
-            return redirect()->route('borrowerLists')->with('success', 'Returning Recorded Successfully.');
+            return redirect()->route('borrowerLists')->with('success', 'Return Books Successfully.');
         } else {
             return redirect()->back()->with('error', 'Check atleast one book to return');
         }
@@ -491,8 +556,45 @@ class LibrarianController extends Controller
 
     public function generateReport()
     {
-        return view('pagesLibrarian.generateReport');
+        // $pendingTeachers = User::where('role', '=', -2)->get();
+
+        $sections = BookSection::all();
+        $authors = Author::all();
+        $locations = BookLocation::all();
+        return view('pagesLibrarian.generateReport', [
+            'sections' => $sections, //section is addded to the page
+            'locations' => $locations,
+            'authors' => $authors,
+        ]);
+
     }
+    public function fetchLocationsAndAuthors(Request $request)
+{
+    $sectionId = $request->input('section_id');
+
+    if (!$sectionId) {
+        return response()->json(['error' => 'Section ID is required'], 400);
+    }
+
+    // Fetch locations and authors associated with the books of the given section
+    $locations = BookLocation::whereIn('id', function ($query) use ($sectionId) {
+        $query->select('location_id')
+              ->from('books')
+              ->where('section_id', $sectionId);
+    })->get();
+
+    $authors = Author::whereIn('id', function ($query) use ($sectionId) {
+        $query->select('author_id')
+              ->from('books')
+              ->where('section_id', $sectionId);
+    })->get();
+
+    return response()->json([
+        'locations' => $locations,
+        'authors' => $authors,
+    ]);
+}
+
 
     public function studentTransactions()
     {
@@ -589,50 +691,143 @@ class LibrarianController extends Controller
     {
         // return view('pagesLibrarian.generateReport');
 
-        $reportType = $request->input('reportType');
-        if ($reportType == 'borrowedBooks') {
-            $title = 'Number of borrowed books';
-            $totalText = 'Total books Borrowed';
-        } else {
-            $title = 'Attendance Logs';
-            $totalText = 'Total';
-        }
         $fromDate = $request->input('from_date');
         $toDate = $request->input('to_date');
+        $totalText = 'Total Number of Library Users';
         $totalCounter = 0;
-        $grade_levels = ['Grade-7', 'Grade-8', 'Grade-9', 'Grade-10', 'Grade-11', 'Grade-12'];
+        $students = ['Grade-7', 'Grade-8', 'Grade-9', 'Grade-10', 'Grade-11', 'Grade-12'];
+       
+       
+        $teachers = DB::table('users')
+        ->where('role', '=', 2)
+        ->whereNotNull('office_or_department')
+        ->distinct()
+        ->pluck('office_or_department')
+        ->toArray();
+        $userType = $request->input('usersType');
+        
+        $sectionType = $request->input('sectionType');
+        $locationType = $request->input('locationType');
+        $authorType = $request->input('authorType');
+
+        $reportType = $request->input('reportType');
+
+        $itemType = $request->input('itemType');
+            if ($itemType == 'sequence') {
+            $statistical = 'Monthly Statistics of Books Borrowed';
+   
+            }else if($itemType == 'overAll') {
+            $statistical = 'Summary of Books Borrowed';
+            $totalText1 = 'Total Number of  Book/s Borrowed';
+            }else {
+                $statistical = 'Statistical Record of Library Users';
+                $totalText = 'Total Number of Library Users';
+            }
+       
         //  Query the database to filter transactions for the specified month, join wsith the users table, and filter by grade level
 
-        $reportData = '<h4 style="text-align: center;">Bukidnon National High School Library Information System</h4>'
-            . '<h5 style="text-align: center;">Main Campus Malaybalay City Bukidnon</h5>';
-        $reportData .= '<p style="text-align: center; font-style: italic;"> ' . $title . ' from ' . date('F d, Y', strtotime($fromDate)) . ' to ' . date('F d, Y', strtotime($toDate)) . '</p>';
-        $reportData .= '<table border="1" style="width: 100%; text-align: center;">
+        $reportData = '<h3 style="text-align: center;">Bukidnon National High School Library Management System</h3>' . '<h3 style="text-align: center;">Malaybalay</h3>'
+            .  '<h3 style="text-align: center;">'. $statistical .'</h3>';
+        $reportData .= '<p style="text-align: center; font-style: italic;">'. date('F d', strtotime($fromDate)) . ' - ' . date('d, Y', strtotime($toDate)).'</p>';
+        
+        if($itemType == 'sequence'){
+
+                    $reportData .= '<table border="1" style="width: 100%; text-align: center;">
+
+                                <thead>
+                                    <tr>
+                                        <th>Date Borrowed</th>
+                                        <th>Borrowers Name</th>
+                                        <th>Title of Books</th>
+                                        <th>Author</th>
+                                        <th>Accession Number</th>
+                                        <th>Due Date</th>
+                                        <th>Fines</th>
+                                    </tr>
+                                </thead>
+                            <tbody>';
+
+                }else if($itemType == 'overAll'){
+                    $reportData .= '<table border="1" style="width: 100%; text-align: center;">
                         <thead>
                             <tr>
                                 <th>Grade Level</th>
-                                <th>' . $title . '</th>
+                                <th>Number of borrowed books</th>
                             </tr>
                         </thead>
                         <tbody>';
 
-        foreach ($grade_levels as $gradeLevel) {
-//            $transactionCount = DB::table('transactions')
-//                ->join('users', 'transactions.user_id', '=', 'users.id')
-//                ->whereBetween('transactions.borrowed_at', [$fromDate, $toDate])
-//                ->where('users.grade_and_section', $gradeLevel)
-//                ->count();
+        }else{
 
-            if ($reportType == 'borrowedBooks') {
-                $bookCount = DB::table('transactions')
+            $reportData .= '<table border="1" style="width: 100%; text-align: center;">
+                        <thead>
+                            <tr>
+                                <th>Grade Level</th>
+                                <th>Number of Library Users</th>
+                            </tr>
+                        </thead>
+                        <tbody>';
+        }
+
+       // Handle students if userType is 'students' or 'all'
+    if ($userType == 'students' || $userType == 'all') {
+        foreach ($students as $student) {
+            if ($itemType == 'sequence') {
+                $query = DB::table('transactions')
                     ->join('users', 'transactions.user_id', '=', 'users.id')
                     ->join('book_transactions', 'transactions.id', '=', 'book_transactions.transaction_id')
                     ->join('books', 'book_transactions.book_id', '=', 'books.id')
+                    ->join('authors', 'books.author_id', '=', 'authors.id')
+                    ->select('transactions.borrowed_at', 'users.name as borrower_name', 'books.book_title', 'authors.author', 'expected_return_date', 'accession', 'fines')
                     ->whereBetween('transactions.borrowed_at', [$fromDate, $toDate])
-                    ->where('users.grade_and_section', $gradeLevel)
+                    ->where('users.grade_and_section', $student);
+
+                if ($sectionType) {
+                    $query->where('books.section_id', $sectionType);
+                }
+                if ($locationType) {
+                    $query->where('books.location_id', $locationType);
+                }
+                if ($authorType) {
+                    $query->where('books.author_id', $authorType);
+                }
+
+                $bookTransactions = $query->get();
+
+                foreach($bookTransactions as $bookTransaction) {   
+                    $reportData .= '<tr>';
+                    $reportData .= '<td>' . $bookTransaction->borrowed_at . '</td>';
+                    $reportData .= '<td>' . $bookTransaction->borrower_name . '</td>';
+                    $reportData .= '<td>' . $bookTransaction->book_title . '</td>';
+                    $reportData .= '<td>' . $bookTransaction->author . '</td>';
+                    $reportData .= '<td>' . $bookTransaction->accession . '</td>';
+                    $reportData .= '<td>' . $bookTransaction->expected_return_date . '</td>';
+                    $reportData .= '<td>' . $bookTransaction->fines . '</td>';
+                    $reportData .= '</tr>';
+                }
+            } else if($itemType == 'overAll') {
+                $query = DB::table('transactions')
+                    ->join('users', 'transactions.user_id', '=', 'users.id')
+                    ->join('book_transactions', 'transactions.id', '=', 'book_transactions.transaction_id')
+                    ->join('books', 'book_transactions.book_id', '=', 'books.id');
+
+                if ($sectionType) {
+                    $query->where('books.section_id', $sectionType);
+                }
+                if ($locationType) {
+                    $query->where('books.location_id', $locationType);
+                }
+                if ($authorType) {
+                    $query->where('books.author_id', $authorType);
+                }
+
+                $bookCount = $query
+                    ->whereBetween('transactions.borrowed_at', [$fromDate, $toDate])
+                    ->where('users.grade_and_section', $student)
                     ->count('books.id');
 
                 $reportData .= '<tr>';
-                $reportData .= '<td>' . $gradeLevel . '</td>';
+                $reportData .= '<td>' . $student . '</td>';
                 $reportData .= '<td>' . $bookCount . '</td>';
                 $reportData .= '</tr>';
                 $totalCounter = $totalCounter + $bookCount;
@@ -640,44 +835,137 @@ class LibrarianController extends Controller
                 $loginCounts = DB::table('record_logins')
                     ->join('users', 'record_logins.id_number', '=', 'users.id_number')
                     ->whereBetween('record_logins.created_at', [$fromDate, $toDate])
-                    ->where('users.grade_and_section', $gradeLevel)
+                    ->where('users.grade_and_section', $student)
                     ->select('users.grade_and_section', DB::raw('COUNT(DISTINCT record_logins.id_number) as login_count'))
                     ->groupBy('users.grade_and_section')
-                    ->first(); // Use first() to get a single result object
+                    ->first();
 
                 $reportData .= '<tr>';
-                $reportData .= '<td>' . $gradeLevel . '</td>';
-                $reportData .= '<td>' . ($loginCounts ? $loginCounts->login_count : 0) . '</td>'; // Access login_count property
+                $reportData .= '<td>' . $student . '</td>';
+                $reportData .= '<td>' . ($loginCounts ? $loginCounts->login_count : 0) . '</td>';
                 $reportData .= '</tr>';
-                $totalCounter += $loginCounts ? $loginCounts->login_count : 0; // Increment totalCounter with login_count
+                $totalCounter += $loginCounts ? $loginCounts->login_count : 0;
             }
-
         }
+    }
+
+    // Handle teachers if userType is 'teachers' or 'all'
+    if ($userType == 'teachers' || $userType == 'all') {
+        foreach ($teachers as $teacher) {
+            if ($itemType == 'sequence') {
+                $query = DB::table('transactions')
+                    ->join('users', 'transactions.user_id', '=', 'users.id')
+                    ->join('book_transactions', 'transactions.id', '=', 'book_transactions.transaction_id')
+                    ->join('books', 'book_transactions.book_id', '=', 'books.id')
+                    ->join('authors', 'books.author_id', '=', 'authors.id')
+                    ->select('transactions.borrowed_at', 'users.name as borrower_name', 'books.book_title', 'authors.author', 'expected_return_date', 'accession', 'fines')
+                    ->whereBetween('transactions.borrowed_at', [$fromDate, $toDate])
+                    ->where('users.office_or_department', $teacher);
+
+                if ($sectionType) {
+                    $query->where('books.section_id', $sectionType);
+                }
+                if ($locationType) {
+                    $query->where('books.location_id', $locationType);
+                }
+                if ($authorType) {
+                    $query->where('books.author_id', $authorType);
+                }
+
+                $bookTransactions = $query->get();
+
+                foreach($bookTransactions as $bookTransaction) {   
+                    $reportData .= '<tr>';
+                    $reportData .= '<td>' . $bookTransaction->borrowed_at . '</td>';
+                    $reportData .= '<td>' . $bookTransaction->borrower_name . '</td>';
+                    $reportData .= '<td>' . $bookTransaction->book_title . '</td>';
+                    $reportData .= '<td>' . $bookTransaction->author . '</td>';
+                    $reportData .= '<td>' . $bookTransaction->accession . '</td>';
+                    $reportData .= '<td>' . $bookTransaction->expected_return_date . '</td>';
+                    $reportData .= '<td>' . $bookTransaction->fines . '</td>';
+                    $reportData .= '</tr>';
+                }
+            } else if($itemType == 'overAll') {
+                $query = DB::table('transactions')
+                    ->join('users', 'transactions.user_id', '=', 'users.id')
+                    ->join('book_transactions', 'transactions.id', '=', 'book_transactions.transaction_id')
+                    ->join('books', 'book_transactions.book_id', '=', 'books.id');
+
+                if ($sectionType) {
+                    $query->where('books.section_id', $sectionType);
+                }
+                if ($locationType) {
+                    $query->where('books.location_id', $locationType);
+                }
+                if ($authorType) {
+                    $query->where('books.author_id', $authorType);
+                }
+
+                $bookCount = $query
+                    ->whereBetween('transactions.borrowed_at', [$fromDate, $toDate])
+                    ->where('users.office_or_department', $teacher)
+                    ->count('books.id');
+
+                $reportData .= '<tr>';
+                $reportData .= '<td>' . $teacher . '</td>';
+                $reportData .= '<td>' . $bookCount . '</td>';
+                $reportData .= '</tr>';
+                $totalCounter = $totalCounter + $bookCount;
+            } else {
+                $loginCounts = DB::table('record_logins')
+                    ->join('users', 'record_logins.id_number', '=', 'users.id_number')
+                    ->whereBetween('record_logins.created_at', [$fromDate, $toDate])
+                    ->where('users.role', '=', 2) // Add this line to specify teachers
+                    ->where('users.office_or_department', 'LIKE', '%' . trim($teacher) . '%') // Modified this line
+                    ->select('users.office_or_department', DB::raw('COUNT(DISTINCT record_logins.id_number) as login_count'))
+                    ->groupBy('users.office_or_department')
+                    ->orderByRaw("CASE 
+                        WHEN office_or_department LIKE '%7%' THEN 1
+                        WHEN office_or_department LIKE '%8%' THEN 2
+                        WHEN office_or_department LIKE '%9%' THEN 3
+                        WHEN office_or_department LIKE '%10%' THEN 4
+                        WHEN office_or_department LIKE '%11%' THEN 5
+                        WHEN office_or_department LIKE '%12%' THEN 6
+                        ELSE 7 END")
+                    ->first();
+            
+                $reportData .= '<tr>';
+                $reportData .= '<td>' . $teacher . '</td>';
+                $reportData .= '<td>' . ($loginCounts ? $loginCounts->login_count : 0) . '</td>';
+                $reportData .= '</tr>';
+                $totalCounter += $loginCounts ? $loginCounts->login_count : 0;
+            }
+        }
+    }
 
         $reportData .= '<tr>';
 
         $reportData .= '</tr>';
         $reportData .= '</tbody>';
         $reportData .= '</table>';
-        $reportData .= '<p style="text-align: right; padding-right: 50px;"> ' . $totalText . ': ' . $totalCounter . '</p>';
+        if($itemType == 'overAll'){
+            $reportData .= '<p style="text-align: right; padding-right: 237px;"> '. $totalText1.': ' . $totalCounter . '</p>';
+        }else if($reportType == 'attendanceLogs'){
+            $reportData .= '<p style="text-align: right; padding-right: 237px;"> '. $totalText.': ' . $totalCounter . '</p>';
+        }else{
+            $reportData .= '<p style="text-align: right; padding-right: 50px;"></p>';
+        }
         $reportData .= '<br><br><br><br><br>';
-        $reportData .= '<p style="text-align: left;">PREPARED BY:</p><br>';
+        $reportData .= '<p style="text-align: right;  padding-right: 260px;">PREPARED BY:</p><br>';
         $reportData .= '<footer>
-        <p style="font-size: 16px; font-weight: bold;margin: 0px;"><u>' . Auth::user()->name . '</u></p>
-        <p style="font-style: italic;margin-left: 10px; margin-top:0px;">Librarian</p>
+        <p style="font-size: 16px;text-align: right;  padding-right: 290px; font-weight: bold;margin: 0px;"><u>' . Auth::user()->name . '</u></p>
+        <p style="font-style: italic;text-align: right;  padding-right: 280px; margin-left: 10px; margin-top:0px;">Librarian</p>
       </footer>';
         $reportData .= '<br>';
-        $reportData .= '<p style="text-align: right; padding-right: 50px;">Noted:</p>';
-        $reportData .= '<p style="text-align: right;">______________________</p><br>';
-        $reportData .= '<br><br>';
         $reportData .= '<p style="text-align: right; font-style: italic;">Generated on: ' . date('Y-m-d H:i:s') . '</p><br>';
-        $mpdf = new Mpdf();
+        $mpdf = new Mpdf(['orientation' => 'L']);
         // $mpdf->WriteHTML('<h1>Report</h1>');
         $mpdf->WriteHTML($reportData);
         $mpdf->Output('report.pdf', 'I');
     }
 
-    public function markAsRead(){
+    public function markAsRead()
+    {
         Auth::user()->unreadNotifications->markAsRead();
         return redirect()->back();
     }

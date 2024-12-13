@@ -46,7 +46,7 @@
                                             <div class="col">
                                                 <div class="form-group">
                                                     <div class="form-group">
-                                                        <label for="gender-select">Grade Level:</label>
+                                                        <label for="gender-select">Current Grade Level:</label>
                                                         <select class="form-select form-control" id="grade_levelA" name="grade_levelA" onchange="toggleGradeLevelB()">
                                                             <option value="Grade-7" selected>Grade-7</option>
                                                             <option value="Grade-8" selected>Grade-8</option>
@@ -60,7 +60,7 @@
                                             </div>
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label for="gender-select">Grade Level to be Promoted:</label>
+                                                    <label for="gender-select">Grade Level Update:</label>
                                                     <select class="form-select form-control" id="grade_levelB" name="grade_levelB" disabled>
                                                         <option value="Grade-7" selected>Grade-7</option>
                                                         <option value="Grade-8" selected>Grade-8</option>

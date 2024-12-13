@@ -19,10 +19,9 @@
     <link href="{{ url('assets/assets/css/nucleo-svg.css') }}" rel="stylesheet" />
     <link href="{{ url('assets/assets/css/nucleo-svg.css') }}" rel="stylesheet" />
 
-    <!-- Recaptcha -->
+   {{-- <!-- Recaptcha -->
     {!! htmlScriptTagJsApi() !!}
-    {{-- <link href="{{ url('assets/assets/css/bootstrap.min.css') }}"> --}}
-    <!-- CSS Files -->
+    <!-- CSS Files --> --}}
     <link id="pagestyle" href="{{ url('assets/assets/css/argon-dashboard.css?v=2.0.4') }}" rel="stylesheet" />
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
@@ -51,7 +50,7 @@
     <!-- End Navbar -->
     <main class="main-content  mt-0">
         <div class="page-header align-items-start min-vh-50 pt-5 pb-11 m-3 border-radius-lg"
-            style="background-image: url('https://media.licdn.com/dms/image/C561BAQGoO3WWkMBcCQ/company-background_10000/0/1632665721223?e=1698660000&v=beta&t=6k32kzNxn8BdFEJuJdO_KjZZLwnUOPEX6V_cVMv5yDQ'); background-position: top;">
+            style="background-image: url('{{ asset('assets/assets/img/buknat9.jpg') }}'); background-position-y: 60%; background-repeat: no-repeat; background-size: cover;">
             <span class="mask bg-gradient-dark opacity-6"></span>
             <div class="container">
                 <div class="row justify-content-center">
@@ -102,9 +101,7 @@
                                                     {{ $errors->first('id_pic') }}
                                                 </div>
                                             @endif
-                                            <p class="text-sm font-weight-bold mb-2 text-secondary text-border d-inline z-index-2 bg-white px-3">
-                                                and
-                                            </p>
+                                            
                                         </div>
 
 
@@ -119,7 +116,7 @@
                                             </div>
 
                                             <div class="mb-3">
-                                                <input type="number" class="form-control @if('id_number') is-invalid @endif" placeholder="ID Number"
+                                                <input type="number" class="form-control @if($errors->has('id_number')) is-invalid @endif" placeholder="LRN Number"
                                                        name="id_number" id="id_number" value="{{ old('id_number') }}">
                                                 @if ($errors->has('id_number'))
                                                     <div class="invalid-feedback">
@@ -127,7 +124,7 @@
                                                     </div>
                                                 @endif
                                             </div>
-
+                                            
                                             <div class="mb-3">
                                                 <label for="cars">Grade Level</label>
                                                 <select name="grade_and_section" id="cars" class="form-control">
@@ -138,6 +135,7 @@
                                                     <option value="Grade-11" {{ old('grade_and_section') == 'Grade-11' ? 'selected' : '' }}>I am Grade 11</option>
                                                     <option value="Grade-12" {{ old('grade_and_section') == 'Grade-12' ? 'selected' : '' }}>I am Grade 12</option>
                                                 </select>
+                                                <input type="number" value="1" hidden>
 
                                             </div>
 
@@ -160,7 +158,7 @@
                                                 @endif
                                             </div>
 
-                                            <div class="d-flex justify-content-center py-2">
+                                            <!-- <div class="d-flex justify-content-center py-2">
                                                 {!! htmlFormSnippet() !!}
                                                 @if($errors->has('g-recaptcha-response'))
                                                     <div>
@@ -169,7 +167,7 @@
                                                         </small>
                                                     </div>
                                                 @endif
-                                            </div>
+                                            </div> -->
 
                                             <div class="text-center">
                                                 <button type="submit" class="btn bg-gradient-primary w-100">Register</button>
@@ -295,21 +293,18 @@
 
     <!--   Core JS Files   -->
     <!-- Font Awesome Icons -->
-    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
-    {{-- <script src="{{ url('assets/assets/js/core/popper.min.js') }}"></script> --}}
-    {{-- <script src="{{ url('assets/assets/js/core/bootstrap.min.js') }}"></script> --}}
-    {{-- <script src="{{ url('assets/assets/js/plugins/perfect-scrollbar.min.js') }}"></script> --}}
-    {{-- <script src="{{ url('assets/assets/js/plugins/smooth-scrollbar.min.js') }}"></script> --}}
-    {{-- <script src="{{ url('assets/assets/js/plugins/chartjs.min.js') }}"></script> --}}
+    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script> 
+    <script src="{{ url('assets/assets/js/core/bootstrap.min.js') }}"></script>
+    <script src="{{ url('assets/assets/js/plugins/perfect-scrollbar.min.js') }}"></script>
+    <script src="{{ url('assets/assets/js/plugins/smooth-scrollbar.min.js') }}"></script>
 
     <!-- Github buttons -->
     {{-- <script async defer src="https://buttons.github.io/buttons.js"></script> --}}
     <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
-    <script src="{{ url('assets/assets/js/argon-dashboard.min.js?v=2.0.4') }}"></script>
-
-    {{-- <script src="{{ url('assets/assets/js/bootstrap.min.js') }}"></script>
-    <script src="{{ url('assets/assets/js/jquery.min.js') }}"></script> --}}
+    
     @vite('resources/js/app.js')
 </body>
 
 </html>
+
+

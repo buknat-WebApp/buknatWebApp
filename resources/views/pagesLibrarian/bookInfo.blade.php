@@ -5,6 +5,9 @@
         <div class="card-body ">
             <div class="row gx-4">
 
+            <td class="align-middle text-center">
+                                                               
+
                 <div class="col-auto my-auto text-white">
                     <div class="h-100">
                         <h5 class="mb-1">
@@ -74,8 +77,7 @@
                                         <div class="row">
                                             <div class="col col-md-5">
                                                 <div class="form-group">
-                                                    <label for="example-text-input" class="form-control-label">Book
-                                                        Title</label>
+                                                    <label for="example-text-input" class="form-control-label">Book Title</label>
                                                     <input name="book_id" value="{{ $book->id }}" hidden>
                                                     <input class="form-control" name="book_title" type="text"
                                                         value="{{ $book->book_title }}">
@@ -83,58 +85,51 @@
                                             </div>
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label for="example-text-input" class="form-control-label">Book
-                                                        Author</label>
+                                                    <label for="example-text-input" class="form-control-label">Book Author</label>
                                                     <input name="authorID" value="{{ $book->author->id }}" hidden>
                                                     <input class="form-control" name="author_name" type="text"
                                                         value="{{ $book->author->author }}">
                                                 </div>
                                             </div>
+
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label for="example-text-input" class="form-control-label">Author
-                                                        ID</label>
-                                                    <input class="form-control" name="author_id" type="number"
-                                                        value="{{ $book->author->author_id }}">
+                                                    <label for="example-text-input" class="form-control-label">Class Number</label>
+                                                    <input class="form-control" name="class_no" type="number"
+                                                        value="{{ $book->class_no }}">
                                                 </div>
                                             </div>
+
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label for="example-text-input"
-                                                        class="form-control-label">Section</label>
-                                                    <select class="form-select form-control" id="gender-select"
-                                                        name="section">
-                                                        @foreach ($sections as $section)
-                                                            @if ($book->section->id == $section->id)
-                                                                <option value="{{ $section->id }}" selected>
-                                                                    {{ $section->section_name }}
-                                                                </option>
-                                                            @endif
-                                                            <option value="{{ $section->id }}">
-                                                                {{ $section->section_name }}
-                                                        @endforeach
-                                                    </select>
+                                                    <label for="example-text-input" class="form-control-label">Author Number</label>
+                                                    <input class="form-control" name="author_no" type="text"
+                                                        value="{{ $book->author_no }}">
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div class="row">
+
                                             <div class="col">
-                                                <div class="form-group">
-                                                    <label for="example-text-input" class="form-control-label">Added
-                                                        by</label>
-                                                    <input class="form-control" type="text"
-                                                        value="{{ $book->added_by }}" disabled>
+                                                    <div class="form-group">
+                                                        <label for="example-text-input"
+                                                            class="form-control-label">Section</label>
+                                                        <select class="form-select form-control" id="gender-select"
+                                                            name="section">
+                                                            @foreach ($sections as $section)
+                                                                @if ($book->section->id == $section->id)
+                                                                    <option value="{{ $section->id }}" selected>
+                                                                        {{ $section->section_name }}
+                                                                    </option>
+                                                                @endif
+                                                                <option value="{{ $section->id }}">
+                                                                    {{ $section->section_name }}
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col">
-                                                <div class="form-group">
-                                                    <label for="example-text-input" class="form-control-label">Class
-                                                        Number</label>
-                                                    <input class="form-control" name="class_no" type="number"
-                                                        value="{{ $book->class_no }}">
-                                                </div>
-                                            </div>
+                                           
                                             <div class="col">
                                                 <div class="form-group">
                                                     <label for="example-text-input"
@@ -143,6 +138,15 @@
                                                         value="{{ $book->edition }}">
                                                 </div>
                                             </div>
+
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <label for="example-text-input" class="form-control-label">Date of Publication</label>
+                                                    <input class="form-control" name="publication_year" type="number"
+                                                        value="{{ $book->publication_year }}">
+                                                </div>
+                                            </div>
+
                                             <div class="col">
                                                 <div class="form-group">
                                                     <label for="example-text-input"
@@ -154,10 +158,18 @@
                                         </div>
 
                                         <div class="row">
+
+                                            <div class="col">
+                                                    <div class="form-group">
+                                                        <label for="example-text-input" class="form-control-label">Accession Number</label>
+                                                        <input class="form-control" name="aaccession" type="number"
+                                                            value="{{ $book->accession }}">
+                                                    </div>
+                                                </div>
+
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label for="example-text-input" class="form-control-label">Number of
-                                                        Pages</label>
+                                                    <label for="example-text-input" class="form-control-label">Number of Pages</label>
                                                     <input class="form-control" name="number_of_pages" type="text"
                                                         value="{{ $book->number_of_pages }}">
                                                 </div>
@@ -166,7 +178,7 @@
                                                 <div class="form-group">
                                                     <label for="example-text-input"
                                                         class="form-control-label">ISBN</label>
-                                                    <input class="form-control" name="isbn" type="number"
+                                                    <input class="form-control" name="isbn" type="text"
                                                         value="{{ $book->isbn }}">
                                                 </div>
                                             </div>
@@ -188,14 +200,7 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="col">
-                                                <div class="form-group">
-                                                    <label for="example-text-input" class="form-control-label">Publication
-                                                        Year</label>
-                                                    <input class="form-control" name="publication_year" type="number"
-                                                        value="{{ $book->publication_year }}">
-                                                </div>
-                                            </div>
+                                
                                         </div>
                                         <div class="row">
                                             <div class="col col-6">
@@ -233,6 +238,14 @@
                                                         class="form-control-label">No. Of copies</label>
                                                     <input class="form-control" name="no_of_copies" type="number"
                                                         value="{{ $book->no_of_copies }}">
+                                                </div>
+                                            </div>
+
+                                             <div class="col">
+                                                <div class="form-group">
+                                                    <label for="example-text-input" class="form-control-label">Added by</label>
+                                                    <input class="form-control" type="text"
+                                                        value="{{ $book->added_by }}" disabled>
                                                 </div>
                                             </div>
 

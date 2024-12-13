@@ -15,6 +15,7 @@ class BookTransaction extends Model
         'borrowed_book_condition',
         'returned_at',
         'return_book_condition',
+        'fines',
         'remarks',
 
     ];

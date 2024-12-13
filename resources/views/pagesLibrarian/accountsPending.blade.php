@@ -4,42 +4,43 @@
     <div class="card shadow-lg mx-4 card-profile-bottom">
         <div class="card-body p-3">
             <div class="row gx-4">
-
                 <div class="col-auto my-auto">
                     <div class="h-100">
                         <h5 class="mb-1">
-                            Pending Users
+                           All Students
                         </h5>
                         <p class="mb-0 font-weight-bold text-sm">
-                            In this page you see all students who created account and is waiting for your validation
+                            In this page you will see all the students with activated accounts.
                         </p>
                     </div>
                 </div>
 
                 <div class="col-lg-4 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
                     <div class="nav-wrapper position-relative end-0">
-                        <ul class="nav nav-pills nav-fill p-1">
-                            <li class="nav-item">
-                                <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center btn"
-                                    href="{{ route('accountPending') }}">
-                                    <i class="ni ni-circle-08"></i>
-                                    <span class="ms-2">Pending</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center "
-                                    href="{{ route('accountLists') }}">
-                                    <i class="ni ni-bullet-list-67"></i>
-                                    <span class="ms-2">All Lists</span>
-                                </a>
-                            </li>
+                        <ul class="column-gap-4 nav nav-pills nav-fill p-1">
+                            <div class="dropdown">
+                                <button class="ni-circle-08 btn dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Pending Student
+                                </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <li><a class="dropdown-item" href="{{ route('accountPendingTeacher') }}">Pending Teachers</a></li>  
+                                    </ul>
+                            </div>
+                            <div class="dropdown">
+                                <button class="ni ni-bullet-list-67 btn dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                    All Users List
+                                </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <li><a class="dropdown-item" href="{{ route('accountLists') }}">All Students List</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('accountListsTeacher') }}">All Teachers List</a></li>
+                                    </ul>
+                            </div>
 
                         </ul>
                     </div>
                 </div>
 
-
-                <div class="container-fluid py-4 mt-2">
+                <div class="container-fluid py-0 mt-2">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="col-12">
@@ -125,7 +126,7 @@
                                                                 <div class="d-flex px-2 py-1">
                                                                     <div class="d-flex flex-column justify-content-center">
                                                                         <h6 id="id_number" class="mb-0 text-sm">
-                                                                            {{ $student->id_number }}l
+                                                                            {{ $student->id_number }}
                                                                         </h6>
                                                                         <p id="id"
                                                                             class="text-xs text-secondary mb-0">
@@ -149,7 +150,7 @@
                                                                 <span
                                                                     class="badge badge-sm bg-gradient-danger">inactive</span>
 
-                                                            </td>
+                                                            </td>                                                         
                                                             <td class="">
 
                                                                 <a type="button" class="btn btn-success btn-sm"
@@ -238,9 +239,9 @@
                     <button type="submit" class="btn btn-success ">Confirm</button>
                 </div>
                 </form>
+                </div>
             </div>
         </div>
-    </div>
 
     <!-- Delete Student -->
     <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"

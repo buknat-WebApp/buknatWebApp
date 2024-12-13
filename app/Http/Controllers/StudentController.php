@@ -7,8 +7,10 @@ use App\Models\User;
 use App\Models\Author;
 use App\Models\BookSection;
 use App\Models\Transaction;
+use App\Models\BookLocation;
 use Illuminate\Http\Request;
 use App\Models\BookTransaction;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
@@ -56,9 +58,11 @@ class StudentController extends Controller
 
         $book = Book::where('id', '=', $id)->first();
         $sections = BookSection::all();
+        $location = BookLocation::all();
         return view ('pagesStudent.bookInfo', [
         'book' =>  $book ,
         'sections' => $sections,
+        'location' => $location,
        ]);
     }
 

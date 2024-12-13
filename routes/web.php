@@ -27,13 +27,21 @@ use App\Http\Controllers\TransactionController;
 Route::get('/',[AccountController::class, 'index']);
 Route::get('/login',[AccountController::class, 'loginForm'])->name('loginForm');
 Route::post('/login',[AccountController::class, 'loginUser'])->name('login');
-Route::get('/signup',[AccountController::class, 'signupForm'])->name('signupForm');
-Route::post('/signup',[AccountController::class, 'registerUser'])->name('signup');
+
+Route::get('/user',[AccountController::class, 'roleUsers'])->name('roleUsers');
+
+Route::get('/user/student/signup',[AccountController::class, 'signupForm'])->name('signupForm');
+Route::post('/user/student/signup',[AccountController::class, 'registerUser'])->name('signup');
+
+Route::get('/user/teacher/signup',[AccountController::class, 'signupForms'])->name('signupForms');
+Route::post('/user/teacher/signup',[AccountController::class, 'registerUsers'])->name('signup_teacher');
+
 Route::get('/account/profile',[AccountController::class, 'profile'])->name('userProfile');
 Route::post('/account/profile',[AccountController::class, 'profile'])->name('profile');
 Route::put('/account/updateProfile',[AccountController::class, 'updateProfile'])->name('updateProfile');
 Route::put('/account/updatePassword',[AccountController::class, 'updatePassword'])->name('updatePassword');
 Route::post('/logout',[AccountController::class, 'logout'])->name('logout');
+
 Route::get('/test',[TestController::class, 'test']);
 Route::post('/test',[TestController::class, 'testing'])->name('testing');
 
@@ -75,15 +83,24 @@ Route::prefix('Librarian')->middleware(['auth', 'isLibrarian'])->group(function(
     Route::get('/book/add',[LibrarianController::class, 'addForm'])->name('addBook');
     Route::post('/book/add',[LibrarianController::class, 'registerBook'])->name('registerBook');
     Route::post('/book/add/registerAuthor', [LibrarianController::class, 'registerAuthor'])->name('registerAuthor');
+    // Route::post('/book/add/updateAuthor', [LibrarianController::class, 'updateAuthor'])->name('updateAuthor');
+    Route::post('/book/add/registerLocation', [LibrarianController::class, 'registerLocation'])->name('registerLocation');
 
     Route::get('/book/list',[LibrarianController::class, 'bookLists'])->name('bookLists');
     Route::get('/book/info/{book}', [LibrarianController::class, 'bookInfo'])->name('bookInfo');//getting the info of the book
     Route::put('/book/update', [LibrarianController::class, 'updateBook'])->name('updateBook');//updateBook
-    Route::get('/students/pending', [LibrarianController::class, 'accountPending'])->name('accountPending');//getting the info of the book
-    Route::put('/students/pending', [LibrarianController::class, 'confirmAccount'])->name('confirmAccount');//confirming the account
-    Route::delete('/students/pending', [LibrarianController::class, 'deleteAccount'])->name('deleteAccount');//deleting the student the account
-    Route::get('/students/all', [LibrarianController::class, 'accountLists'])->name('accountLists');//getting the info of the book
+    Route::get('/pending/students', [LibrarianController::class, 'accountPending'])->name('accountPending');//showing pending users
+    Route::put('/pending/students', [LibrarianController::class, 'confirmAccount'])->name('confirmAccount');//confirming the account
+    Route::delete('/pending/students', [LibrarianController::class, 'deleteAccount'])->name('deleteAccount');//deleting the student the account
+    Route::get('/all/students', [LibrarianController::class, 'accountLists'])->name('accountLists');//getting the info of the book
     Route::get('/generate/report', [LibrarianController::class, 'generateReport'])->name('generateReport');//getting the info of the book
+    Route::get('/generate/report/data', [LibrarianController::class, 'fetchLocationsAndAuthors'])->name('fetchLocationsAndAuthors');
+
+
+    Route::get('/pending/teachers', [LibrarianController::class, 'accountPendingTeacher'])->name('accountPendingTeacher');//showing pending users
+    Route::put('/pending/teachers', [LibrarianController::class, 'confirmAccountTeacher'])->name('confirmAccountTeacher');//confirming the account
+    Route::delete('/pending/teachers', [LibrarianController::class, 'deleteAccountTeacher'])->name('deleteAccountTeacher');//deleting the student the account
+    Route::get('/all/teachers', [LibrarianController::class, 'accountListsTeacher'])->name('accountListsTeacher');//getting the info of the book
 
 
     Route::get('/records/update', [LibrarianController::class, 'updateStudents'])->name('updateStudents');//getting the info of the book

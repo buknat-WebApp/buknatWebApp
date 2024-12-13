@@ -16,23 +16,22 @@ class Book extends Model
         'author_id',
         'section_id',
         'location_id',
-//        'class_id',
+        'author_no',
         'class_no',
+        'accession',
         'edition',
         'publication_year',
         'date_acquired',
         'no_of_copies',
-        'on_hand_per_count',
         'book_status',
         'book_condition',
         'isbn',
         'publisher',
-        'genre',
-        'language',
         'number_of_pages',
         'summary',
         'added_by',
-        'available_copies'
+        'available_copies',
+        'book_cover'
     ];
 
     public function bookTransactions()

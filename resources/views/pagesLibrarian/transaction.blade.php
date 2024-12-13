@@ -48,7 +48,7 @@
                             <div class="col-12">
                                 <div class="card mb-4">
                                     <div class="card-header pb-0">
-                                        <h6>Trnx</h6>
+                                        <h6>Borrower's Information</h6>
 
                                     </div>
                                     <div class="card-body px-0 pt-0 pb-2">
@@ -61,21 +61,21 @@
 
                                                         <th
                                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                            Books</th>
+                                                            List of Books Borrowed</th>
 
                                                         <th
-                                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                            Book Condition</th>
+                                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                            Author/s</th>
                                                         <th
                                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                                             Date Borrowed</th>
                                                         <th
                                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                            Date to Return</th>
+                                                            Date Returned</th>
 
                                                         <th
                                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                            Note</th>
+                                                            Remarks</th>
 
 
                                                         <th></th>
@@ -100,11 +100,19 @@
                                                                 </div>
                                                             </div>
                                                         </td>
-
+                                                        {{--@foreach ($sections as $section)
+                                                                @if ($book->section->id == $section->id)
+                                                                    <option value="{{ $section->id }}" selected>
+                                                                        {{ $section->section_name }}
+                                                                    </option>
+                                                                @endif
+                                                                <option value="{{ $section->id }}">
+                                                                    {{ $section->section_name }}
+                                                            @endforeach--}}
                                                         <td>
                                                             @foreach ($books as $book)
                                                                 <p id="grade" class="text-xs font-weight-bold mb-0">
-                                                                    {{ $book['borrowed_book_condition'] }}
+                                                                    {{ $book['authors->author'] }}
                                                                 </p>
                                                             @endforeach
                                                         </td>

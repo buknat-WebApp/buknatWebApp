@@ -23,21 +23,21 @@
                                 <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center"
                                     href="{{ route('borrowingForm') }}">
                                     <i class="ni ni-fat-add"></i>
-                                    <span class="ms-2">Borrow</span>
+                                    <span class="ms-2">Search</span>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center btn"
                                     href="{{ route('borrowerLists') }}">
                                     <i class="ni ni-books"></i>
-                                    <span class="ms-2">Borrowed</span>
+                                    <span class="ms-2">Check/Out</span>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center"
                                     href="{{ route('returnedBook') }}">
                                     <i class="ni ni-books"></i>
-                                    <span class="ms-2">Returned</span>
+                                    <span class="ms-2">Book Returned</span>
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -78,13 +78,13 @@
                                                             Date Borrowed</th>
                                                         <th
                                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                            Expected Return Date</th>
+                                                            Due Date</th>
                                                         <th
                                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                            Borrowed Book/s</th>
+                                                            Title of Book/s Borrowed</th>
                                                         <th
                                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                            Borrow Status</th>
+                                                            Status</th>
                                                         <th class="text-secondary opacity-7"></th>
                                                     </tr>
                                                 </thead>
@@ -158,10 +158,7 @@
                                                             </td>
 
                                                         </tr>
-                                                        {{-- <hr> --}}
-                                                        {{-- //END OF FOREACH's --}}
                                                     @endforeach
-                                                    {{-- @endif --}}
                                                 </tbody>
                                             </table>
                                         </div>
@@ -177,107 +174,6 @@
         </div>
     </div>
 
-
-    {{-- <div class="modal fade" id="returnBook" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h1 class="modal-title fs-5" id="exampleModalToggleLabel">Update Record</h1>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form method="POST" action="" >
-                    <div class="row">
-                        <div class="col">
-                            <label for="user">Book</label>
-                            <input type="text"  id="user" class="form-control" name="" id="">
-                        </div>
-                        <div class="col">
-                            <label for="user"></label>
-
-                            <input type="text"  id="user" name="return_book_condition[]" class="form-control" name="" id="">
-                        </div>
-                    </div>
-
-
-                </form>
-
-            </div>
-            <div class="modal-footer">
-              <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">Open second modal</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">Modal 2</h1>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              Hide this modal and show the first with the button below.
-            </div>
-            <div class="modal-footer">
-              <button class="btn btn-primary" data-bs-target="#returnBook" data-bs-toggle="modal">Back to first</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <a class="btn btn-primary" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Open first modal</a> --}}
-
-    <!-- Modal -->
-    {{-- <div class="modal fade" id="returnBook" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
-     <div class="modal-dialog modal-md" role="document">
-         <div class="modal-content">
-             <div class="modal-header">
-                 <h5 class="modal-title" id="exampleModalLabel">Validation</h5>
-                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
-                     aria-label="Close"></button>
-             </div>
-             <div class="modal-body">
-                 <p class="text-center">
-                     Do you want to confirm this account?
-                 </p>
-
-                 <form method="POST" action="{{ route('confirmAccount') }}">
-                     @csrf
-                     @method('PUT')
-                     <input type="text" id="ids" name="id_account">
-
-                     <label for="named">Name:</label>
-                     <input type="text" id="named" name="name" class="form-control" required>
-                     <label for="name">ID Number:</label>
-                     <input type="number" name="id_number" class="form-control" id="idNumber" required>
-                     <div class="row">
-                         <div class="col">
-                             <label for="grades" class="text-warning">Grade Level Selected</label>
-                             <input type="text" class="form-control" name="" id="grades">
-                         </div>
-                         <div class="col">
-                             <label for="grade">Kindly Re- Select</label>
-                             <select id="grade" name="grade_and_section" class="form-control" required>
-                                 <option value="Grade-7"> Grade 7</option>
-                                 <option value="Grade-8"> Grade 8</option>
-                                 <option value="Grade-9"> Grade 9</option>
-                                 <option value="Grade-10"> Grade 10</option>
-                                 <option value="Grade-11"> Grade 11</option>
-                                 <option value="Grade-12"> Grade 12</option>
-                             </select>
-                             <input type="number" value="1" hidden>
-                         </div>
-                     </div>
-
-
-             </div>
-             <div class="modal-footer">
-                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                 <button type="submit" class="btn btn-success ">Confirm</button>
-             </div>
-             </form>
-         </div>
-     </div>
- </div> --}}
+  
+    
 @endsection
