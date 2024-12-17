@@ -23,14 +23,14 @@
                                 <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center"
                                     href="{{ route('addBook') }}">
                                     <i class="ni ni-fat-add"></i>
-                                    <span class="ms-2">Add</span>
+                                    <span class="ms-2">Add Book</span>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center btn"
                                     href="{{ route('bookLists') }}">
                                     <i class="ni ni-books"></i>
-                                    <span class="ms-2">All</span>
+                                    <span class="ms-2">All Book</span>
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -92,7 +92,7 @@
                                                                                 {{ $book->book_title }}
                                                                             </h6>
                                                                             <p class="text-xs text-secondary mb-0">
-                                                                                {{ $book->author->author }}</p>
+                                                                            {{ $book->author ? $book->author->author : '' }}</p>
                                                                         </div>
                                                                     </div>
                                                                 </td>
@@ -119,7 +119,7 @@
                                                                 </td>
                                                                 <td class="align-middle text-center">
                                                                     <span
-                                                                        class="text-secondary text-xs font-weight-bold">{{ $book->location->name }}</span>
+                                                                        class="text-secondary text-xs font-weight-bold"> {{ $book->location?->name ?? '' }}</span>
                                                                 </td>
                                                                 @if ($book->section_id === 8)
                                                                 <td>
@@ -151,6 +151,9 @@
                                                                         onclick="printImage('{{ asset('storage/BookQRCodes/' . $book->id.'.png') }}'); return false;">
                                                                         <span class="fas fa-print"></span> Print QR
                                                                      </a>
+                                                                     <a class="m-3" href="{{ asset('storage/BookQRCodes/' . $book->id.'.png') }}" download>
+                                                                        <span class="fas fa-download"></span> Download QR
+                                                                    </a>
                                                                 </td>
                                                                 @endif
                                                             </tr>

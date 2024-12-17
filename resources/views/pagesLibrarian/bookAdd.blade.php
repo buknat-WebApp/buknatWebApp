@@ -74,6 +74,37 @@
                                         <form method="POST" action="{{ route('registerBook') }}" enctype="multipart/form-data">
                                             @csrf
                                             <div class="row">
+                                                <div class="col">
+                                                    <div class="form-group">
+                                                        <div class="d-flex justify-content-between">
+                                                            <label class="" for="gender-select">Author </label>
+                                                                <a href="#addAuthor" class="text-sm" data-bs-toggle="modal">Add author </a>
+                                                        </div>
+                                                            <select class="form-select form-control" id="gender-select"
+                                                                        name="author_id">
+                                                                        <option value=""></option>
+                                                                    @foreach ($authors as $author)
+                                                                        <option value="{{ $author->id }}">{{ $author->author }}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
+                                                    </div>
+
+                                                    <div class="col">
+                                                        <div class="form-group">
+                                                            <div class="d-flex justify-content-between">
+                                                                <a href="#addLocation" class="text-sm" data-bs-toggle="modal">Add Location </a>
+                                                            </div>
+                                                           <select class="form-select form-control" id="gender-select"
+                                                                    name="location_id">
+                                                                    <option value=""></option>
+                                                                @foreach ($locations as $book_location)
+                                                                    <option value="{{ $book_location->id }}">{{ $book_location->name }}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+</div>
+
                                                     <div class="col">
                                                         <div class="form-group">
                                                                 <label for="exampleInputText1">Book Title</label>
@@ -81,20 +112,7 @@
                                                                        name="book_title">
                                                         </div>
                                                     </div>
-                                                    <div class="col">
-                                                        <div class="form-group">
-                                                            <div class="d-flex justify-content-between">
-                                                                <label class="" for="gender-select">Author </label>
-                                                                <a href="#addAuthor" class="text-sm" data-bs-toggle="modal">Add author </a>
-                                                            </div>
-                                                           <select class="form-select form-control" id="gender-select"
-                                                                    name="author_id">
-                                                                @foreach ($authors as $author)
-                                                                    <option value="{{ $author->id }}">{{ $author->author }}</option>
-                                                                @endforeach
-                                                            </select>
-                                                        </div>
-                                                    </div>
+                            
                                                     <div class="col">
                                                         <div class="form-group">
                                                             <label for="exampleInputText1">Class Number</label>
@@ -102,7 +120,9 @@
                                                                    name="class_no">
                                                         </div>
                                                     </div>
-                                                    
+                                                </div>      
+
+                                                <div class="row">
                                                     <div class="col">
                                                         <div class="form-group">
                                                             <label for="exampleInputText1">Author Number</label>
@@ -110,9 +130,7 @@
                                                                 name="author_no">
                                                         </div>
                                                     </div>
-                                                </div>
 
-                                                <div class="row">
                                                     <div class="col">
                                                         <div class="form-group">
                                                             <label for="gender-select">Section </label>
@@ -146,12 +164,13 @@
                                                         <div class="form-group">
                                                             <div class="form-group">
                                                                 <label for="exampleInputText1">Year of Publication</label>
-                                                               <input type="number" class="form-control" id="exampleInputText1"
+                                                               <input type="text" class="form-control" id="exampleInputText1"
                                                                min="1000" and max="9999"
                                                                        name="publication_year">
                                                             </div>
                                                         </div>
                                                     </div>
+                                                <div class="row">
                                                     <div class="col">
                                                         <div class="form-group">
                                                             <label for="exampleInputText1">Date Acquired</label>
@@ -159,8 +178,6 @@
                                                                    name="date_acquired">
                                                         </div>
                                                     </div>
-
-                                                <div class="row">
 
                                                      <div class="col">
                                                         <div class="form-group">
@@ -198,6 +215,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                <div class="row">
                                                     <div class="col">
                                                         <div class="form-group">
                                                             <label for="gender-select">Book Condition:</label>
@@ -208,9 +226,6 @@
                                                             </select>
                                                         </div>
                                                     </div>
-                                    
-
-                                                    <div class="row">
 
                                                         <div class="col">
                                                             <div class="form-group">
@@ -240,21 +255,7 @@
                                                                            name="number_of_pages">
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                        
-                                                        <div class="col">
-                                                        <div class="form-group">
-                                                            <div class="d-flex justify-content-between">
-                                                                <label class="" for="gender-select">Subject/Location </label>
-                                                                <a href="#addLocation" class="text-sm" data-bs-toggle="modal">Add Subject </a>
-                                                            </div>
-                                                           <select class="form-select form-control" id="gender-select"
-                                                                    name="location_id">
-                                                                @foreach ($locations as $book_location)
-                                                                    <option value="{{ $book_location->id }}">{{ $book_location->name }}</option>
-                                                                @endforeach
-                                                            </select>
-                                                        </div>
+                                                        </div>  
                                                     </div>
                                                         
                                                     </div>

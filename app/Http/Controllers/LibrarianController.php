@@ -150,12 +150,12 @@ class LibrarianController extends Controller
     {
         $validated = $request->validate([
             'book_title' => 'required|string|max:255',
-            'author_id' => 'required|exists:authors,id',
-            'author_no' => 'required|string|max:255',
-            'class_no' => 'required|string|max:255',
+            'author_id' => 'nullable|exists:authors,id',
+            'author_no' => 'nullable|string|max:255',
+            'class_no' => 'nullable|string|max:255',
             'edition' => 'nullable|string|max:255',
             'accession' => 'nullable|string|max:255',
-            'publication_year' => 'nullable|integer|min:1000|max:' . date('Y'),
+            'publication_year' => 'nullable|string|max:255',
             'date_acquired' => 'nullable|date',
             'no_of_copies' => 'required|integer|min:0',
             'book_status' => 'required|string',
@@ -346,7 +346,7 @@ class LibrarianController extends Controller
             ->merge(public_path('logo.png'), 0.12, true) // Merge the cat image with QR code
             ->generate($file_ID, ($path . $filename));
 
-        return redirect()->back()->with('successApprove', 'User Approved successfully.');
+        return redirect()->back()->with('successApprove', 'Student Approved successfully.');
     }
 
     public function confirmAccountTeacher(Request $request)
@@ -389,7 +389,7 @@ class LibrarianController extends Controller
             ->merge(public_path('logo.png'), 0.12, true) // Merge the cat image with QR code
             ->generate($file_ID, ($path . $filename));
 
-        return redirect()->back()->with('successApprove', 'User Approved successfully.');
+        return redirect()->back()->with('successApprove', 'Teacher Approved successfully.');
     }
 
     public function deleteAccount(Request $request)
@@ -401,7 +401,7 @@ class LibrarianController extends Controller
         $user = User::findOrFail($request->id_account);
         $user->delete();
 
-        return redirect()->back()->with('successDelete', 'User Deleted successfully.');
+        return redirect()->back()->with('successDelete', 'Student Deleted successfully.');
     }
 
     public function deleteAccountTeacher(Request $request)
@@ -413,7 +413,7 @@ class LibrarianController extends Controller
         $user = User::findOrFail($request->id_account);
         $user->delete();
 
-        return redirect()->back()->with('successDelete', 'User Deleted successfully.');
+        return redirect()->back()->with('successDelete', 'Teacher Deleted successfully.');
     }
     //END ACCOUNT OPTIONS
 
@@ -500,7 +500,7 @@ class LibrarianController extends Controller
     public function updateBorrow($transaction)
     { //view the borrowed and its books
         $user = DB::table('transactions')
-            ->select('users.*', 'transactions.*') //gettinG all the User Details
+            ->select('users.*', 'transactions.*') //gettinG all the User Details    
             ->join('users', 'users.id', '=', 'transactions.user_id')
             ->where('transactions.id', $transaction)
             ->first();
@@ -632,7 +632,7 @@ class LibrarianController extends Controller
 
     public function updateStudents()
     {
-        return view('pagesLibrarian.updateStudentrecords');
+        return view('pagesLibrarian.updateStudentRecords');
     }
 
     public function studentLogbook()

@@ -24,20 +24,34 @@ class AllTableSeeder extends Seeder
     {
 
         //USER
-        // $fakerUsers = Faker::create();
+        $fakerUsers = Faker::create();
 
-        // DB::table('users')->insert([
-        //     'name' => 'Admin',
-        //     'id_number' => 123456,
-        //     'grade_and_section' => null,
-        //     'office_or_department' => $fakerUsers->randomElement([$fakerUsers->jobTitle, null]),
-        //     'password' => Hash::make('password'),
-        //     'role' => 1,
-        //     'id_pic' => $fakerUsers->randomElement([$fakerUsers->imageUrl(), null]),
-        //     'remember_token' => Str::random(10),
-        //     'created_at' => now(),
-        //     'updated_at' => now(),
-        // ]);
+        DB::table('users')->insert([
+            'name' => 'Admin I',
+            'id_number' => 123456,
+            'grade_and_section' => null,
+            'office_or_department' => $fakerUsers->randomElement([$fakerUsers->jobTitle, null]),
+            'password' => Hash::make('password'),
+            'role' => 1,
+            'id_pic' => $fakerUsers->randomElement([$fakerUsers->imageUrl(), null]),
+            'remember_token' => Str::random(10),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        $fakerUsers = Faker::create();
+
+        DB::table('users')->insert([
+            'name' => 'Admin II',
+            'id_number' => 67890,
+            'grade_and_section' => null,
+            'office_or_department' => $fakerUsers->randomElement([$fakerUsers->jobTitle, null]),
+            'password' => Hash::make('password'),
+            'role' => 1,
+            'id_pic' => $fakerUsers->randomElement([$fakerUsers->imageUrl(), null]),
+            'remember_token' => Str::random(10),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
 
         // for ($i = 0; $i < 50; $i++) {
         //     DB::table('users')->insert([
@@ -64,13 +78,13 @@ class AllTableSeeder extends Seeder
         // }
 
         //BOOK SECTION
-        // $arrays = ['Circulation Section','General Reference Section','Fiction Section','Filipiniana Section','LRMDS Section','Periodical Section','Reserve Section', 'Research Papers Section'];
+        $arrays = ['Circulation Section','General Reference Section','Fiction Section','Filipiniana Section','LRMDS Section','Periodical Section','Reserve Section', 'Research Papers Section'];
 
-        // foreach ($arrays as $array) {
-        //     BookSection::create([
-        //         'section_name' => $array,
-        //     ]);
-        // }
+        foreach ($arrays as $array) {
+            BookSection::create([
+                'section_name' => $array,
+            ]);
+        }
 
         //BOOK LOCATION
         // $locationArrays = ['Rack 1', 'Rack 2', 'Rack 3', 'Rack 4'];
@@ -82,32 +96,32 @@ class AllTableSeeder extends Seeder
         // }
 
         //BOOK
-        $faker = Faker::create();
-        foreach (range(1, 30) as $index) {
-            Book::create([
-                'book_title' => $faker->sentence,
-                'author_id' => $faker->unique()->numberBetween(1, 50),
-                'section_id' => $faker->numberBetween(1, 6),
-                'class_no' => $faker->numerify('###'),
-                'accession' => $faker->numerify('###'),
-                'edition' => $faker->numerify('#th Edition'),
-                'publication_year' => $faker->year(),
-                'date_acquired' => $faker->date($format = 'Y-m-d', $max = 'now'),
-                'no_of_copies' => 4,
-                'on_hand_per_count' => $faker->randomDigitNotNull,
-                'book_status' => $faker->randomElement(['available', 'not-available']),
-                'book_condition' =>$faker->randomElement(['functional', 'not-functional']),
-                'isbn' => $faker->isbn13,
-                'publisher' => $faker->company,
-                'number_of_pages' => $faker->randomDigitNotNull,
-                'location_id' => $faker->randomElement(['1', '2', '3']),
-                'summary' => $faker->paragraph,
-                'added_by' => $faker->name,
-                'is_available' => 1,
-                'available_copies' => 4
+        // $faker = Faker::create();
+        // foreach (range(1, 30) as $index) {
+        //     Book::create([
+        //         'book_title' => $faker->sentence,
+        //         'author_id' => $faker->unique()->numberBetween(1, 50),
+        //         'section_id' => $faker->numberBetween(1, 6),
+        //         'class_no' => $faker->numerify('###'),
+        //         'accession' => $faker->numerify('###'),
+        //         'edition' => $faker->numerify('#th Edition'),
+        //         'publication_year' => $faker->year(),
+        //         'date_acquired' => $faker->date($format = 'Y-m-d', $max = 'now'),
+        //         'no_of_copies' => 4,
+        //         'on_hand_per_count' => $faker->randomDigitNotNull,
+        //         'book_status' => $faker->randomElement(['available', 'not-available']),
+        //         'book_condition' =>$faker->randomElement(['functional', 'not-functional']),
+        //         'isbn' => $faker->isbn13,
+        //         'publisher' => $faker->company,
+        //         'number_of_pages' => $faker->randomDigitNotNull,
+        //         'location_id' => $faker->randomElement(['1', '2', '3']),
+        //         'summary' => $faker->paragraph,
+        //         'added_by' => $faker->name,
+        //         'is_available' => 1,
+        //         'available_copies' => 4
 
-            ]);
-        }
+        //     ]);
+        // }
     }
 }
 

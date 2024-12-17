@@ -82,6 +82,7 @@
         <div class="card">
             <div class="card-body p-3">
                 <div class="row">
+                <a href="{{ route('accountLists') }}" class="text-decoration-none text-black">
                     <div class="col-8">
                         <div class="numbers">
                             <p class="text-sm mb-0 text-uppercase font-weight-bold">Unreturned Books</p>
@@ -90,11 +91,13 @@
                             </h5>
 
                         </div>
+</a>
                     </div>
                     <div class="col-4 text-end">
                         <div class="icon icon-shape bg-gradient-warning shadow-warning text-center rounded-circle">
-                            <i class="ni ni-cart text-lg opacity-10" aria-hidden="true"></i>
-                        </div>
+                             <a href="{{ route('accountLists') }}">
+                                <i class="ni ni-cart text-lg opacity-10" aria-hidden="true"></i>
+                        </div> </a>
                     </div>
                 </div>
             </div>
@@ -134,6 +137,8 @@
                                         Expected Return Date</th>
                                     <th class="text-start text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Borrowed Book/s</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        Accession Number</th>
                                     <th></th>
                                 </tr>
                                 </thead>
@@ -144,7 +149,7 @@
                                 @endphp
                                 @if ($overdueTransactions)
                                     @foreach ($overdueTransactions as $overdueTransaction)
-                                        @if ($overdueTransaction->expected_return_date !== null)
+                                        @if ($overdueTransaction->expected_return_date !== null && $overdueTransaction->expected_return_date < $today)
                                             @php
                                                 $dueCounter++;
                                             @endphp
@@ -185,7 +190,7 @@
                                                 </td>
 
                                                 <td class="text-start">
-                                                        <?php $count = 1; ?>
+                                                    <?php $count = 1; ?>
                                                     @foreach ($overdueTransaction->bookTransactions as $bookTransaction)
                                                         @foreach ($books as $book)
                                                             @if (is_null($bookTransaction->returned_at))
@@ -194,13 +199,21 @@
                                                                         {{ $count }} .
                                                                         {{ $book->book_title }} </p>
                                                                     <p class="text-xs text-secondary mb-0"></p>
-                                                                        <?php $count++; ?>
+                                                                    <?php $count++; ?>
                                                                 @endif
                                                             @endif
                                                         @endforeach
                                                     @endforeach
-
                                                 </td>
+
+                                                <td class="align-middle text-start">
+                                                    @foreach ($overdueTransaction->bookTransactions as $bookTransaction)
+                                                        @if (is_null($bookTransaction->returned_at))
+                                                            <p class="text-center text-xs font-weight-bold mb-2">{{ $bookTransaction->books->accession ?? '' }}</p>
+                                                        @endif
+                                                    @endforeach
+                                                </td>
+
                                                 <td class="text-center">
                                                     <a href="{{ route('updateBorrow', ['transaction' => $overdueTransaction->id]) }}"
                                                        ddata-bs-toggle="tooltip" data-bs-placement="top"
@@ -245,6 +258,8 @@
                                         Expected Return Date</th>
                                     <th class="text-start text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Borrowed Book/s</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        Accession Number</th>
                                     <th></th>
                                 </tr>
                                 </thead>
@@ -296,7 +311,7 @@
                                                 </td>
 
                                                 <td class="text-start">
-                                                        <?php $count = 1; ?>
+                                                    <?php $count = 1; ?>
                                                     @foreach ($transaction->bookTransactions as $bookTransaction)
                                                         @foreach ($books as $book)
                                                             @if (is_null($bookTransaction->returned_at))
@@ -305,13 +320,21 @@
                                                                         {{ $count }} .
                                                                         {{ $book->book_title }} </p>
                                                                     <p class="text-xs text-secondary mb-0"></p>
-                                                                        <?php $count++; ?>
+                                                                    <?php $count++; ?>
                                                                 @endif
                                                             @endif
                                                         @endforeach
                                                     @endforeach
-
                                                 </td>
+
+                                                <td class="align-middle text-start">
+                                                    @foreach ($transaction->bookTransactions as $bookTransaction)
+                                                        @if (is_null($bookTransaction->returned_at))
+                                                            <p class="text-center text-xs font-weight-bold mb-2">{{ $bookTransaction->books->accession ?? '' }}</p>
+                                                        @endif
+                                                    @endforeach
+                                                </td>
+
                                                 <td class="text-center">
                                                     <a href="{{ route('updateBorrow', ['transaction' => $transaction->id]) }}"
                                                        ddata-bs-toggle="tooltip" data-bs-placement="top"
@@ -360,13 +383,13 @@
                         @foreach ($pendingStudents as $student)
                             <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
                                 <div class="d-flex align-items-center">
-                                    <div class="icon icon-shape icon-sm me-3 text-center">
-                                        @if($student->avatar)
-                                            <img src="{{ asset('storage/avatar/' . $student->avatar) }}" class="card-img-top rounded-circle" alt={elonMusk} />
-                                        @else
-                                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGhmTe4FGFtGAgbIwVBxoD3FmED3E5EE99UGPItI0xnQ&s" class="card-img-top rounded-circle" alt={elonMusk} />
-                                        @endif
-                                    </div>
+                                <div class="icon icon-shape icon-sm me-3 text-center">
+                                    @if($student->avatar)
+                                        <img src="{{ Storage::url('avatar/' . $student->avatar) }}" class="card-img-top rounded-circle" alt="{{ $student->name }}" />
+                                    @else
+                                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGhmTe4FGFtGAgbIwVBxoD3FmED3E5EE99UGPItI0xnQ&s" class="card-img-top rounded-circle" alt="Default Avatar" />
+                                    @endif
+                                </div>
                                     <div class="d-flex flex-column">
                                         <h6 class="mb-1 text-dark text-sm">{{ $student->name }}</h6>
                                         <span class="text-xs">{{ $student->grade_and_section }} &nbsp;<span

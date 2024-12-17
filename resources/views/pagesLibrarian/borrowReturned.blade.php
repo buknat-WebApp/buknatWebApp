@@ -23,21 +23,21 @@
                                 <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center"
                                     href="{{ route('borrowingForm') }}">
                                     <i class="ni ni-fat-add"></i>
-                                    <span class="ms-2">Borrow</span>
+                                    <span class="ms-2">Search</span>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center"
                                     href="{{ route('borrowerLists') }}">
                                     <i class="ni ni-books"></i>
-                                    <span class="ms-2">Borrowed</span>
+                                    <span class="ms-2">Check/Out</span>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center btn"
                                     href="{{ route('returnedBook') }}">
                                     <i class="ni ni-books"></i>
-                                    <span class="ms-2">Returned</span>
+                                    <span class="ms-2">Book Returned</span>
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -81,15 +81,15 @@
                                                             Return Date</th>
                                                         <th
                                                             class="text-start text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                            Borrowed Book/s</th>
+                                                            Title of Books/s Borrowed </th>
                                                         <th
-                                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                            Borrow Status</th>
+                                                            class="text-start text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                            Status</th>
                                                         <th
                                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                             Returned Condition</th>
                                                         <th
-                                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                            class="text-start text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                             Remarks</th>
                                                     </tr>
                                                 </thead>
@@ -134,7 +134,6 @@
                                                                         @if ($bookTransaction->returned_at)
                                                                             @if ($bookTransaction->book_id == $book->id)
                                                                                 <p class="text-xs font-weight-bold mb-2">
-                                                                                    {{ $count }} .
                                                                                     {{ $book->book_title }} </p>
                                                                                 <p class="text-xs text-secondary mb-0"></p>
                                                                                 <?php $count++; ?>
@@ -153,7 +152,7 @@
                                                             <td>
                                                                 @foreach ($transaction->bookTransactions as $bookTransaction)
                                                                     @if ($bookTransaction->returned_at)
-                                                                        <p class="text-xs font-weight-bold mb-2">
+                                                                        <p class="text-center text-xs font-weight-bold mb-2">
                                                                             {{ $bookTransaction->return_book_condition }}
                                                                         </p>
                                                                     @endif
@@ -166,8 +165,8 @@
                                                                 @endphp
                                                                 @foreach ($transaction->bookTransactions as $bookTransaction)
                                                                     @if ($bookTransaction->returned_at)
-                                                                        <p class="text-xs font-weight-bold mb-2">
-                                                                             {{ $counter }}. &nbsp; {{ $bookTransaction->remarks }}
+                                                                        <p class="text-start text-xs font-weight-bold mb-2">
+                                                                             &nbsp; {{ $bookTransaction->remarks }}
                                                                         </p>
                                                                         @php $counter++ @endphp
                                                                     @endif

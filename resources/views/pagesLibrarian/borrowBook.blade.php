@@ -30,7 +30,7 @@
                                 <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center"
                                    href="{{ route('borrowerLists') }}">
                                     <i class="ni ni-books"></i>
-                                    <span class="ms-2">Check/out</span>
+                                    <span class="ms-2">Check/Out</span>
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -95,8 +95,7 @@
 
                                             </div>
                                         </div>
-                                    </div>
-                                    {{-- <input type="text" name="" class="form form-control" id="search-box"> --}}
+                                    </div>  
                                     <div class="row">
                                         <div class="col">
                                             <div class="form-group">
@@ -120,23 +119,21 @@
                                                             <table>
                                                                 <thead>
                                                                 <tr>
-                                                                    <th>ID Number</th>
-                                                                    <th>&nbsp; &nbsp; Name</th>
-                                                                    <th>Tick &nbsp;</th>
+                                                                    <th class="text-center">ID Number</th>
+                                                                    <th class="text-center">Name</th>
+                                                                    <th class="text-center" style="padding-left: 5em;">Tick &nbsp;</th>
                                                                 </tr>
                                                                 </thead>
                                                                 <tbody id="users-table">
-                                                                @foreach ($users as $user)
+                                                                @foreach ($users->take(25) as $user)
                                                                     <tr>
-                                                                        <td>{{ $user->id_number }}</td>
-                                                                        <td> &nbsp; &nbsp; &nbsp;
-                                                                            {{ $user->name }}</td>
-                                                                        <td class="text-center">
+                                                                        <td text-start>{{ $user->id_number }}&nbsp; &nbsp; &nbsp;</td>
+                                                                        <td text-start>&nbsp; &nbsp; &nbsp;{{ $user->name }}</td>
+                                                                        <td class="text-center" style="padding-left: 5em;">
                                                                             <input type="radio"
-                                                                                   name="user_id"
-                                                                                   value="{{ $user->id }}"
+                                                                                name="user_id"
+                                                                                value="{{ $user->id }}"
                                                                                 {{ old('user_id', '') == $user->id ? 'checked' : '' }}>
-
                                                                         </td>
                                                                     </tr>
                                                                 @endforeach
@@ -156,29 +153,28 @@
 
                                                             </div>
 
-                                                            <table class="">
+                                                            <table class="text-center">
                                                                 <thead class="thead-light">
-                                                                <tr>
-                                                                    <th>Book Title</th>
-                                                                    <th>Author</th>
-                                                                    <th>Check to select</th>
-                                                                </tr>
+                                                                    <tr>
+                                                                        <th class="text-center">Book Title</th>
+                                                                        <th class="text-center" style="padding-left: 2em;">Author</th>
+                                                                        <th class="text-center">Check to select</th>
+                                                                    </tr>
                                                                 </thead>
                                                                 <tbody id="table-book-toborrow">
-                                                                @foreach ($books as $book)
-                                                                    <tr>
-                                                                        <td>{{ $book->book_title }}</td>
-                                                                        <td>{{ $book->author->author }}</td>
-                                                                        <td>
+                                                                    @foreach ($books->take(25) as $book)
+                                                                    <tr data-section="{{ $book->section }}">
+                                                                        <td style="text-align: start;">{{ $book->book_title }}</td>
+                                                                        <td style="text-align: start;padding-left: 2em;">{{ $book->author?->author ?? '' }}</td>
+                                                                        <td style="text-align: center;">
                                                                             <input type="checkbox"
-                                                                                   name="books[]"
-                                                                                   value="{{ $book->id }}"
+                                                                                name="books[]"
+                                                                                value="{{ $book->id }}"
+                                                                                data-section="{{ $book->section }}" {{-- Add section to checkbox --}}
                                                                                 {{ in_array($book->id, old('books', [])) ? 'checked' : '' }}>
                                                                         </td>
-                                                                        <input type="text"
-                                                                               name="borrowed_book_condition[]"
-                                                                               value="{{ $book->book_condition }}"
-                                                                               id="" hidden>
+                                                                        {{-- Add a debug element to show section (you can remove this later) --}}
+                                                                        <td style="display: none;">Section: {{ $book->section }}</td>
                                                                     </tr>
                                                                 @endforeach
                                                                 </tbody>
@@ -567,89 +563,113 @@
                         </script>
 
                         <script>
-                            document.addEventListener('DOMContentLoaded', function () {
+                             document.addEventListener('DOMContentLoaded', function () {
                                 const today = new Date();
-                                const dd = String(today.getDate()).padStart(2, '0');
-                                const mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
-                                const yyyy = today.getFullYear();
+                                
+                                // Function to set date limits based on book section
+                                function updateDateLimits() {
+                                    const selectedBook = document.querySelector('input[name="books[]"]:checked');
+                                    if (!selectedBook) return;
+                                    
+                                    const row = selectedBook.closest('tr');
+                                    const bookSection = row.getAttribute('data-section'); // We'll need to add this attribute to the book rows
+                                    
+                                    const dd = String(today.getDate()).padStart(2, '0');
+                                    const mm = String(today.getMonth() + 1).padStart(2, '0');
+                                    const yyyy = today.getFullYear();
+                                    
+                                    const minDate = yyyy + '-' + mm + '-' + dd;
+                                    
+                                    // Calculate max date based on section
+                                    let maxDays = bookSection === 'fiction' ? 5 : 2; // 5 days for fiction, 2 for others
+                                    const maxDate = new Date(today);
+                                    maxDate.setDate(today.getDate() + maxDays);
+                                    const maxDD = String(maxDate.getDate()).padStart(2, '0');
+                                    const maxMM = String(maxDate.getMonth() + 1).padStart(2, '0');
+                                    const maxYYYY = maxDate.getFullYear();
+                                    
+                                    const dateInput = document.getElementById('recipient-name');
+                                    dateInput.setAttribute('min', minDate);
+                                    dateInput.setAttribute('max', `${maxYYYY}-${maxMM}-${maxDD}`);
+                                }
 
-                                const minDate = yyyy + '-' + mm + '-' + dd;
-                                const maxDate = yyyy + '-' + mm + '-' + (parseInt(dd) + 2);
+                                // Add event listeners to book checkboxes
+                                const bookCheckboxes = document.querySelectorAll('input[name="books[]"]');
+                                bookCheckboxes.forEach(checkbox => {
+                                    checkbox.addEventListener('change', updateDateLimits);
+                                });
 
-                                document.getElementById('recipient-name').setAttribute('min', minDate);
-                                document.getElementById('recipient-name').setAttribute('max', maxDate);
+                                // Initial setup
+                                updateDateLimits();
                             });
                         </script>
 
-<script>
-    // Get the modal
-    var modal = document.getElementById('signupModal');
+                    <script>
+                        // Get the modal
+                        var modal = document.getElementById('signupModal');
 
-    // Function to open the modal
-    function openModal() {
-        modal.style.display = 'block';
-    }
+                        // Function to open the modal
+                        function openModal() {
+                            modal.style.display = 'block';
+                        }
 
-    // Close the modal when user clicks outside of it
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = 'none';
-        }
-    }
-</script>  
+                        // Close the modal when user clicks outside of it
+                        window.onclick = function(event) {
+                            if (event.target == modal) {
+                                modal.style.display = 'none';
+                            }
+                        }
+                    </script>  
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-    // Update selected book in modal when checkbox is clicked
-    const bookCheckboxes = document.querySelectorAll('input[name="books[]"]');
-    bookCheckboxes.forEach(checkbox => {
-        checkbox.addEventListener('change', function() {
-            if (this.checked) {
-                const bookTitle = this.closest('tr').cells[0].textContent;
-                const bookAuthor = this.closest('tr').cells[1].textContent;
-                document.getElementById('selectedBookDisplay').textContent = 
-                    `${bookTitle} by ${bookAuthor}`;
-            }
-        });
-    });
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                        // Update selected book in modal when checkbox is clicked
+                        const bookCheckboxes = document.querySelectorAll('input[name="books[]"]');
+                        bookCheckboxes.forEach(checkbox => {
+                            checkbox.addEventListener('change', function() {
+                                if (this.checked) {
+                                    const bookTitle = this.closest('tr').cells[0].textContent;
+                                    const bookAuthor = this.closest('tr').cells[1].textContent;
+                                    document.getElementById('selectedBookDisplay').textContent = 
+                                        `${bookTitle} by ${bookAuthor}`;
+                                }
+                            });
+                        });
 
-    // Update selected user in modal when radio button is clicked
-    const userRadios = document.querySelectorAll('input[name="user_id"]');
-    userRadios.forEach(radio => {
-        radio.addEventListener('change', function() {
-            if (this.checked) {
-                const idNumber = this.closest('tr').cells[0].textContent;
-                const userName = this.closest('tr').cells[1].textContent;
-                document.getElementById('selectedUserDisplay').textContent = 
-                    `${idNumber} - ${userName}`;
-            }
-        });
-    });
+                        // Update selected user in modal when radio button is clicked
+                        const userRadios = document.querySelectorAll('input[name="user_id"]');
+                        userRadios.forEach(radio => {
+                            radio.addEventListener('change', function() {
+                                if (this.checked) {
+                                    const idNumber = this.closest('tr').cells[0].textContent;
+                                    const userName = this.closest('tr').cells[1].textContent;
+                                    document.getElementById('selectedUserDisplay').textContent = 
+                                        `${idNumber} - ${userName}`;
+                                }
+                            });
+                        });
 
-    // Update modal when it's opened
-    const borrowModal = document.getElementById('borrowModal');
-    borrowModal.addEventListener('show.bs.modal', function() {
-        // Update book display
-        const selectedBook = document.querySelector('input[name="books[]"]:checked');
-        if (selectedBook) {
-            const bookTitle = selectedBook.closest('tr').cells[0].textContent;
-            const bookAuthor = selectedBook.closest('tr').cells[1].textContent;
-            document.getElementById('selectedBookDisplay').textContent = 
-                `${bookTitle} by ${bookAuthor}`;
-        }
+                        // Update modal when it's opened
+                        const borrowModal = document.getElementById('borrowModal');
+                        borrowModal.addEventListener('show.bs.modal', function() {
+                            // Update book display
+                            const selectedBook = document.querySelector('input[name="books[]"]:checked');
+                            if (selectedBook) {
+                                const bookTitle = selectedBook.closest('tr').cells[0].textContent;
+                                const bookAuthor = selectedBook.closest('tr').cells[1].textContent;
+                                document.getElementById('selectedBookDisplay').textContent = 
+                                    `${bookTitle} by ${bookAuthor}`;
+                            }
 
-        // Update user display
-        const selectedUser = document.querySelector('input[name="user_id"]:checked');
-        if (selectedUser) {
-            const idNumber = selectedUser.closest('tr').cells[0].textContent;
-            const userName = selectedUser.closest('tr').cells[1].textContent;
-            document.getElementById('selectedUserDisplay').textContent = 
-                `${idNumber} - ${userName}`;
-        }
-    });
-});
-</script>
-
-
-
+                            // Update user display
+                            const selectedUser = document.querySelector('input[name="user_id"]:checked');
+                            if (selectedUser) {
+                                const idNumber = selectedUser.closest('tr').cells[0].textContent;
+                                const userName = selectedUser.closest('tr').cells[1].textContent;
+                                document.getElementById('selectedUserDisplay').textContent = 
+                                    `${idNumber} - ${userName}`;
+                            }
+                        });
+                    });
+                    </script>
 @endsection

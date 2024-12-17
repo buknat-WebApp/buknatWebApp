@@ -33,19 +33,8 @@
     <link href="{{ url('assets/assets/css/nucleo-icons.css') }}" rel="stylesheet" />
     <link href="{{ url('assets/assets/css/nucleo-svg.css') }}" rel="stylesheet" />
     <link href="{{ url('assets/assets/css/nucleo-svg.css') }}" rel="stylesheet" />
-
-    {{-- <link href="{{ url('assets/assets/css/bootstrap.min.css') }}"> --}}
     <!-- CSS Files -->
     <link id="pagestyle" href="{{ url('assets/assets/css/argon-dashboard.css?v=2.0.4') }}" rel="stylesheet" />
-    <!-- jQuery -->
-{{--    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>--}}
-
-    <!-- Popper.js -->
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script> --}}
-
-    <!-- Bootstrap 4 -->
-    {{-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script> --}}
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
 
@@ -54,6 +43,15 @@
     <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
 
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+     <!-- First load Popper.js -->
+     <script src="https://unpkg.com/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    
+    <!-- Then load Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Finally load Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 
 </head>
 
@@ -314,8 +312,7 @@
     
 
     <!--   Core JS Files   -->
-    <!-- Font Awesome Icons -->
-    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- <script src="{{ url('assets/assets/js/core/popper.min.js') }}"></script> -->
     <script src="{{ url('assets/assets/js/core/bootstrap.min.js') }}"></script>
     <script src="{{ url('assets/assets/js/plugins/perfect-scrollbar.min.js') }}"></script>
@@ -323,8 +320,9 @@
     <script src="{{ url('assets/assets/js/plugins/chartjs.min.js') }}"></script>
     <!-- Github buttons -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
-    <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
-    <script src="{{ url('assets/assets/js/argon-dashboard.min.js?v=2.0.4') }}"></script>
+    
+    <script src="{{ url('assets/assets/js/argon-dashboard.min.js') }}"></script>
+    <script src="{{ url('assets/assets/js/custom.js') }}"></script>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>

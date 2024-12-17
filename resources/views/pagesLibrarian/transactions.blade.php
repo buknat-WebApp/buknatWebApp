@@ -53,7 +53,7 @@
 
                                             <table class="table align-items-center" id="mytable">
 
-                                                <thead>
+                                            <thead>
                                                     <tr>
                                                         <th
                                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
@@ -62,11 +62,11 @@
                                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                             Id Number</th>
                                                         <th
-                                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                                            Name</th>
+                                                            class="text-start text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Name</th>
                                                         <th
-                                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                            Section</th>
+                                                            class="text-start text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                            Grade</th>
 
                                                         <th
                                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
@@ -100,7 +100,7 @@
                                                                 <div class="d-flex px-2 py-1">
                                                                     <div class="d-flex flex-column justify-content-center">
                                                                         <h6 id="id_number" class="mb-0 text-sm">
-                                                                            {{ $student->id_number }}l
+                                                                            {{ $student->id_number }}
                                                                         </h6>
                                                                         <p id="id"
                                                                             class="text-xs text-secondary mb-0">

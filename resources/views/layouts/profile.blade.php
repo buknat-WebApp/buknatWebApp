@@ -26,7 +26,6 @@
                             @elseif (Auth::user()->role == 2)
                                 Teacher
                             @endif
-{{--                             {{ Auth::user()->id_number }} &nbsp; {{ Auth::user()->grade_and_section }}--}}
                         </p>
                     </div>
                 </div>
@@ -95,6 +94,19 @@
                                         <input class="form-control" type="file" name="avatar" id="avatar">
                                     </div>
                                 </div>
+
+                                @if(Auth::user()->role == 1)
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="check1">
+                                            ID Number
+                                        </label>
+                                        <input class="form-control" type="number" id="id_number" name="id_number" value="{{ Auth::user()->id_number }}">
+                                    </div>
+                                </div>
+                                
+                                @else
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="form-control-label" for="check1">
@@ -103,6 +115,7 @@
                                         <input class="form-control" type="text" id="check1" value="{{ Auth::user()->id_number }}" disabled>
                                     </div>
                                 </div>
+                                @endif
 
                                 @if(Auth::user()->role == 0)
 

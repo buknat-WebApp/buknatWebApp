@@ -19,9 +19,9 @@
     <link href="{{ url('assets/assets/css/nucleo-svg.css') }}" rel="stylesheet" />
     <link href="{{ url('assets/assets/css/nucleo-svg.css') }}" rel="stylesheet" />
 
-   {{-- <!-- Recaptcha -->
+    <!-- Recaptcha -->
     {!! htmlScriptTagJsApi() !!}
-    <!-- CSS Files --> --}}
+    <!-- CSS Files -->
     <link id="pagestyle" href="{{ url('assets/assets/css/argon-dashboard.css?v=2.0.4') }}" rel="stylesheet" />
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>

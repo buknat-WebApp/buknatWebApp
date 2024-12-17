@@ -6,8 +6,11 @@
             <div class="row gx-4">
                 <div class="col-auto">
                     <div class="avatar avatar-xl position-relative">
-                        <img src="{{ url('assets/assets/img/team-1.jpg') }}" alt="profile_image"
-                            class="w-100 border-radius-lg shadow-sm">
+                    @if( $transaction->user->avatar)
+                            <img src="{{ asset('storage/avatar/' . $transaction->user->avatar) }}" alt="profile_image" class="w-100 h-100 border-radius-lg shadow-sm object-fit-cover border rounded">
+                        @else
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGhmTe4FGFtGAgbIwVBxoD3FmED3E5EE99UGPItI0xnQ&s" class="w-100 h-100 border-radius-lg shadow-sm object-fit-cover border rounded" />
+                        @endif
                     </div>
                 </div>
                 <div class="col-auto my-auto">
@@ -26,14 +29,6 @@
                     <div class="nav-wrapper position-relative end-0">
                         <ul class="nav nav-pills nav-fill p-1">
 
-                            {{-- <li class="nav-item">
-                                <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center btn"
-                                    @disabled(true)">
-                                    <i class="ni ni-lock-circle-open"></i>
-                                    <span class="ms-2">Transaction Lists</span>
-                                </a>
-                            </li> --}}
-
                         </ul>
                     </div>
                 </div>
@@ -49,8 +44,8 @@
                                 <div class="card mb-4">
                                     <div class="card-header pb-0">
                                         <h6>Borrower's Information</h6>
-
                                     </div>
+                                    
                                     <div class="card-body px-0 pt-0 pb-2">
                                         <div class="table-responsive p-0">
 

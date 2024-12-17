@@ -80,11 +80,10 @@
                                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                             Due Date</th>
                                                         <th
-                                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                            class="text-start text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                             Title of Book/s Borrowed</th>
                                                         <th
-                                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                            Status</th>
+                                                            class="text-start text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
                                                         <th class="text-secondary opacity-7"></th>
                                                     </tr>
                                                 </thead>
@@ -131,7 +130,6 @@
                                                                         @if (is_null($bookTransaction->returned_at))
                                                                             @if ($bookTransaction->book_id == $book->id)
                                                                                 <p class="text-xs font-weight-bold mb-2">
-                                                                                    {{ $count }} .
                                                                                     {{ $book->book_title }} </p>
                                                                                 <p class="text-xs text-secondary mb-0"></p>
                                                                                 <?php $count++; ?>
@@ -142,7 +140,7 @@
 
                                                             </td>
 
-                                                            <td class="align-middle">
+                                                            <td class="tesct-start align-middle">
                                                                 <span class="badge badge-sm bg-gradient-danger">Not
                                                                     Returned</span>
                                                             </td>
