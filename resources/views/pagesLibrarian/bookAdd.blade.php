@@ -133,7 +133,7 @@
 
                                                     <div class="col">
                                                         <div class="form-group">
-                                                            <label for="gender-select">Section </label>
+                                                            <label for="gender-select">Section</label>
                                                             <select class="form-select form-control" id="gender-select"
                                                                     name="section_id">
                                                                 @foreach ($sections as $section)
@@ -163,7 +163,7 @@
                                                     <div class="col">
                                                         <div class="form-group">
                                                             <div class="form-group">
-                                                                <label for="exampleInputText1">Year of Publication</label>
+                                                                <label for="exampleInputText1">Year of Publication/Copyright</label>
                                                                <input type="text" class="form-control" id="exampleInputText1"
                                                                min="1000" and max="9999"
                                                                        name="publication_year">
