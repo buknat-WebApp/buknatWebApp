@@ -19,18 +19,19 @@
                 <div class="col-lg-6 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
                     <div class="nav-wrapper position-relative end-0">
                         <ul class="nav nav-pills nav-fill p-1">
-                            <li class="nav-item">
-                                <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center"
-                                    href="{{ route('borrowingForm') }}">
-                                    <i class="ni ni-fat-add"></i>
-                                    <span class="ms-2">Search</span>
-                                </a>
-                            </li>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Students
+                                </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <li><a class="dropdown-item" href="{{ route('borrowingFormTeacher') }}">Teachers</a></li>  
+                                    </ul>
+                            </div>
                             <li class="nav-item">
                                 <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center btn"
                                     href="{{ route('borrowerLists') }}">
                                     <i class="ni ni-books"></i>
-                                    <span class="ms-2">Check/Out</span>
+                                    <span class="ms-2">Check Out</span>
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -38,13 +39,6 @@
                                     href="{{ route('returnedBook') }}">
                                     <i class="ni ni-books"></i>
                                     <span class="ms-2">Book Returned</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a
-                                    class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center disabled">
-                                    <i class="ni ni-books"></i>
-                                    <span class="ms-2">Update</span>
                                 </a>
                             </li>
                         </ul>
@@ -150,7 +144,7 @@
                                                                     class="text-secondary font-weight-bold text-xs btn"
                                                                     ddata-bs-toggle="tooltip" data-bs-placement="top"
                                                                     title="Manage Book">
-                                                                    <span class="fas fa-edit"> update</span>
+                                                                    <span class="fas fa-edit"> Check In</span>
                                                                 </a>
 
                                                             </td>

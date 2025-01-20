@@ -19,18 +19,19 @@
                 <div class="col-lg-6 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
                     <div class="nav-wrapper position-relative end-0">
                         <ul class="nav nav-pills nav-fill p-1">
-                            <li class="nav-item">
-                                <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center btn"
-                                   href="{{ route('borrowingForm') }}">
-                                    <i class="ni ni-fat-add"></i>
-                                    <span class="ms-2">Search</span>
-                                </a>
-                            </li>
+                            <div class="dropdown nav-item">
+                                <button class="btn dropdown-toggle nav-link" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Teachers
+                                </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <li><a class="dropdown-item" href="{{ route('borrowingForm') }}">Teachers</a></li>  
+                                    </ul>
+                            </div>
                             <li class="nav-item">
                                 <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center"
                                    href="{{ route('borrowerLists') }}">
                                     <i class="ni ni-books"></i>
-                                    <span class="ms-2">Check/Out</span>
+                                    <span class="ms-2">Check Out</span>
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -38,13 +39,6 @@
                                    href="{{ route('returnedBook') }}">
                                     <i class="ni ni-books"></i>
                                     <span class="ms-2">Book Returned</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a
-                                    class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center disabled">
-                                    <i class="ni ni-books"></i>
-                                    <span class="ms-2">Update</span>
                                 </a>
                             </li>
                         </ul>
@@ -56,19 +50,6 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card">
-                            <div class="col-lg-4 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
-                                        <div class="nav-wrapper position-relative end-0">
-                                            <ul class="nav nav-pills nav-fill p-1">
-                                                <li class="nav-item">
-                                                    <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center btn"
-                                                    href="{{ route('borrowingForm') }}">
-                                                        <i class="fas fa-user"></i>
-                                                        <span class="ms-2">Students</span>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col">
@@ -228,7 +209,7 @@
 
                                                                         <!-- User Search and Display -->
                                                                         <div class="mb-3">
-                                                                            <label class="col-form-label">Selected User</label>
+                                                                            <label class="col-form-label">Select User</label>
                                                                             <div id="selectedUserDisplay" class="form-control" readonly style="background-color: #f8f9fa;">
                                                                                 No user selected
                                                                             </div>
@@ -237,7 +218,7 @@
                                                                     
 
                                                                         <div class="mb-3">
-                                                                            <label for="recipient-name" class="col-form-label">Due Date - Expected Date to be Returned</label>
+                                                                            <label for="recipient-name" class="col-form-label">Due Date</label>
                                                                             <input type="date" name="expected_return_date" class="form-control" id="recipient-name">
                                                                         </div>
                                                                         <div class="mb-3">
@@ -267,7 +248,7 @@
                 </div>
 
                 <div>
-                    <button class="btn btn-primary btn-lg font-weight-bold mx-4 mt-4" onclick="goBack()">
+                    <button class="btn btn-dark btn-lg font-weight-bold mx-4 mt-4" onclick="goBack()">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
                         <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z"/>
                         </svg><i></i> Back    
@@ -384,9 +365,14 @@
                         }
                     </style>
 
-                <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/webrtc-adapter/3.3.3/adapter.min.js"></script>
-                <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.10/vue.min.js"></script>
-                <script type="text/javascript" src="https://unpkg.com/instascan@1.0.0/dist/instascan.min.js"></script>
+                <script type="text/javascript"
+                        src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+                <script type="text/javascript"
+                        src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.10/vue.min.js"></script>
+                <script type="text/javascript"
+                        src="https://cdnjs.cloudflare.com/ajax/libs/webrtc-adapter/3.3.3/adapter.min.js">
+                </script>
+                <script type="text/javascript" src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
 
                 <script>
                     const searchInputStudent = document.getElementById('search-student-borrow');
@@ -469,65 +455,92 @@
                                 // Create audio context on user interaction
                                 let audioContext = null;
 
-                                window.startScanner = async function() {
-                                    try {
-                                        // Initialize scanner only if not already created
-                                        if (!scanner) {
-                                            scanner = new Instascan.Scanner({
-                                                video: document.getElementById('scanner'),
-                                                scanPeriod: 5,
-                                                mirror: false
-                                            });
-
-                                            scanner.addListener('scan', function(content) {
-                                                try {
-                                                    // Find and check the checkbox corresponding to the scanned book ID
-                                                    const checkbox = document.querySelector(`input[name="books[]"][value="${content}"]`);
-                                                    if (checkbox) {
-                                                        // Uncheck all other checkboxes first
-                                                        document.querySelectorAll('input[name="books[]"]').forEach(box => {
-                                                            box.checked = false;
-                                                        });
-                                                        checkbox.checked = true;
-                                                        
-                                                        // Close camera modal and open confirmation modal
-                                                        const cameraModal = bootstrap.Modal.getInstance(document.getElementById('cameraBookModal'));
-                                                        if (cameraModal) cameraModal.hide();
-                                                        
-                                                        const borrowModal = new bootstrap.Modal(document.getElementById('borrowModal'));
-                                                        borrowModal.show();
-                                                    } else {
-                                                        alert('Book not found in the list!');
-                                                    }
-                                                } catch (error) {
-                                                    console.error('Error handling scan:', error);
-                                                }
-                                            });
-                                        }
-
-                                        // Get cameras and start scanner
-                                        const cameras = await Instascan.Camera.getCameras();
-                                        if (cameras.length > 0) {
-                                            // Prefer back camera if available
-                                            const selectedCamera = cameras[cameras.length - 1];
-                                            await scanner.start(selectedCamera);
-                                            
-                                            const modal = new bootstrap.Modal(document.getElementById('cameraBookModal'));
-                                            modal.show();
-                                        } else {
-                                            throw new Error('No cameras found on your device.');
-                                        }
-                                    } catch (error) {
-                                        console.error('Scanner error:', error);
-                                        alert('Error accessing camera: ' + error.message);
+                                window.startScanner = function() {
+                                    // Initialize audio context on user interaction
+                                    if (!audioContext) {
+                                        audioContext = new (window.AudioContext || window.webkitAudioContext)();
                                     }
+                                    
+                                    if (!scanner) {
+                                        scanner = new Instascan.Scanner({
+                                            video: document.getElementById('scanner'),
+                                            scanPeriod: 5,
+                                            mirror: false
+                                        });
+
+                                        scanner.addListener('scan', function(content) {
+                                            // Play sound effect
+                                            try {
+                                                audio.currentTime = 0; // Reset audio to start
+                                                let playPromise = audio.play();
+                                                
+                                                if (playPromise !== undefined) {
+                                                    playPromise.then(() => {
+                                                        // Audio played successfully
+                                                    }).catch((error) => {
+                                                        console.warn("Audio playback failed:", error);
+                                                    });
+                                                }
+                                            } catch (error) {
+                                                console.error("Audio error:", error);
+                                            }
+                                            
+                                            // Find and check the checkbox corresponding to the scanned book ID
+                                            const checkbox = document.querySelector(`input[name="books[]"][value="${content}"]`);
+                                            if (checkbox) {
+                                                // Uncheck all other checkboxes first
+                                                document.querySelectorAll('input[name="books[]"]').forEach(box => {
+                                                    box.checked = false;
+                                                });
+                                                // Check the scanned book's checkbox
+                                                checkbox.checked = true;
+                                                
+                                                // Close camera modal
+                                                let cameraModal = bootstrap.Modal.getInstance(document.getElementById('cameraBookModal'));
+                                                cameraModal.hide();
+                                                
+                                                // Open confirmation modal
+                                                let borrowModal = new bootstrap.Modal(document.getElementById('borrowModal'));
+                                                borrowModal.show();
+                                            } else {
+                                                alert('Book not found in the list!');
+                                            }
+                                        });
+                                    }
+
+                                    // Start camera
+                                    Instascan.Camera.getCameras().then(function(cameras) {
+                                        if (cameras.length > 0) {
+                                            // Try to use the back camera if available
+                                            let selectedCamera = cameras[cameras.length - 1]; // Usually back camera
+                                            scanner.start(selectedCamera).then(() => {
+                                                // Show modal after camera starts
+                                                let modal = new bootstrap.Modal(document.getElementById('cameraBookModal'));
+                                                modal.show();
+                                            }).catch(function(e) {
+                                                console.error('Failed to start camera:', e);
+                                                alert('Failed to start camera: ' + e.message);
+                                            });
+                                        } else {
+                                            console.error('No cameras found.');
+                                            alert('No cameras found on your device.');
+                                        }
+                                    }).catch(function(e) {
+                                        console.error('Error accessing cameras:', e);
+                                        alert('Error accessing camera. Please ensure you have given camera permissions: ' + e.message);
+                                    });
                                 };
 
-                                // Clean up scanner when modal is closed
-                                document.getElementById('cameraBookModal')?.addEventListener('hidden.bs.modal', function() {
+                                // Stop scanner when modal is closed
+                                document.getElementById('cameraBookModal').addEventListener('hidden.bs.modal', function() {
                                     if (scanner) {
-                                        scanner.stop().catch(console.error);
+                                        scanner.stop();
                                     }
+                                });
+
+                                // For debugging
+                                window.addEventListener('error', function(e) {
+                                    console.error('Global error:', e);
                                 });
                             });
                             </script>
@@ -581,7 +594,7 @@
                                     const minDate = yyyy + '-' + mm + '-' + dd;
                                     
                                     // Calculate max date based on section
-                                    let maxDays = bookSection === 'fiction' ? 5 : 2; // 5 days for fiction, 2 for others
+                                    let maxDays = bookSection === 'fiction' ? 10 : 5; // 5 days for fiction, 2 for others
                                     const maxDate = new Date(today);
                                     maxDate.setDate(today.getDate() + maxDays);
                                     const maxDD = String(maxDate.getDate()).padStart(2, '0');

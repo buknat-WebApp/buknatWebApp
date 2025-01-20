@@ -16,8 +16,6 @@
                         <table class="table align-items-center ">
                             <thead>
                                 <tr>
-                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Transaction ID</th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                         Date Borrowed</th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
@@ -39,23 +37,6 @@
                                             $dueCounter++;
                                         @endphp
                                             <tr>
-
-                                                <td>
-
-                                                    <div class="d-flex px-2 py-1 text-primary">
-                                                        <div class="d-flex flex-column justify-content-center">
-                                                            <h6 class="mb-0 text-sm">
-                                                                {{ $transaction->id }}
-                                                            </h6>
-                                                            <p class="text-xs text-secondary mb-0">
-                                                                <strong>ID No.</strong>
-                                                                {{ $transaction->user->id_number }}
-                                                            </p>
-                                                        </div>
-                                                    </div>
-
-                                                </td>
-
                                                 <td>
                                                     <p class="text-xs font-weight-bold mb-2">
                                                         {{ $transaction->borrowed_at }}</p>

@@ -19,7 +19,7 @@
                     <div class="nav-wrapper position-relative end-0">
                         <ul class="column-gap-4 nav nav-pills nav-fill p-1">
                             <div class="dropdown">
-                                <button class="ni-circle-08 btn dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                <button class="ni ni-fat-add btn dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                                     All Users Pending
                                 </button>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">

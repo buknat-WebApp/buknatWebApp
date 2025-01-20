@@ -178,7 +178,7 @@ public function registerUser(Request $request)
         $librarians = $user->isLibrarian();
 
         foreach ($librarians as $admin) {
-            $admin->notify(new RegisterUser());
+            $admin->notify(new RegisterUser($user));
         }
         return redirect()->back()->with('success', 'Account created successfully. The Librarian will have to confirm it first, before you can use it');
     }

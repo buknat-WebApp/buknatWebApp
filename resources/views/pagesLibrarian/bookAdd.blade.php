@@ -80,13 +80,15 @@
                                                             <label class="" for="author-select">Author </label>
                                                             <a href="#addAuthor" class="text-sm" data-bs-toggle="modal">Add author </a>
                                                         </div>
-                                                        <select class="form-select form-control" id="author-select" name="author_id">
+                                                        <div class="form-control" style="margin-top: 2px;">
+                                                        <select class="form-control" id="author-select" name="author_id">
                                                             <option value=""></option>
                                                             @foreach ($authors as $author)
                                                                 <option value="{{ $author->id }}">{{ $author->author }}</option>
                                                             @endforeach
-                                                        </select>
-                                                    </div>
+                                                        </select>   
+                                                        </div>
+                                                                                                            </div>
                                                 </div>
 
                                                     <div class="col">
@@ -94,12 +96,14 @@
                                                             <div class="d-flex justify-content-between">
                                                                 <a href="#addLocation" class="text-sm" data-bs-toggle="modal">Add Location </a>
                                                             </div>
-                                                           <select class="form-select form-control" id="location-select" name="location_id">
+                                                            <div class="form-control" style="margin-top: 7px;">
+                                                           <select class="form-control" id="location-select" name="location_id">
                                                                 <option value=""></option>
                                                                 @foreach ($locations as $book_location)
                                                                     <option value="{{ $book_location->id }}">{{ $book_location->name }}</option>
                                                                 @endforeach
                                                             </select>
+                                                            </div>
                                                         </div>
 </div>
 
@@ -348,21 +352,21 @@
                 </div>
 
                 <!-- Include Select2 CSS -->
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+{{-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
 <!-- Include Select2 JS -->
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
 
 
         <script>
         $(document).ready(function() {
             $('#author-select').select2({
-                placeholder: 'Select an author',
-                allowClear: true
+            placeholder: 'Select an author',
+            
+         
             });
             $('#location-select').select2({
-                placeholder: 'Select a location',
-                allowClear: true
+                placeholder: 'Select a location'
             });
         });
         </script>

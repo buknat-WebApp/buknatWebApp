@@ -14,9 +14,9 @@ class RegisterUser extends Notification
     /**
      * Create a new notification instance.
      */
-    public function __construct()
+    public function __construct($user)
     {
-        //
+        $this->user = $user;
     }
 
     /**
@@ -48,7 +48,10 @@ class RegisterUser extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            'data' =>' New user has registered.'
+            'name' => $this->user->name,
+            'data' =>'has registered.',
+
+        
         ];
     }
 }

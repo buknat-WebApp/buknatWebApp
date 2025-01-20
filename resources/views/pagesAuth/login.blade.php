@@ -31,7 +31,7 @@
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- Recaptcha -->
-    {!! htmlScriptTagJsApi([
+   {!! htmlScriptTagJsApi([
         'action' => 'login',
         'callback_then' => 'onRecaptchaSuccess',
         'callback_catch' => 'onRecaptchaError'
@@ -116,7 +116,7 @@
                             </div>
                           @endif
                       </div>
-                        <div class="mb-3">
+                      <div class="mb-3">
                             {!! htmlFormSnippet() !!}
                             @if($errors->has('g-recaptcha-response'))
                                 <div>
@@ -125,7 +125,7 @@
                                     </small>
                                 </div>
                             @endif
-                        </div> 
+                        </div>
                       <div class="text-center">
                         <button type="submit" class="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0">Sign in</button>
                       </div>

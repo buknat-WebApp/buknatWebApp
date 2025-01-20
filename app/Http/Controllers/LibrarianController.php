@@ -437,7 +437,6 @@ class LibrarianController extends Controller
 
         // // Generate QR code with given data
         $file_ID = $user->id_number;
-        // $qrCode = QrCode::size(250)->generate($file_ID);
 
         // //Save QR code as image in a specific folder
         $path = public_path('storage/StudentQrCodes/'); // path to folder where image will be saved
@@ -445,20 +444,15 @@ class LibrarianController extends Controller
         if (!File::exists($path)) {
             File::makeDirectory($path, $mode = 0777, true, true);
         }
-        $filename = $user->id . '.png'; // name of the image file
-        // QrCode::format('svg')->size(250)->generate($file_ID, public_path($path . $filename));
-        // QrCode::format('svg')->size(400)->margin(10)->color(0, 0, 0)->backgroundColor(255, 255, 255)
-        //     ->generate($file_ID, public_path($path . $filename));
-
+        $filename = $user->name . '.png'; // name of the image file
 
         QrCode::style('square')
             ->eye('circle')// Use PNG format for the merged image
             ->size(400)
-            ->margin(10)
+            ->margin(1)
             ->color(0, 0, 0)
             ->backgroundColor(255, 255, 255)
             ->format('png')
-//            ->merge('https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-google-icon-logo-png-transparent-svg-vector-bie-supply-14.png', .3, true)
             ->merge(public_path('logo.png'), 0.12, true) // Merge the cat image with QR code
             ->generate($file_ID, ($path . $filename));
 
@@ -488,20 +482,16 @@ class LibrarianController extends Controller
         if (!File::exists($path)) {
             File::makeDirectory($path, $mode = 0777, true, true);
         }
-        $filename = $user->id . '.png'; // name of the image file
-        // QrCode::format('svg')->size(250)->generate($file_ID, public_path($path . $filename));
-        // QrCode::format('svg')->size(400)->margin(10)->color(0, 0, 0)->backgroundColor(255, 255, 255)
-        //     ->generate($file_ID, public_path($path . $filename));
+        $filename = $user->name . '.png'; // name of the image file
 
 
         QrCode::style('square')
             ->eye('circle')// Use PNG format for the merged image
             ->size(400)
-            ->margin(10)
+            ->margin(1)
             ->color(0, 0, 0)
             ->backgroundColor(255, 255, 255)
             ->format('png')
-//            ->merge('https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-google-icon-logo-png-transparent-svg-vector-bie-supply-14.png', .3, true)
             ->merge(public_path('logo.png'), 0.12, true) // Merge the cat image with QR code
             ->generate($file_ID, ($path . $filename));
 
@@ -624,16 +614,14 @@ class LibrarianController extends Controller
         $request->validate([
             'user_id'              => 'required|exists:users,id',
             'expected_return_date' => 'required|date',
-            'books'                => 'required|array|min:1',
+            'books'                => 'required|array|max:3',
             'books.*'              => 'exists:books,id',
         ]);
 
         $user = User::find($request->input('user_id'));
         // $books = Book::find($id);
 
-
         $hasUnreturnedBooks = $user->books->where('returned_at', null)->isNotEmpty();
-
 
         if ($hasUnreturnedBooks) {
             return redirect()->back()->with('error', 'Error. ' . $user->name . ' has an unreturned book!');
@@ -664,7 +652,7 @@ class LibrarianController extends Controller
             Book::where('id', $bookId)->decrement('available_copies', 1);
         }
 
-        return redirect()->back()->with('success', 'Book  Borrowed Recorded Successfully!');
+        return redirect()->back()->with('success', 'Book Borrowed Recorded Successfully!');
     }
 
 
@@ -693,11 +681,69 @@ class LibrarianController extends Controller
             ->join('books', 'books.id', '=', 'book_transactions.book_id')
             ->where('transaction_id', $transaction)
             ->get();
+            
 
+        $penalty = 0;
+        $currentdate = date("Y-m-d");
+        $expectedReturnDate = $user->expected_return_date;
+
+        // Calculate the number of days overdue
+        $daysOverdue = (strtotime($currentdate) - strtotime($expectedReturnDate)) / (60 * 60 * 24);
+
+        if ($daysOverdue > 0) {
+            $penalty = $daysOverdue; // Assuming penalty is 1 per day overdue
+        }
+
+        foreach ($bookTransactions as $bookTransaction) {
+            $bookTransaction->fines = $penalty;
+        }
+        
         return view('pagesLibrarian.borrowUpdate', [
             'user' => $user,
             'bookTransactions' => $bookTransactions,
+
         ]);
+
+        $penalty = 0;
+        $currentdate = date("Y-m-d");
+        // echo $currentdate;
+        // echo $user->expected_return_date;
+        if ($currentdate > $user->expected_return_date){
+            $penalty = 1;
+            // echo "penalty";
+        }
+
+        
+        $bookTransactions->fines = $penalty;
+        // echo ($bookTransactions);
+        
+        return view('pagesLibrarian.borrowUpdate', [
+            'user' => $user,
+            'bookTransactions' => $bookTransactions,
+
+        ]);
+
+
+
+        // $user = DB::table('transactions')
+        //     ->select('users.*', 'transactions.*') //gettinG all the User Details    
+        //     ->join('users', 'users.id', '=', 'transactions.user_id')
+        //     ->where('transactions.id', $transaction)
+        //     ->first();
+
+        // $bookTransactions = DB::table('book_transactions')
+        //     ->select('book_transactions.*', 'books.*', 'book_transactions.id')
+        //     ->join('books', 'books.id', '=', 'book_transactions.book_id')
+        //     ->where('transaction_id', $transaction)
+        //     ->get();
+
+        // $penalty = 0;
+        // $currentdate = date("Y-m-d");
+        // if ($currentdate > $user->expected_return_date) {
+        //     $penalty = 1;
+        // }
+        // $bookTransactions[0]->fines = $penalty;
+        // echo $bookTransactions[0]->fines;
     }
 
     public function returnBook(Request $request)
@@ -709,18 +755,18 @@ class LibrarianController extends Controller
                 $Book->update([
                     'returned_at' => $request->returned_dates[$i],
                     'return_book_condition' => $request->returned_book_conditions[$i],
-                    'fines' => $request->fines[$i],
+                    'fines' => isset($request->fines[$i]) ? $request->fines[$i] : null,
                     'remarks' => $request->remarks[$i],
                 ]);
 
                 if ($request->returned_book_conditions[$i] == 'functional') {
                     $bookToUpdate = BookTransaction::where('id', $request->transactionIDs[$i])->first();
-                    Book::where('id', $bookToUpdate->book_id)->increment('available_copies', '1'); //returned book will be added to copies
+                    Book::where('id', $bookToUpdate->book_id)->increment('available_copies', 1); // returned book will be added to copies
                 }
             }
             return redirect()->route('borrowerLists')->with('success', 'Return Books Successfully.');
         } else {
-            return redirect()->back()->with('error', 'Check atleast one book to return');
+            return redirect()->back()->with('error', 'Check at least one book to return');
         }
     }
 
@@ -862,21 +908,19 @@ class LibrarianController extends Controller
     public function recordLogins(Request $request)
     {
         $qrID = $request->input('qr_code');
-
+    
         $user = User::where('id_number', $qrID)->first();
-
+    
         if ($user) {
             RecordLogin::create([
-                'id_number' => $request->input('qr_code'),
+                'id_number' => $request->input('qr_code'),  
                 'name' => $user->name
             ]);
-
         }
+    
         $records = RecordLogin::orderBy('created_at', 'desc')->get();
-
+    
         return view('pagesLibrarian.transactionLogs', compact('records'));
-
-        //    return response()->json($records);
     }
 
     public function updateStudentsRecord(Request $request)
@@ -981,8 +1025,8 @@ class LibrarianController extends Controller
             
             $reportData = '';
 
-            $reportData = '<h3 style="text-align: center;">Bukidnon National High School Library Management System</h3>' . '<h3 style="text-align: center;">Malaybalay</h3>'
-            .  '<h3 style="text-align: center;">'. $statistical .'</h3>';
+            $reportData = '<h3 style="text-align: center;">Bukidnon National High School Library Management System</h3>' . '<h3 style="text-align: center;">Malaybalay City</h3>'
+            .  '<h2 style="text-align: center;">'. $statistical .'</h2>';
         $reportData .= '<p style="text-align: center; font-style: italic;">'. date('F d', strtotime($fromDate)) . ' - ' . date('d, Y', strtotime($toDate)).'</p>';
     
         
@@ -1166,6 +1210,7 @@ class LibrarianController extends Controller
                                         <th>Title of Books</th>
                                         <th>Author</th>
                                         <th>Accession Number</th>
+                                        <th>Pub.Yr/Copyright</th>
                                         <th>Due Date</th>
                                         <th>Fines</th>
                                     </tr>
@@ -1174,7 +1219,7 @@ class LibrarianController extends Controller
     
                 if($userType == 'students') {
                     $students = DB::table('users')->where('role', 0)->pluck('grade_and_section');
-                    $students = ['Grade 7', 'Grade 8', 'Grade 9', 'Grade 10', 'Grade 11', 'Grade 12'];
+                   
 
                     foreach($students as $student) {
                         $query = DB::table('transactions')
@@ -1182,7 +1227,7 @@ class LibrarianController extends Controller
                             ->join('book_transactions', 'transactions.id', '=', 'book_transactions.transaction_id')
                             ->join('books', 'book_transactions.book_id', '=', 'books.id')
                             ->join('authors', 'books.author_id', '=', 'authors.id')
-                            ->select('transactions.borrowed_at', 'users.name as borrower_name', 'users.grade_and_section', 'books.book_title', 'authors.author', 'books.accession', 'transactions.expected_return_date', 'book_transactions.fines')
+                            ->select('transactions.borrowed_at', 'users.name as borrower_name', 'users.grade_and_section', 'books.book_title', 'authors.author', 'books.accession', 'publication_year', 'transactions.expected_return_date', 'book_transactions.fines')
                             ->whereBetween('transactions.borrowed_at', [$fromDate, $toDate])
                             ->where('users.grade_and_section', $student);
             
@@ -1200,13 +1245,14 @@ class LibrarianController extends Controller
                     
                         foreach ($bookTransactions as $bookTransaction) {
                             $reportData .= '<tr>';
-                            $reportData .= '<td>' . Carbon::parse($bookTransaction->borrowed_at)->format('M d, Y h:i A') . '</td>';
+                            $reportData .= '<td>' . Carbon::parse($bookTransaction->borrowed_at)->format('M d, Y') . '</td>';
                             $reportData .= '<td>' . $bookTransaction->borrower_name . '</td>';
                             $reportData .= '<td>' . $bookTransaction->grade_and_section . '</td>';
                             $reportData .= '<td>' . $bookTransaction->book_title . '</td>';
                             $reportData .= '<td>' . $bookTransaction->author . '</td>';
                             $reportData .= '<td>' . $bookTransaction->accession . '</td>';
-                            $reportData .= '<td>' . Carbon::parse($bookTransaction->expected_return_date)->format('M d, Y h:i A') . '</td>';
+                            $reportData .= '<td>' . $bookTransaction->publication_year . '</td>';
+                            $reportData .= '<td>' . Carbon::parse($bookTransaction->expected_return_date)->format('M d, Y') . '</td>';
                             $reportData .= '<td>' . $bookTransaction->fines . '</td>';
                             $reportData .= '</tr>';
                         }
@@ -1223,7 +1269,7 @@ class LibrarianController extends Controller
                             ->join('book_transactions', 'transactions.id', '=', 'book_transactions.transaction_id')
                             ->join('books', 'book_transactions.book_id', '=', 'books.id')
                             ->join('authors', 'books.author_id', '=', 'authors.id')
-                            ->select('transactions.borrowed_at', 'users.name as borrower_name', 'users.office_or_department', 'books.book_title', 'authors.author', 'books.accession', 'transactions.expected_return_date', 'book_transactions.fines')
+                            ->select('transactions.borrowed_at', 'users.name as borrower_name', 'users.office_or_department', 'books.book_title', 'authors.author', 'books.accession', 'publication_year', 'transactions.expected_return_date', 'book_transactions.fines')
                             ->whereBetween('transactions.borrowed_at', [$fromDate, $toDate])
                             ->where('users.office_or_department', $teacher);
             
@@ -1246,6 +1292,7 @@ class LibrarianController extends Controller
                             $reportData .= '<td>' . $bookTransaction->book_title . '</td>';
                             $reportData .= '<td>' . $bookTransaction->author . '</td>';
                             $reportData .= '<td>' . $bookTransaction->accession . '</td>';
+                            $reportData .= '<td>' . $bookTransaction->publication_year . '</td>';
                             $reportData .= '<td>' . $bookTransaction->expected_return_date . '</td>';
                             $reportData .= '<td>' . $bookTransaction->fines . '</td>';
                             $reportData .= '</tr>';
@@ -1266,7 +1313,7 @@ class LibrarianController extends Controller
                                 ->join('book_transactions', 'transactions.id', '=', 'book_transactions.transaction_id')
                                 ->join('books', 'book_transactions.book_id', '=', 'books.id')
                                 ->join('authors', 'books.author_id', '=', 'authors.id')
-                                ->select('transactions.borrowed_at', 'users.name as borrower_name', 'users.grade_and_section', 'books.book_title', 'authors.author', 'books.accession', 'transactions.expected_return_date', 'book_transactions.fines')
+                                ->select('transactions.borrowed_at', 'users.name as borrower_name', 'users.grade_and_section', 'books.book_title', 'authors.author', 'books.accession', 'publication_year', 'transactions.expected_return_date', 'book_transactions.fines')
                                 ->whereBetween('transactions.borrowed_at', [$fromDate, $toDate])
                                 ->where('users.grade_and_section', $student);
                 
@@ -1290,6 +1337,7 @@ class LibrarianController extends Controller
                                 $reportData .= '<td>' . $bookTransaction->book_title . '</td>';
                                 $reportData .= '<td>' . $bookTransaction->author . '</td>';
                                 $reportData .= '<td>' . $bookTransaction->accession . '</td>';
+                                $reportData .= '<td>' . $bookTransaction->publication_year . '</td>';
                                 $reportData .= '<td>' . Carbon::parse($bookTransaction->expected_return_date)->format('M d, Y h:i A') . '</td>';
                                 $reportData .= '<td>' . $bookTransaction->fines . '</td>';
                                 $reportData .= '</tr>';
@@ -1302,7 +1350,7 @@ class LibrarianController extends Controller
                             ->join('book_transactions', 'transactions.id', '=', 'book_transactions.transaction_id')
                             ->join('books', 'book_transactions.book_id', '=', 'books.id')
                             ->join('authors', 'books.author_id', '=', 'authors.id')
-                            ->select('transactions.borrowed_at', 'users.name as borrower_name', 'users.office_or_department', 'books.book_title', 'authors.author', 'books.accession', 'transactions.expected_return_date', 'book_transactions.fines')
+                            ->select('transactions.borrowed_at', 'users.name as borrower_name', 'users.office_or_department', 'books.book_title', 'authors.author', 'books.accession', 'publication_year', 'transactions.expected_return_date', 'book_transactions.fines')
                             ->whereBetween('transactions.borrowed_at', [$fromDate, $toDate])
                             ->where('users.office_or_department', $teacher);
             
@@ -1325,6 +1373,7 @@ class LibrarianController extends Controller
                             $reportData .= '<td>' . $bookTransaction->book_title . '</td>';
                             $reportData .= '<td>' . $bookTransaction->author . '</td>';
                             $reportData .= '<td>' . $bookTransaction->accession . '</td>';
+                            $reportData .= '<td>' . $bookTransaction->publication_year . '</td>';
                             $reportData .= '<td>' . Carbon::parse($bookTransaction->expected_return_date)->format('M d, Y h:i A') . '</td>';
                             $reportData .= '<td>' . $bookTransaction->fines . '</td>';
                             $reportData .= '</tr>';
@@ -1499,7 +1548,7 @@ class LibrarianController extends Controller
         $reportData .= '<br><br><br><br><br>';
         $reportData .= '<p style="text-align: right;  padding-right: 260px;">PREPARED BY:</p><br>';
         $reportData .= '<footer>
-        <p style="font-size: 16px;text-align: right;  padding-right: 290px; font-weight: bold;margin: 0px;"><u>' . Auth::user()->name . '</u></p>
+        <p style="font-size: 16px;text-align: right;  padding-right: 240px; font-weight: bold;margin: 0px;"><u>' . Auth::user()->name . '</u></p>
         <p style="font-style: italic;text-align: right;  padding-right: 280px; margin-left: 10px; margin-top:0px;">Librarian</p>
       </footer>';
         $reportData .= '<br>';

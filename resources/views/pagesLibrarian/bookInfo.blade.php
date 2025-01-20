@@ -247,6 +247,14 @@
                                                         value="{{ $book->no_of_copies }}">
                                                 </div>
                                             </div>
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <label for="example-text-input"
+                                                        class="form-control-label">Available copies</label>
+                                                    <input class="form-control" name="available_copies" type="number"
+                                                        value="{{ $book->available_copies }}">
+                                                </div>
+                                            </div>
 
                                              <div class="col">
                                                 <div class="form-group">

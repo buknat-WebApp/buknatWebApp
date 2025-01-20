@@ -105,6 +105,7 @@
                                 @endif
 
                                 @foreach (auth()->user()->unreadNotifications as $notification)
+                                
                                 <li class="mb-2">
                                     <a class="dropdown-item border-radius-md bg-gradient-faded-info" href="javascript:;">
                                         <div class="d-flex py-1">
@@ -114,10 +115,8 @@
                                             </div>
                                                     <div class="d-flex flex-column justify-content-center">
                                                         <h6 class="text-sm font-weight-normal mb-1">
-                                                            <span class="font-weight-bold">{{$notification->data['data']}}</span>
-                                                            @if(isset($notification->data['message']))
-                                                                {{$notification->data['message']}}
-                                                            @endif
+                                                            <span class="font-weight-bold">{{$notification->data['name']}} {{$notification->data['data']}}</span>
+                                                        
                                                         </h6>
                                                         <p class="text-xs text-secondary mb-0">
                                                             <i class="fa fa-clock me-1"></i>
@@ -127,6 +126,7 @@
                                                 </div>
                                             </a>
                                         </li>
+
                                 @endforeach
                                 @foreach (auth()->user()->readNotifications as $notification)
                                 <li class="mb-2">
@@ -241,7 +241,7 @@
         
         <div>
         
-        <button class="btn btn-primary btn-lg font-weight-bold mx-4 mt-4" onclick="goBack()">
+        <button class="btn btn-dark btn-lg font-weight-bold mx-4 mt-4" onclick="goBack()">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
             <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8m15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z"/>
             </svg><i></i> Back    

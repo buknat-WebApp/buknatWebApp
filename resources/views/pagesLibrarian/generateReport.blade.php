@@ -101,7 +101,7 @@
             </div>
 
             <div class="row mt-3">
-                <div class="col-3">
+               {{-- <div class="col-3">
                     <p class="text-center font-weight-bold">Select Author</p>
                 </div>
                 <div class="col-5 text-center font-weight-bold">
@@ -111,7 +111,7 @@
                             <option value="{{ $author->id }}">{{ $author->author }}</option>
                         @endforeach
                     </select>
-                </div>
+                </div> --}}
             </div>
 
             <div class="row mt-3">
@@ -124,7 +124,7 @@
                         <select class="form-control custom-select" id="logType" name="logType">
                             <option value=""></option>
                             <option value="monthly_record">Monthly Statistical Record of Library Users</option>
-                            <option value="top3">Top 3 Visitors</option>
+                            {{-- <option value="top3">Top 3 Visitors</option> --}}
                         </select>
                     </div>
             </div>
@@ -224,6 +224,7 @@
             $('#locationType, #authorType').empty().append('<option value=""></option>');
         }
     });
+    
 });
 
     </script>
@@ -279,6 +280,7 @@
         toggleLogTypeVisibility(); // Initial call to set the correct state on page load
     });
 </script>
+
 
 @endsection
 

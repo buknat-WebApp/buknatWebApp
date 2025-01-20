@@ -53,7 +53,7 @@
                                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                             Borrowed Book/s</th>
                                                         <th
-                                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                             Borrow Status</th>
 
                                                     </tr>

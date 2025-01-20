@@ -20,31 +20,32 @@
                 <div class="col-lg-6 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
                     <div class="nav-wrapper position-relative end-0">
                         <ul class="nav nav-pills nav-fill p-1">
-                            <li class="nav-item">
-                                <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center"
-                                    href="{{ route('borrowingForm') }}">
-                                    <i class="ni ni-fat-add"></i>
-                                    <span class="ms-2">Borrow</span>
-                                </a>
-                            </li>
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Students
+                                </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <li><a class="dropdown-item" href="{{ route('borrowingFormTeacher') }}">Teachers</a></li>  
+                                    </ul>
+                            </div>
                             <li class="nav-item">
                                 <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center"
                                     href="{{ route('borrowerLists') }}">
                                     <i class="ni ni-books"></i>
-                                    <span class="ms-2">Borrowed</span>
+                                    <span class="ms-2">Check Out</span>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center"
                                     href="{{ route('returnedBook') }}">
                                     <i class="ni ni-books"></i>
-                                    <span class="ms-2">Returned</span>
+                                    <span class="ms-2">Book Returned</span>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center btn">
                                     <i class="ni ni-books"></i>
-                                    <span class="ms-2">Update</span>
+                                    <span class="ms-2">Check In</span>
                                 </a>
                             </li>
                         </ul>
@@ -91,6 +92,7 @@
                                     </div>
                                     
                                     <div class="col-md-6">
+                                       
                                         <div class="form-group">
                                             <label for="example-text-input" class="form-control-label">Returned Date</label>
                                             <input class="form-control" name="returned_dates[]" value="{{ date('Y-m-d') }}"
@@ -110,7 +112,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="exampleInputText1" class="form-control-label">Fines</label>
-                                            <input class="form-control" type="number" name="fines[]">
+                                            <input class="form-control" type="number" name="fines" value="{{ $bookTransaction->fines }}">
                                         </div>
                                     </div>
 
