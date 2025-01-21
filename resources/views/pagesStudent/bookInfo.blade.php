@@ -10,7 +10,7 @@
                             {{ $book->book_title }}
                         </h5>
                         <p class="mb-0 font-weight-bold text-sm">
-                            <strong> Author/s </strong> : {{ $book->author->author }}.
+                         {{ $book->author->author }}.
                         </p>
                     </div>
                 </div>

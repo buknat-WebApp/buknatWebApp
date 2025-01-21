@@ -67,16 +67,15 @@
                                                 </td>
 
                                                 <td class="text-start">
-                                                    <?php $count = 1; ?>
+                                                   
                                                     @foreach ($transaction->bookTransactions as $bookTransaction)
                                                         @foreach ($books as $book)
                                                             @if (is_null($bookTransaction->returned_at))
                                                                 @if ($bookTransaction->book_id == $book->id)
                                                                     <p class="text-xs font-weight-bold mb-2">
-                                                                        {{ $count }} .
                                                                         {{ $book->book_title }} </p>
                                                                     <p class="text-xs text-secondary mb-0"></p>
-                                                                    <?php $count++; ?>
+                                                                    
                                                                 @endif
                                                             @endif
                                                         @endforeach

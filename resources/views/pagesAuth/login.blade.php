@@ -116,7 +116,7 @@
                             </div>
                           @endif
                       </div>
-                      <div class="mb-3">
+                     <div class="mb-3">
                             {!! htmlFormSnippet() !!}
                             @if($errors->has('g-recaptcha-response'))
                                 <div>

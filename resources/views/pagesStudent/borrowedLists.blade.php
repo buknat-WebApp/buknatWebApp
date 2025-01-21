@@ -53,7 +53,7 @@
                                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                             Borrowed Book/s</th>
                                                         <th
-                                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                            class="text-start text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                             Borrow Status</th>
 
                                                     </tr>
@@ -91,18 +91,25 @@
 
                                                             </td>
 
-                                                            <td class="align-middle">
+                                                            <td class="text-start align-middle">
                                                                 @foreach ($transaction->bookTransactions as $bookTransaction)
                                                                     @if (!is_null($bookTransaction->returned_at))
                                                                         <p
-                                                                            class="text-center text-white font-weight-bold mb-1 bg-success bg-gradient">
-                                                                            RETURNED
+                                                                            class="badge badge-pill badge-lg bg-gradient-success" style="font-size: 14px;>
+                                                                            ON TIME
                                                                         </p>
                                                                     @else
-                                                                        <p
-                                                                            class="text-center text-white font-weight-bold mb-1 bg-danger bg-gradient">
-                                                                            NOT YET RETURNED
-                                                                        </p>
+                                                                        @if (now()->greaterThan($transaction->expected_return_date))
+                                                                            <p
+                                                                                class="badge badge-pill badge-lg bg-gradient-danger" style="font-size: 14px;">
+                                                                                OVERDUE
+                                                                            </p>
+                                                                        @else
+                                                                            <p
+                                                                                class="badge badge-pill badge-lg bg-gradient-warning" style="font-size: 14px;>
+                                                                                NOT YET RETURN
+                                                                            </p>
+                                                                        @endif
                                                                     @endif
                                                                 @endforeach
                                                             </td>

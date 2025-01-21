@@ -59,12 +59,12 @@
                                                     <div class="form-group">
                                                         <label for="gender-select">Current Grade Level:</label>
                                                         <select class="form-select form-control" id="grade_levelA" name="grade_levelA" onchange="toggleGradeLevelB()">
-                                                            <option value="Grade-7" selected>Grade-7</option>
-                                                            <option value="Grade-8" selected>Grade-8</option>
-                                                            <option value="Grade-9" selected>Grade-9</option>
-                                                            <option value="Grade-10" selected>Grade-10</option>
-                                                            <option value="Grade-11" selected>Grade-11</option>
-                                                            <option value="Grade-12" selected>Grade-12</option>
+                                                            <option value="Grade 7" selected>Grade 7</option>
+                                                            <option value="Grade 8" selected>Grade 8</option>
+                                                            <option value="Grade 9" selected>Grade 9</option>
+                                                            <option value="Grade 10" selected>Grade 10</option>
+                                                            <option value="Grade 11" selected>Grade 11</option>
+                                                            <option value="Grade 12" selected>Grade 12</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -73,12 +73,12 @@
                                                 <div class="form-group">
                                                     <label for="gender-select">Grade Level Update:</label>
                                                     <select class="form-select form-control" id="grade_levelB" name="grade_levelB" disabled>
-                                                        <option value="Grade-7" selected>Grade-7</option>
-                                                        <option value="Grade-8" selected>Grade-8</option>
-                                                        <option value="Grade-9" selected>Grade-9</option>
-                                                        <option value="Grade-10" selected>Grade-10</option>
-                                                        <option value="Grade-11" selected>Grade-11</option>
-                                                        <option value="Grade-12" selected>Grade-12</option>
+                                                        <option value="Grade 7" selected>Grade 7</option>
+                                                        <option value="Grade 8" selected>Grade 8</option>
+                                                        <option value="Grade 9" selected>Grade 9</option>
+                                                        <option value="Grade 10" selected>Grade 10</option>
+                                                        <option value="Grade 11" selected>Grade 11</option>
+                                                        <option value="Grade 12" selected>Grade 12</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -114,7 +114,7 @@
             var gradeLevelB = document.getElementById('grade_levelB');
 
             // Enable or disable Grade Level to be Promoted based on the selected Grade Level
-            gradeLevelB.disabled = (gradeLevelA.value === 'Grade-12');
+            gradeLevelB.disabled = (gradeLevelA.value === 'Grade 12');
         }
     </script>
 

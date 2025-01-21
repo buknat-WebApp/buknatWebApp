@@ -82,7 +82,7 @@
         <div class="card">
             <div class="card-body p-3">
                 <div class="row">
-                <a href="{{ route('accountLists') }}" class="text-decoration-none text-black">
+                <a href="{{ route('borrowerLists') }}" class="text-decoration-none text-black">
                     <div class="col-8">
                         <div class="numbers">
                             <p class="text-sm mb-0 text-uppercase font-weight-bold">Unreturned Books</p>
@@ -95,7 +95,7 @@
                     </div>
                     <div class="col-4 text-end">
                         <div class="icon icon-shape bg-gradient-warning shadow-warning text-center rounded-circle">
-                             <a href="{{ route('accountLists') }}">
+                             <a href="{{ route('borrowerLists') }}">
                                 <i class="ni ni-cart text-lg opacity-10" aria-hidden="true"></i>
                         </div> </a>
                     </div>

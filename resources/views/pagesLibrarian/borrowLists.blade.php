@@ -117,26 +117,26 @@
                                                             </td>
 
                                                             <td class="text-start">
-                                                                <?php $count = 1; ?>
+                                                                
                                                                 @foreach ($transaction->bookTransactions as $bookTransaction)
-                                                                    @if (is_null($bookTransaction->returned_at))
-                                                                        <p class="text-xs font-weight-bold mb-2">
-                                                                            {{ $bookTransaction->book->book_title ?? 'No Title' }} 
-                                                                        </p>
-                                                                        <p class="text-xs text-secondary mb-0">
-                                                                            <strong>Author:</strong> {{ $bookTransaction->book->author->author ?? 'No Author' }}
-                                                                        </p>
-                                                                        <p class="text-xs text-secondary mb-0">
-                                                                            <strong>Accession No.:</strong> {{ $bookTransaction->book->accession ?? 'No Accession No.'}}
-                                                                        </p>
-                                                                        <?php $count++; ?>
-                                                                    @endif
+                                                                    @foreach ($books as $book)
+                                                                        @if (is_null($bookTransaction->returned_at))
+                                                                            @if ($bookTransaction->book_id == $book->id)
+                                                                                <p class="text-xs font-weight-bold mb-2">
+                                                                                    {{ $book->book_title }} </p>
+                                                                            @endif
+                                                                        @endif
+                                                                    @endforeach
                                                                 @endforeach
+
                                                             </td>
 
-                                                            <td class="tesct-start align-middle">
-                                                                <span class="badge badge-sm bg-gradient-danger">Not
-                                                                    Returned</span>
+                                                            <td class="text-start align-middle">
+                                                                @if (now()->greaterThan($transaction->expected_return_date))
+                                                                    <span class="badge badge-sm bg-gradient-danger">Overdue</span>
+                                                                @else
+                                                                    <span class="badge badge-sm bg-gradient-warning">Borrowed</span>
+                                                                @endif
                                                             </td>
 
                                                             <td class="align-middle">

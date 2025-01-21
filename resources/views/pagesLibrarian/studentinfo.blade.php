@@ -78,12 +78,12 @@
                                                     <label for="example-text-input" class="form-control-label">Grade Level</label>
                                                     <select class="form-control" name="grade_and_section" type="text" value="{{ $student->grade_and_section }} {{ $student->last_grade_level }}">
                                                         <option value=""}}>{{ $student->grade_and_section }} {{ $student->last_grade_level }}</option>
-                                                        <option value="Grade-7">Grade-7</option>
-                                                        <option value="Grade-8">Grade-8</option>
-                                                        <option value="Grade-9">Grade-9</option>
-                                                        <option value="Grade-10">Grade-10</option>
-                                                        <option value="Grade-11">Grade-11</option>
-                                                        <option value="Grade-12">Grade-12</option>
+                                                        <option value="Grade 7">Grade 7</option>
+                                                        <option value="Grade 8">Grade 8</option>
+                                                        <option value="Grade-9">Grade 9</option>
+                                                        <option value="Grade 10">Grade 10</option>
+                                                        <option value="Grade 11">Grade 11</option>
+                                                        <option value="Grade 12">Grade 12</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -141,6 +141,12 @@
                                                     <button type="submit" class="btn btn-sm form-control mt-4 btn-success">Update</button>
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div class="row">
+                                            <a href="{{ route('regenerateQrCode', ['student' => $student->id]) }}" class="btn btn-primary btn-sm mb-0"
+                                                onclick="return confirm('Are you sure you want this student to regenerate QR Code? This may take a while.');">
+                                                <i class="fas fa-sync"></i> Regenerate QR Code
+                                            </a>
                                         </div>
                                     </form>
 

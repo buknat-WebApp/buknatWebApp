@@ -42,44 +42,44 @@ if (recipientNameInput) {
 }
 
 
-import './bootstrap';
-import '../css/app.css';
+// import './bootstrap';
+// import '../css/app.css';
 
-// Import DataTables
-import $ from 'jquery';
-import 'datatables.net-bs4';
+// // Import DataTables
+// import $ from 'jquery';
+// import 'datatables.net-bs4';
 
-$(document).ready(function () {
-  $('#mytable').DataTable();
-});
+// $(document).ready(function () {
+//   $('#mytable').DataTable();
+// });
 
 
-//table in searching the user in the borrrowing form
-   // Get the search input and users table elements
-   const searchInput = document.getElementById('search-student-borrow');
-   const usersTable = document.getElementById('users-table');
-if(searchInput){
+// //table in searching the user in the borrrowing form
+//    // Get the search input and users table elements
+//    const searchInput = document.getElementById('search-student-borrow');
+//    const usersTable = document.getElementById('users-table');
+// if(searchInput){
 
-    // Add an event listener to the search input
-   searchInput.addEventListener('input', function () {
-    // Get the search term
-    const searchTerm = searchInput.value.toLowerCase();
+//     // Add an event listener to the search input
+//    searchInput.addEventListener('input', function () {
+//     // Get the search term
+//     const searchTerm = searchInput.value.toLowerCase();
 
-    // Loop through each row in the users table
-    for (let i = 0; i < usersTable.rows.length; i++) {
-        const row = usersTable.rows[i];
-        const name = row.cells[0].textContent.toLowerCase();
-        const email = row.cells[1].textContent.toLowerCase();
+//     // Loop through each row in the users table
+//     for (let i = 0; i < usersTable.rows.length; i++) {
+//         const row = usersTable.rows[i];
+//         const name = row.cells[0].textContent.toLowerCase();
+//         const email = row.cells[1].textContent.toLowerCase();
 
-        // Check if the row matches the search term
-        if (name.includes(searchTerm) || email.includes(searchTerm)) {
-            row.style.display = '';
-        } else {
-            row.style.display = 'none';
-        }
-    }
-});
-}
+//         // Check if the row matches the search term
+//         if (name.includes(searchTerm) || email.includes(searchTerm)) {
+//             row.style.display = '';
+//         } else {
+//             row.style.display = 'none';
+//         }
+//     }
+// });
+// }
    
 
 

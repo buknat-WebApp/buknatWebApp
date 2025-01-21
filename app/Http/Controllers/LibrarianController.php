@@ -664,6 +664,7 @@ class LibrarianController extends Controller
             })
             ->orderBy('expected_return_date', 'asc')
             ->get();
+        $authors = Author::all();
         $books = Book::all();
         return view('pagesLibrarian.borrowLists', compact('transactions', 'books'));
     }
