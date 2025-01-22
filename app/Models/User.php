@@ -73,9 +73,15 @@ class User extends Authenticatable
     }
 
     public function isGraduated()
-{
-    return $this->role == 3;
-}
+    {
+        return $this->role == 3;
+    }
+    
+    public function isInactive()
+    {
+        // Logic to determine if the student is inactive and has a role of 4
+        return $this->status === 'inactive' && $this->role == 4; // Assuming you have a 'status' field and 'role' field
+    }
 //    public function isInActive()
 
 //     {

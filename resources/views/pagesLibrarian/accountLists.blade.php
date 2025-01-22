@@ -130,10 +130,17 @@
                                                             </td>
 
                                                             <td class="align-middle text-center text-sm">
+                                                                <span class="badge badge-sm 
+                                                                    {{ $student->isGraduated() ? 'bg-gradient-secondary' : ($student->isInactive() ? 'bg-gradient-danger' : 'bg-gradient-success') }}">
+                                                                    {{ $student->isGraduated() ? 'Graduated' : ($student->isInactive() ? 'Inactive' : 'Active') }}
+                                                                </span>
+                                                            </td>
+
+                                                            <!-- <td class="align-middle text-center text-sm">
                                                                 <span class="badge badge-sm {{ $student->isGraduated() ? 'bg-gradient-secondary' : 'bg-gradient-success' }}">
                                                                     {{ $student->isGraduated() ? 'Graduated' : 'Active' }}
                                                                 </span>
-                                                            </td>
+                                                            </td> -->
 
                                                             <td class="">
                                                                 <a href="{{ route('studentDetails', ['student' => $student->id]) }}"

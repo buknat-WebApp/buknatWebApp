@@ -221,12 +221,7 @@
                         <div class="col">
                             <label for="office">Kindly Re- Select</label>
                             <select id="office" name="office_or_department" class="form-control" required>
-                                <option value="Grade 7 Teacher"> Grade 7 Teacher</option>
-                                <option value="Grade 8 Teacher"> Grade 8 Teacher</option>
-                                <option value="Grade 9 Teacher"> Grade 9 Teacher</option>
-                                <option value="Grade 10 Teacher"> Grade 10 Teacher</option>
-                                <option value="Grade 11 Teacher"> Grade 11 Teacher</option>
-                                <option value="Grade 12 Teacher"> Grade 12 Teacher</option>
+                                <option value="Teacher">Teacher</option>
                             </select>
                             <input type="number" value="1" hidden>
                         </div>

@@ -21,8 +21,7 @@
                         <ul class="nav nav-pills nav-fill p-1">
 
                             <li class="nav-item">
-                                <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center btn"
-                                    @disabled(true)">
+                                <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center btn" @disabled(true)>
                                     <i class="ni ni-folder-17"></i>
                                     <span class="ms-2">Student Records</span>
                                 </a>

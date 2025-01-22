@@ -69,18 +69,19 @@
                                             </div>
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label for="example-text-input" class="form-control-label">ID Number</label>
-                                                    <input class="form-control" name="id_number" type="text" value="{{ $student->id_number }}">
+                                                    <label for="example-text-input" class="form-control-label">LRN Number</label>
+                                                    <input class="form-control" name="id_number" type="text" value="{{ $student->id_number }}" disabled>
                                                 </div>
                                             </div>
                                             <div class="col">
                                                 <div class="form-group">
                                                     <label for="example-text-input" class="form-control-label">Grade Level</label>
-                                                    <select class="form-control" name="grade_and_section" type="text" value="{{ $student->grade_and_section }} {{ $student->last_grade_level }}">
-                                                        <option value=""}}>{{ $student->grade_and_section }} {{ $student->last_grade_level }}</option>
+                                                    <select class="form-control" name="grade_and_section" type="text">
+                                                        <option value="{{ $student->grade_and_section }} {{ $student->last_grade_level }}">{{ $student->grade_and_section }} {{ $student->last_grade_level }}</option>
+                                                        <!-- <option value=""></option> -->
                                                         <option value="Grade 7">Grade 7</option>
                                                         <option value="Grade 8">Grade 8</option>
-                                                        <option value="Grade-9">Grade 9</option>
+                                                        <option value="Grade 9">Grade 9</option>
                                                         <option value="Grade 10">Grade 10</option>
                                                         <option value="Grade 11">Grade 11</option>
                                                         <option value="Grade 12">Grade 12</option>
@@ -91,7 +92,7 @@
                                             <div class="col">
                                                 <div class="form-group">
                                                     <label for="example-text-input" class="form-control-label">Section</label>
-                                                    <input class="form-control" name="section" type="text" value="{{ $student->grade_and_section }}" disabled>
+                                                    <input class="form-control" name="section" type="text" value="{{ $student->section }}" disabled>
                                                 </div>
                                             </div>
                                             
@@ -122,6 +123,7 @@
                                                     <label for="example-text-input" class="form-control-label">Status:</label>
                                                     <select class="form-select form-control" id="status" name="status">
                                                         <option value="active" {{ $student->status == 'active' ? 'selected' : '' }}>Active</option>
+                                                        <option value="inactive" {{ $student->status == 'inactive' ? 'selected' : '' }}>Inactive</option>
                                                         <option value="graduated" {{ $student->status == 'graduated' ? 'selected' : '' }}>Graduated</option>
                                                     </select>
                                                 </div>

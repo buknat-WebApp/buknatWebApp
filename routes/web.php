@@ -103,8 +103,8 @@ Route::prefix('Librarian')->middleware(['auth', 'isLibrarian'])->group(function(
 
     Route::get('/all/students/info/{student}', [LibrarianController::class, 'showStudentInfo'])->name('studentDetails');
     Route::put('/all/students/info/{student}', [LibrarianController::class, 'studentUpdate'])->name('studentUpdate');
-    Route::get('/regenerate/{student}', [LibrarianController::class, 'regenerateQrCode'])->name('regenerateQrCode');
-
+    Route::get('/all/students/info/regenerate/{student}', [LibrarianController::class, 'regenerateQrCode'])->name('regenerateQrCode');
+    // Route::get('/all/students/info/{student}/print', [LibrarianController::class, 'printQrCode'])->name('printQrCode');
     Route::get('/all/teachers/info/{teacher}', [LibrarianController::class, 'showTeacherInfo'])->name('teacherDetails');
     Route::put('/all/teachers/info/{teacher}', [LibrarianController::class, 'teacherUpdate'])->name('teacherUpdate');
 

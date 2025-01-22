@@ -118,7 +118,7 @@
                                             </div>
 
                                             <div class="mb-3">
-                                                <input type="number" class="form-control @if($errors->has('id_number')) is-invalid @endif" placeholder="Library ID"
+                                                <input type="number" class="form-control @if($errors->has('id_number')) is-invalid @endif" placeholder="ID Number"
                                                        name="id_number" id="id_number" value="{{ old('id_number') }}">
                                                 @if ($errors->has('id_number'))
                                                     <div class="invalid-feedback">
@@ -130,12 +130,7 @@
                                             <div class="mb-3">
                                                 <label for="cars">Grade Level</label>
                                                 <select name="office_or_department" id="cars" class="form-control">
-                                                    <option value="Grade 7 Teacher" {{ old('office_or_department') == 'Grade 7 Teacher' ? 'selected' : '' }}>Grade 7  Teacher</option>
-                                                    <option value="Grade 8 Teacher" {{ old('office_or_department') == 'Grade 8 Teacher' ? 'selected' : '' }}>Grade  8 Teacher</option>
-                                                    <option value="Grade 9 Teacher" {{ old('office_or_department') == 'Grade 9 Teacher' ? 'selected' : '' }}>Grade  9 Teacher</option>
-                                                    <option value="Grade 10 Teacher" {{ old('office_or_department') == 'Grade 10 Teacher' ? 'selected' : '' }}>Grade 10  Teacher</option>
-                                                    <option value="Grade 11 Teacher" {{ old('office_or_department') == 'Grade 11 Teacher' ? 'selected' : '' }}>Grade  11 Teacher</option>
-                                                    <option value="Grade 12 Teacher" {{ old('office_or_department') == 'Grade 12 Teacher' ? 'selected' : '' }}>Grade  12 Teacher</option>
+                                                    <option value="Teacher" {{ old('office_or_department') == 'Teacher' ? 'selected' : '' }}>Teacher</option>
                                                 </select>
                                                 <input type="number" value="1" hidden>
 

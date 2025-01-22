@@ -262,7 +262,8 @@ class LibrarianController extends Controller
         // Generate QR code image
         $qrImage = QrCode::style('square')
             ->eye('circle')
-            ->size(400)
+            ->size(800) // Increased size for higher definition
+            ->errorCorrection('H') // High error correction level
             ->margin(1) // Removed margin around QR code
             ->color(0, 0, 0)
             ->backgroundColor(255, 255, 255)
@@ -274,7 +275,7 @@ class LibrarianController extends Controller
         $image = imagecreatefromstring($qrImage);
         $imageWidth = imagesx($image);
         $imageHeight = imagesy($image);
-        $newHeight = $imageHeight + 52 ; // Reduced extra space for text
+        $newHeight = $imageHeight + 60 ; // Reduced extra space for text
 
         $newImage = imagecreatetruecolor($imageWidth, $newHeight);
         $white = imagecolorallocate($newImage, 255, 255, 255);
@@ -293,12 +294,12 @@ class LibrarianController extends Controller
         $title = $book->book_title;
 
         // Calculate text dimensions for centering
-        $fontSize = 12;
+        $fontSize = 20;
 
         $bboxTitle = imagettfbbox($fontSize, 0, $font, $title);
         $titleWidth = abs($bboxTitle[4] - $bboxTitle[0]);
         $titleX = ($imageWidth - $titleWidth) / 2;
-        $titleY = $imageHeight + 15; // Place title just below the QR code
+        $titleY = $imageHeight + 20; // Place title just below the QR code
 
         // Calculate author text position with tighter spacing
         $bboxAuthor = imagettfbbox($fontSize, 0, $font, $authorName);
@@ -396,16 +397,44 @@ class LibrarianController extends Controller
     {
         $students = User::where('role', 0) 
         ->orWhere('role', 3)
+        ->orWhere('role', 4)
         ->get();
 
         return view('pagesLibrarian.accountLists', compact('students'));
     }
 
     public function showStudentInfo($student)
-{
+    {
+        $student = User::findOrFail($student);
+        return view('pagesLibrarian.studentinfo', compact('student'));
+    }
+   public function regenerateQrCode($student)
+   {
     $student = User::findOrFail($student);
-    return view('pagesLibrarian.studentinfo', compact('student'));
-}
+
+    $file_ID = $student->id_number;
+
+        // //Save QR code as image in a specific folder
+        $path = public_path('storage/StudentQrCodes/'); // path to folder where image will be saved
+
+        if (!File::exists($path)) {
+            File::makeDirectory($path, $mode = 0777, true, true);
+        }
+        $filename = $student->id . '.png'; // name of the image file
+
+        QrCode::style('square')
+            ->eye('circle')// Use PNG format for the merged image
+            ->size(800) // Increased size for higher definition
+            ->errorCorrection('H') // High error correction level
+            ->margin(1) // Removed margin around QR code
+            ->color(0, 0, 0)
+            ->backgroundColor(255, 255, 255)
+            ->format('png')
+            ->merge(public_path('logo.png'), 0.12, true) // Merge the cat image with QR code
+            ->generate($file_ID, ($path . $filename));
+    
+    return redirect()->back()->with('success', 'Student QR Code Regenerated Successfully.');
+   }
 
     public function accountListsTeacher()
     {
@@ -444,12 +473,13 @@ class LibrarianController extends Controller
         if (!File::exists($path)) {
             File::makeDirectory($path, $mode = 0777, true, true);
         }
-        $filename = $user->name . '.png'; // name of the image file
+        $filename = $user->id . '.png'; // name of the image file
 
         QrCode::style('square')
             ->eye('circle')// Use PNG format for the merged image
-            ->size(400)
-            ->margin(1)
+            ->size(800) // Increased size for higher definition
+            ->errorCorrection('H') // High error correction level
+            ->margin(1) // Removed margin around QR code
             ->color(0, 0, 0)
             ->backgroundColor(255, 255, 255)
             ->format('png')
@@ -482,13 +512,14 @@ class LibrarianController extends Controller
         if (!File::exists($path)) {
             File::makeDirectory($path, $mode = 0777, true, true);
         }
-        $filename = $user->name . '.png'; // name of the image file
+        $filename = $user->id . '.png'; // name of the image file
 
 
         QrCode::style('square')
             ->eye('circle')// Use PNG format for the merged image
-            ->size(400)
-            ->margin(1)
+            ->size(800) // Increased size for higher definition
+            ->errorCorrection('H') // High error correction level
+            ->margin(1) // Removed margin around QR code
             ->color(0, 0, 0)
             ->backgroundColor(255, 255, 255)
             ->format('png')
@@ -942,7 +973,7 @@ class LibrarianController extends Controller
 
     public function deleteGrade12Students()
     {
-        $grade12Students = User::where('grade_and_section', 'Grade-12')
+        $grade12Students = User::where('grade_and_section', 'Grade 12')
             ->where('role', 0) // Ensure we're only getting students
             ->get();
         
@@ -993,7 +1024,7 @@ class LibrarianController extends Controller
                 'role' => 3, // Role for graduated students
                 'id_pic' => null,
                 'status' => 'graduated',
-                'last_grade_level' => 'Grade-12 Graduate'
+                'last_grade_level' => 'Grade 12'
             ]);
         }
 
@@ -1044,7 +1075,7 @@ class LibrarianController extends Controller
                                 <tbody>';
                     // Handle students if userType is 'students'
                 if ($userType == 'students') {
-                    $students = DB::table('users')->where('role', 0)->pluck('grade_and_section');
+                    $students = DB::table('users')->whereIn('role', [0, 3])->pluck('grade_and_section', 'last_grade_level');
                     $students = ['Grade 7', 'Grade 8', 'Grade 9', 'Grade 10', 'Grade 11', 'Grade 12'];
                     $studentCount = 1;
                     $totalCounter = 0;
@@ -1054,10 +1085,12 @@ class LibrarianController extends Controller
                             ->join('users', 'record_logins.id_number', '=', 'users.id_number')
                             ->whereBetween('record_logins.created_at', [$fromDate, $toDate])
                             ->where('users.grade_and_section', $student)
-                            ->select('users.grade_and_section', DB::raw('COUNT(record_logins.id) as login_count'))
-                            ->groupBy('users.grade_and_section')    
+                            ->orWhere('users.last_grade_level', $student)
+                            ->select('users.last_grade_level', 'users.grade_and_section', DB::raw('COUNT(record_logins.id) as login_count'))
+                            ->groupBy('users.grade_and_section', 'users.last_grade_level')
                             ->orderByDesc('login_count')
                             ->first();
+
     
                             $reportData .= '<tr>';
                             $reportData .= '<td>' . $student . '</td>';
@@ -1070,7 +1103,7 @@ class LibrarianController extends Controller
                     // Handle Teachers if userType is 'teachers'
                 if ($userType == 'teachers') {
                     $teachers = DB::table('users')->where('role', 2)->pluck('office_or_department');
-                    $teachers = ['Grade 7 Teacher', 'Grade 8 Teacher', 'Grade 9 Teacher', 'Grade 10 Teacher', 'Grade 11 Teacher', 'Grade 12 Teacher'];
+                    $teachers = ['Teacher'];
 
                     $totalCounter = 0;
     
@@ -1094,11 +1127,11 @@ class LibrarianController extends Controller
 
                     // Handle both Students and Teachers if userType is 'all'
                 if ($userType == 'all') {
-                    $students = DB::table('users')->where('role', 0)->pluck('grade_and_section');
+                    $students = DB::table('users')->whereIn('role', [0, 3])->pluck('grade_and_section', 'last_grade_level');
                     $students = ['Grade 7', 'Grade 8', 'Grade 9', 'Grade 10', 'Grade 11', 'Grade 12'];
 
                     $teachers = DB::table('users')->where('role', 2)->pluck('office_or_department');
-                    $teachers = ['Grade 7 Teacher', 'Grade 8 Teacher', 'Grade 9 Teacher', 'Grade 10 Teacher', 'Grade 11 Teacher', 'Grade 12 Teacher'];
+                    $teachers = ['Teacher'];
                     
                     $totalCounter = 0;
 
@@ -1107,8 +1140,9 @@ class LibrarianController extends Controller
                             ->join('users', 'record_logins.id_number', '=', 'users.id_number')
                             ->whereBetween('record_logins.created_at', [$fromDate, $toDate])
                             ->where('users.grade_and_section', $student)
-                            ->select('users.grade_and_section', DB::raw('COUNT(record_logins.id) as login_count'))
-                            ->groupBy('users.grade_and_section')    
+                            ->orWhere('users.last_grade_level', $student)
+                            ->select('users.last_grade_level', 'users.grade_and_section', DB::raw('COUNT(record_logins.id) as login_count'))
+                            ->groupBy('users.grade_and_section', 'users.last_grade_level')
                             ->orderByDesc('login_count')
                             ->first();
     
@@ -1219,7 +1253,10 @@ class LibrarianController extends Controller
                                 <tbody>';
     
                 if($userType == 'students') {
-                    $students = DB::table('users')->where('role', 0)->pluck('grade_and_section');
+                    // $students = DB::table('users')->where('role', 0)->pluck('grade_and_section');
+                    $students = DB::table('users')->whereIn('role', [0, 3])->pluck('grade_and_section', 'last_grade_level');
+
+                    $students = ['Grade 7', 'Grade 8', 'Grade 9', 'Grade 10', 'Grade 11', 'Grade 12'];
                    
 
                     foreach($students as $student) {
@@ -1228,9 +1265,12 @@ class LibrarianController extends Controller
                             ->join('book_transactions', 'transactions.id', '=', 'book_transactions.transaction_id')
                             ->join('books', 'book_transactions.book_id', '=', 'books.id')
                             ->join('authors', 'books.author_id', '=', 'authors.id')
-                            ->select('transactions.borrowed_at', 'users.name as borrower_name', 'users.grade_and_section', 'books.book_title', 'authors.author', 'books.accession', 'publication_year', 'transactions.expected_return_date', 'book_transactions.fines')
+                            ->select('transactions.borrowed_at', 'users.name as borrower_name', 'users.grade_and_section', 'users.last_grade_level', 'books.book_title', 'authors.author', 'books.accession', 'publication_year', 'transactions.expected_return_date', 'book_transactions.fines')
                             ->whereBetween('transactions.borrowed_at', [$fromDate, $toDate])
-                            ->where('users.grade_and_section', $student);
+                            ->where(function($query) use ($student) {
+                                $query->where('users.grade_and_section', $student)
+                                    ->orWhere('users.last_grade_level', $student);
+                            });
             
                         if ($sectionType) {
                             $query->where('books.section_id', $sectionType);
@@ -1248,7 +1288,7 @@ class LibrarianController extends Controller
                             $reportData .= '<tr>';
                             $reportData .= '<td>' . Carbon::parse($bookTransaction->borrowed_at)->format('M d, Y') . '</td>';
                             $reportData .= '<td>' . $bookTransaction->borrower_name . '</td>';
-                            $reportData .= '<td>' . $bookTransaction->grade_and_section . '</td>';
+                            $reportData .= '<td>' . $bookTransaction->grade_and_section .'' . $bookTransaction->last_grade_level . '</td>';
                             $reportData .= '<td>' . $bookTransaction->book_title . '</td>';
                             $reportData .= '<td>' . $bookTransaction->author . '</td>';
                             $reportData .= '<td>' . $bookTransaction->accession . '</td>';
@@ -1262,7 +1302,7 @@ class LibrarianController extends Controller
                 }
                 if($userType == 'teachers'){
                     $teachers = DB::table('users')->where('role', 2)->pluck('office_or_department');
-                    $teachers = ['Grade 7 Teacher', 'Grade 8 Teacher', 'Grade 9 Teacher', 'Grade 10 Teacher', 'Grade 11 Teacher', 'Grade 12 Teacher'];  
+                    $teachers = ['Teacher'];  
 
                         foreach($teachers as $teacher){
                             $query = DB::table('transactions')
@@ -1302,21 +1342,24 @@ class LibrarianController extends Controller
                 }
                     if($userType == 'all'){
 
-                        $students = DB::table('users')->where('role', 0)->pluck('grade_and_section');
+                        $students = DB::table('users')->whereIn('role', [0, 3])->pluck('grade_and_section', 'last_grade_level');
                         $students = ['Grade 7', 'Grade 8', 'Grade 9', 'Grade 10', 'Grade 11', 'Grade 12'];
 
                         $teachers = DB::table('users')->where('role', 2)->pluck('office_or_department');
-                        $teachers = ['Grade 7 Teacher', 'Grade 8 Teacher', 'Grade 9 Teacher', 'Grade 10 Teacher', 'Grade 11 Teacher', 'Grade 12 Teacher'];  
+                        $teachers = ['Teacher'];  
     
                         foreach($students as $student) {
                             $query = DB::table('transactions')
-                                ->join('users', 'transactions.user_id', '=', 'users.id')
-                                ->join('book_transactions', 'transactions.id', '=', 'book_transactions.transaction_id')
-                                ->join('books', 'book_transactions.book_id', '=', 'books.id')
-                                ->join('authors', 'books.author_id', '=', 'authors.id')
-                                ->select('transactions.borrowed_at', 'users.name as borrower_name', 'users.grade_and_section', 'books.book_title', 'authors.author', 'books.accession', 'publication_year', 'transactions.expected_return_date', 'book_transactions.fines')
-                                ->whereBetween('transactions.borrowed_at', [$fromDate, $toDate])
-                                ->where('users.grade_and_section', $student);
+                            ->join('users', 'transactions.user_id', '=', 'users.id')
+                            ->join('book_transactions', 'transactions.id', '=', 'book_transactions.transaction_id')
+                            ->join('books', 'book_transactions.book_id', '=', 'books.id')
+                            ->join('authors', 'books.author_id', '=', 'authors.id')
+                            ->select('transactions.borrowed_at', 'users.name as borrower_name', 'users.grade_and_section', 'users.last_grade_level', 'books.book_title', 'authors.author', 'books.accession', 'publication_year', 'transactions.expected_return_date', 'book_transactions.fines')
+                            ->whereBetween('transactions.borrowed_at', [$fromDate, $toDate])
+                            ->where(function($query) use ($student) {
+                                $query->where('users.grade_and_section', $student)
+                                    ->orWhere('users.last_grade_level', $student);
+                            });
                 
                             if ($sectionType) {
                                 $query->where('books.section_id', $sectionType);
@@ -1334,7 +1377,7 @@ class LibrarianController extends Controller
                                 $reportData .= '<tr>';
                                 $reportData .= '<td>' . Carbon::parse($bookTransaction->borrowed_at)->format('M d, Y h:i A') . '</td>';
                                 $reportData .= '<td>' . $bookTransaction->borrower_name . '</td>';
-                                $reportData .= '<td>' . $bookTransaction->grade_and_section . '</td>';
+                                $reportData .= '<td>' . $bookTransaction->grade_and_section .'' . $bookTransaction->last_grade_level . '</td>';
                                 $reportData .= '<td>' . $bookTransaction->book_title . '</td>';
                                 $reportData .= '<td>' . $bookTransaction->author . '</td>';
                                 $reportData .= '<td>' . $bookTransaction->accession . '</td>';
@@ -1572,16 +1615,12 @@ class LibrarianController extends Controller
     {
         // Validate the request input
         $validated = $request->validate([
-            'id_number' => 'required|string|max:255',
             'grade_and_section' => 'nullable|string|max:255',
-            'status' => 'required|string|in:active,graduated',
+            'status' => 'required|string|in:active,graduated,inactive',
         ]);
 
         // Find the student record (assuming $student is the student ID)
         $student = User::findOrFail($student);
-
-        // Update student fields
-        $student->id_number = $validated['id_number'];
 
         if (isset($validated['grade_and_section'])) {
             $student->grade_and_section = $validated['grade_and_section'];
@@ -1593,8 +1632,18 @@ class LibrarianController extends Controller
         // Update role based on status
         if ($validated['status'] === 'active') {
             $student->role = 0;
+            $student->status = 'active';
+            $student->last_grade_level = null;
+
         } elseif ($validated['status'] === 'graduated') {
             $student->role = 3;
+            $student->status = 'graduated';
+            $student->last_grade_level = 'Grade 12';
+            $student->grade_and_section = null;
+
+        }  elseif($validated['status'] === 'inactive'){
+            $student->role = 4;
+            $student->status = 'inactive';
         }
 
         // Save the updated student record
