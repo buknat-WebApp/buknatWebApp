@@ -941,16 +941,13 @@ class LibrarianController extends Controller
     {
         try {
             $record = RecordLogin::findOrFail($id);
+            $userName = $record->name; // Store the name before deleting
             $record->delete();
-            $userName = $record->name; 
 
-        return redirect()->back()->with('success', 'Attendance log of ' . $userName . ' has been deleted successfully.');
-
+            return redirect()->back()->with('success', 'Attendance log of ' . $userName . ' has been deleted successfully.');
         } catch (\Exception $e) {
-        
             return redirect()->back()->with('error', 'Failed to delete attendance log.');
         }
-
     }
 
     public function guestForm()
@@ -1080,8 +1077,8 @@ class LibrarianController extends Controller
             
             $reportData = '';
 
-            $reportData = '<h3 style="text-align: center;">Bukidnon National High School Library Management System</h3>' . '<h3 style="text-align: center;">Malaybalay City</h3>'
-            .  '<h2 style="text-align: center;">'. $statistical .'</h2>';
+            $reportData = '<h3 style="text-align: center; margin: 0; padding: 0;">Bukidnon National High School Library Management System</h3>' . '<h3 style="text-align: center; margin: 0; padding: 0;">Malaybalay City</h3>'
+            .  '<h2 style="text-align: center; margin: 0; padding: 0;">'. $statistical .'</h2>';
         $reportData .= '<p style="text-align: center; font-style: italic;">'. date('F d', strtotime($startDate)) . ' - ' . date('d', strtotime($endDate)).'</p>';
     
         
@@ -1583,7 +1580,201 @@ class LibrarianController extends Controller
 
     
                 
-            } elseif ($itemType == 'overAll') {
+            } else if ($itemType == 'sequenceFines') {
+                $reportData .= '<table border="1" style="width: 100%; text-align: left; border-collapse: collapse;">
+                                 <thead>
+                                     <tr>
+                                         <th>Date Borrowed</th>
+                                         <th>Borrowers Name</th>
+                                         <th>Grade Level</th>
+                                         <th>Title of Books</th>
+                                         <th>Author</th>
+                                         <th>Accession Number</th>
+                                         <th>Pub.Yr/Copyright Date</th>
+                                         <th>Due Date</th>
+                                         <th>Fines</th>
+                                         
+                                     </tr>
+                                 </thead>
+                                 <tbody>';
+     
+                 if($userType == 'students') {
+                     $students = DB::table('users')->whereIn('role', [0, 3])->pluck('grade_and_section', 'last_grade_level');
+                     $students = ['Grade 7', 'Grade 8', 'Grade 9', 'Grade 10', 'Grade 11', 'Grade 12'];
+                    
+ 
+                     foreach($students as $student) {
+                         $query = DB::table('transactions')
+                             ->join('users', 'transactions.user_id', '=', 'users.id')
+                             ->join('book_transactions', 'transactions.id', '=', 'book_transactions.transaction_id')
+                             ->join('books', 'book_transactions.book_id', '=', 'books.id')
+                             ->join('authors', 'books.author_id', '=', 'authors.id')
+                             ->select('transactions.borrowed_at', 'users.name as borrower_name', 'users.grade_and_section', 'users.last_grade_level', 'books.book_title', 'authors.author', 'books.accession', 'publication_year', 'transactions.expected_return_date', 'fines')
+                             ->whereBetween('transactions.borrowed_at', [$startDate, $endDate])
+                             ->where(function($query) use ($student) {
+                                 $query->where('users.grade_and_section', $student)
+                                     ->orWhere('users.last_grade_level', $student);
+                             });
+             
+                         if ($sectionType) {
+                             $query->where('books.section_id', $sectionType);
+                         }
+                         if ($locationType) {
+                             $query->where('books.location_id', $locationType);
+                         }
+                         if ($authorType) {
+                             $query->where('books.author_id', $authorType);
+                         }
+             
+                         $bookTransactions = $query->get();
+                     
+                         foreach ($bookTransactions as $bookTransaction) {
+                             $reportData .= '<tr>';
+                             $reportData .= '<td>' . Carbon::parse($bookTransaction->borrowed_at)->format('M d, Y h:i A') . '</td>';
+                             $reportData .= '<td>' . $bookTransaction->borrower_name . '</td>';
+                             $reportData .= '<td style="text-align: center;">' . $bookTransaction->grade_and_section .'' . $bookTransaction->last_grade_level . '</td>';
+                             $reportData .= '<td>' . $bookTransaction->book_title . '</td>';
+                             $reportData .= '<td>' . $bookTransaction->author . '</td>';
+                             $reportData .= '<td style="text-align: center;">' . $bookTransaction->accession . '</td>';
+                             $reportData .= '<td style="text-align: center;">' . $bookTransaction->publication_year . '</td>';
+                             $reportData .= '<td>' . Carbon::parse($bookTransaction->expected_return_date)->format('M d, Y h:i A') . '</td>';
+                             $reportData .= '<td style="text-align: center;">' . $bookTransaction->fines . '</td>';
+                             $reportData .= '</tr>';
+                         }
+ 
+                     }
+                 }
+                 if($userType == 'teachers'){
+                     $teachers = DB::table('users')->where('role', 2)->pluck('office_or_department');
+                     $teachers = ['Teacher'];  
+ 
+                         foreach($teachers as $teacher){
+                             $query = DB::table('transactions')
+                             ->join('users', 'transactions.user_id', '=', 'users.id')
+                             ->join('book_transactions', 'transactions.id', '=', 'book_transactions.transaction_id')
+                             ->join('books', 'book_transactions.book_id', '=', 'books.id')
+                             ->join('authors', 'books.author_id', '=', 'authors.id')
+                             ->select('transactions.borrowed_at', 'users.name as borrower_name', 'users.grade_and_section', 'users.last_grade_level', 'books.book_title', 'authors.author', 'books.accession', 'publication_year', 'transactions.expected_return_date', 'fines')
+                             ->whereBetween('transactions.borrowed_at', [$startDate, $endDate])
+                             ->where('users.office_or_department', $teacher);
+             
+                         if ($sectionType) {
+                             $query->where('books.section_id', $sectionType);
+                         }
+                         if ($locationType) {
+                             $query->where('books.location_id', $locationType);
+                         }
+                         if ($authorType) {
+                             $query->where('books.author_id', $authorType);
+                         }
+             
+                         $bookTransactions = $query->get();
+                         foreach ($bookTransactions as $bookTransaction) {
+                             $reportData .= '<tr>';
+                             $reportData .= '<td>' . Carbon::parse($bookTransaction->borrowed_at)->format('M d, Y h:i A') . '</td>';
+                             $reportData .= '<td>' . $bookTransaction->borrower_name . '</td>';
+                             $reportData .= '<td style="text-align: center;">' . $bookTransaction->office_or_department . '</td>';
+                             $reportData .= '<td>' . $bookTransaction->book_title . '</td>';
+                             $reportData .= '<td>' . $bookTransaction->author . '</td>';
+                             $reportData .= '<td style="text-align: center;">' . $bookTransaction->accession . '</td>';
+                             $reportData .= '<td style="text-align: center;">' . $bookTransaction->publication_year . '</td>';
+                             $reportData .= '<td>' . Carbon::parse($bookTransaction->expected_return_date)->format('M d, Y h:i A') . '</td>';
+                             $reportData .= '<td style="text-align: center;">' . $bookTransaction->fines . '</td>';
+                             
+                             $reportData .= '</tr>';
+                         }
+                      }
+                 }
+                     if($userType == 'all'){
+ 
+                         $students = DB::table('users')->whereIn('role', [0, 3])->pluck('grade_and_section', 'last_grade_level');
+                         $students = ['Grade 7', 'Grade 8', 'Grade 9', 'Grade 10', 'Grade 11', 'Grade 12'];
+ 
+                         $teachers = DB::table('users')->where('role', 2)->pluck('office_or_department');
+                         $teachers = ['Teacher'];  
+     
+                         foreach($students as $student) {
+                             $query = DB::table('transactions')
+                             ->join('users', 'transactions.user_id', '=', 'users.id')
+                             ->join('book_transactions', 'transactions.id', '=', 'book_transactions.transaction_id')
+                             ->join('books', 'book_transactions.book_id', '=', 'books.id')
+                             ->join('authors', 'books.author_id', '=', 'authors.id')
+                             ->select('transactions.borrowed_at', 'users.name as borrower_name', 'users.grade_and_section', 'users.last_grade_level', 'books.book_title', 'authors.author', 'books.accession', 'publication_year', 'transactions.expected_return_date', 'fines')
+                             ->whereBetween('transactions.borrowed_at', [$startDate, $endDate])
+                             ->where(function($query) use ($student) {
+                                 $query->where('users.grade_and_section', $student)
+                                     ->orWhere('users.last_grade_level', $student);
+                             });
+                 
+                             if ($sectionType) {
+                                 $query->where('books.section_id', $sectionType);
+                             }
+                             if ($locationType) {
+                                 $query->where('books.location_id', $locationType);
+                             }
+                             if ($authorType) {
+                                 $query->where('books.author_id', $authorType);
+                             }
+                 
+                             $bookTransactions = $query->get();
+                         
+                             foreach ($bookTransactions as $bookTransaction) {
+                                 $reportData .= '<tr>';
+                                 $reportData .= '<td>' . Carbon::parse($bookTransaction->borrowed_at)->format('M d, Y h:i A') . '</td>';
+                                 $reportData .= '<td>' . $bookTransaction->borrower_name . '</td>';
+                                 $reportData .= '<td style="text-align: center;">' . $bookTransaction->grade_and_section .'' . $bookTransaction->last_grade_level . '</td>';
+                                 $reportData .= '<td>' . $bookTransaction->book_title . '</td>';
+                                 $reportData .= '<td>' . $bookTransaction->author . '</td>';
+                                 $reportData .= '<td style="text-align: center;">' . $bookTransaction->accession . '</td>';
+                                 $reportData .= '<td style="text-align: center;">' . $bookTransaction->publication_year . '</td>';
+                                 $reportData .= '<td>' . Carbon::parse($bookTransaction->expected_return_date)->format('M d, Y h:i A') . '</td>';
+                                 $reportData .= '<td style="text-align: center;">' . $bookTransaction->fines . '</td>';
+                                 $reportData .= '</tr>';
+                             }
+     
+                         }
+                         foreach($teachers as $teacher){
+                             $query = DB::table('transactions')
+                             ->join('users', 'transactions.user_id', '=', 'users.id')
+                             ->join('book_transactions', 'transactions.id', '=', 'book_transactions.transaction_id')
+                             ->join('books', 'book_transactions.book_id', '=', 'books.id')
+                             ->join('authors', 'books.author_id', '=', 'authors.id')
+                             ->select('transactions.borrowed_at', 'users.name as borrower_name', 'users.office_or_department', 'books.book_title', 'authors.author', 'books.accession', 'publication_year', 'transactions.expected_return_date', 'fines')
+                             ->whereBetween('transactions.borrowed_at', [$startDate, $endDate])
+                             ->where('users.office_or_department', $teacher);
+             
+                         if ($sectionType) {
+                             $query->where('books.section_id', $sectionType);
+                         }
+                         if ($locationType) {
+                             $query->where('books.location_id', $locationType);
+                         }
+                         if ($authorType) {
+                             $query->where('books.author_id', $authorType);
+                         }
+             
+                         $bookTransactions = $query->get();
+                         foreach ($bookTransactions as $bookTransaction) {
+                             $reportData .= '<tr>';
+                             $reportData .= '<td>' . Carbon::parse($bookTransaction->borrowed_at)->format('M d, Y h:i A') . '</td>';
+                             $reportData .= '<td style="text-align: center;">' . $bookTransaction->borrower_name . '</td>';
+                             $reportData .= '<td>' . $bookTransaction->office_or_department . '</td>';
+                             $reportData .= '<td>' . $bookTransaction->book_title . '</td>';
+                             $reportData .= '<td>' . $bookTransaction->author . '</td>';
+                             $reportData .= '<td style="text-align: center;">' . $bookTransaction->accession . '</td>';
+                             $reportData .= '<td style="text-align: center;">' . $bookTransaction->publication_year . '</td>';
+                             $reportData .= '<td>' . Carbon::parse($bookTransaction->expected_return_date)->format('M d, Y h:i A') . '</td>';
+                             $reportData .= '<td style="text-align: center;">' . $bookTransaction->fines . '</td>';
+                             $reportData .= '</tr>';
+                         }
+                      }
+                     }
+                     
+                 
+ 
+     
+                 
+             } elseif ($itemType == 'overAll') {
                 $reportData .= '<table border="1" style="width: 100%; text-align: center; border-collapse: collapse;">
                                 <thead>
                                     <tr>

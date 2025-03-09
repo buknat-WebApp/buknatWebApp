@@ -107,6 +107,7 @@
                                                 <td class="text-start">
                                                     <form action="{{ route('delete.student.logbook', $record->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this attendance log?');">
                                                         @csrf
+                                                        @method('DELETE')
                                                         <button type="submit" class="btn btn-danger btn-sm" title="Delete this Log?">
                                                             <i class="fas fa-trash"> Delete</i>
                                                         </button>
@@ -200,9 +201,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     
     // Automatically start scanner when page loads
-    setTimeout(() => {
-        startScanner();
-    }, 500); // Small delay to ensure everything is loaded
+    // setTimeout(() => {
+    //     startScanner();
+    // }, 500); // Small delay to ensure everything is loaded
 
     window.startScanner = function() {
         if (!scanner) {
