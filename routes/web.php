@@ -126,8 +126,7 @@ Route::prefix('Librarian')->middleware(['auth', 'isLibrarian'])->group(function(
 
     Route::get('/transaction/logs', [LibrarianController::class, 'studentLogbook']);
     Route::post('records/recordLogins', [LibrarianController::class, 'recordLogins'])->name('recordLogins');
-    Route::post('/transaction/logs/delete/{id}', [LibrarianController::class, 'deleteStudentLogbook'])->name('delete.student.logbook');
-
+    Route::delete('/transaction/logs/delete/{id}', [LibrarianController::class, 'deleteStudentLogbook'])->name('delete.student.logbook');
     
     Route::get('/guest', [LibrarianController::class, 'guestForm'])->name('guestForm'); // Route to display the guest form page
     Route::post('/record-guests', [LibrarianController::class, 'recordGuests'])->name('recordGuests'); // Route to handle the guest form submission

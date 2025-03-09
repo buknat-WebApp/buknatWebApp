@@ -150,7 +150,7 @@
                                     $dueCounter = 0; $newAccountCounter =0;
                                 @endphp
                                 @if ($overdueTransactions)
-                                    @foreach ($overdueTransactions as $overdueTransaction)
+                                    @foreach ($overdueTransactions->take(25) as $overdueTransaction)
                                         @if ($overdueTransaction->expected_return_date !== null && $overdueTransaction->expected_return_date < $today)
                                             @php
                                                 $dueCounter++;
@@ -192,16 +192,13 @@
                                                 </td>
 
                                                 <td class="text-start">
-                                                    <?php $count = 1; ?>
                                                     @foreach ($overdueTransaction->bookTransactions as $bookTransaction)
                                                         @foreach ($books as $book)
                                                             @if (is_null($bookTransaction->returned_at))
                                                                 @if ($bookTransaction->book_id == $book->id)
                                                                     <p class="text-xs font-weight-bold mb-2">
-                                                                        {{ $count }} .
                                                                         {{ $book->book_title }} </p>
                                                                     <p class="text-xs text-secondary mb-0"></p>
-                                                                    <?php $count++; ?>
                                                                 @endif
                                                             @endif
                                                         @endforeach
@@ -271,7 +268,7 @@
                                     $dueCounter = 0; $newAccountCounter =0;
                                 @endphp
                                 @if ($transactions)
-                                    @foreach ($transactions as $transaction)
+                                    @foreach ($transactions->take(25) as $transaction)
                                         @if ($transaction->expected_return_date !== null)
                                             @php
                                                 $dueCounter++;
@@ -312,17 +309,14 @@
                                                         {{ $transaction->expected_return_date }}</p>
                                                 </td>
 
-                                                <td class="text-start">
-                                                    <?php $count = 1; ?>
+                                                <td class="text-start">                                                    
                                                     @foreach ($transaction->bookTransactions as $bookTransaction)
                                                         @foreach ($books as $book)
                                                             @if (is_null($bookTransaction->returned_at))
                                                                 @if ($bookTransaction->book_id == $book->id)
-                                                                    <p class="text-xs font-weight-bold mb-2">
-                                                                        {{ $count }} .
+                                                                    <p class="text-xs font-weight-bold mb-2">                                                              
                                                                         {{ $book->book_title }} </p>
                                                                     <p class="text-xs text-secondary mb-0"></p>
-                                                                    <?php $count++; ?>
                                                                 @endif
                                                             @endif
                                                         @endforeach

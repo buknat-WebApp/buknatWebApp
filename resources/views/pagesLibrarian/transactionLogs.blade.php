@@ -39,15 +39,23 @@
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col">
-                                                    @if (session('success'))
+                                                @if (session('success'))
                                                     <div class="alert alert-success alert-dismissible fade show" role="alert">
                                                         <p class="text-center text-white">
                                                             {{ session('success') }}
                                                         </p>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                                            aria-label="Close">x</button>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">x</button>
                                                     </div>
-                                                    @endif
+                                                @endif
+
+                                                @if (session('error'))
+                                                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                                        <p class="text-center text-white">
+                                                            {{ session('error') }}
+                                                        </p>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">x</button>
+                                                    </div>
+                                                @endif
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -105,13 +113,13 @@
                                                 <td class="text-start">{{ $record->grade_and_section ?? ''}}</td>
                                                 <td class="text-start">{{ $record->section ?? ''}}</td>
                                                 <td class="text-start">
-                                                    <form action="{{ route('delete.student.logbook', $record->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this attendance log?');">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger btn-sm" title="Delete this Log?">
-                                                            <i class="fas fa-trash"> Delete</i>
-                                                        </button>
-                                                    </form>
+                                                <form action="{{ route('delete.student.logbook', $record->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this attendance log?');">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger btn-sm" title="Delete this Log?">
+                                                        <i class="fas fa-trash"></i> Delete
+                                                    </button>
+                                                </form>
                                                 </td>
                                                 
                                             </tr>
@@ -201,9 +209,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     
     // Automatically start scanner when page loads
-    // setTimeout(() => {
-    //     startScanner();
-    // }, 500); // Small delay to ensure everything is loaded
+    setTimeout(() => {
+        startScanner();
+    }, 500); // Small delay to ensure everything is loaded
 
     window.startScanner = function() {
         if (!scanner) {
@@ -284,6 +292,30 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function submitForm() {
     document.getElementById('form-borrow').submit();
+}
+</script>
+
+<button onclick="deleteRecord({{ $record->id }})" class="btn btn-danger btn-sm" title="Delete this Log?">
+    <i class="fas fa-trash"></i> Delete
+</button>
+
+<script>
+function deleteRecord(id) {
+    if (confirm('Are you sure you want to delete this attendance log?')) {
+        fetch(`/transaction/logs/delete/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => {
+            if (response.redirected) {
+                window.location.href = response.url;
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }
 }
 </script>
 

@@ -940,13 +940,28 @@ class LibrarianController extends Controller
     public function deleteStudentLogbook($id)
     {
         try {
-            $record = RecordLogin::findOrFail($id);
-            $userName = $record->name; // Store the name before deleting
+            // Find the record by ID
+            $record = RecordLogin::find($id);
+
+            // Check if the record exists
+            if (!$record) {
+                return redirect()->back()->with('error', 'Attendance log not found.');
+            }
+
+            // Store the user's name for the success message
+            $userName = $record->name;
+
+            // Delete the record
             $record->delete();
 
-            return redirect()->back()->with('success', 'Attendance log of ' . $userName . ' has been deleted successfully.');
+            // Redirect back with a success message
+            return redirect()->back()->with('success', 'Attendance log deleted successfully.');
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Failed to delete attendance log.');
+            // Log the error for debugging
+            \Log::error('Failed to delete attendance log: ' . $e->getMessage());
+
+            // Redirect back with an error message
+            return redirect()->back()->with('error', 'Failed to delete attendance log. Please try again.');
         }
     }
 
