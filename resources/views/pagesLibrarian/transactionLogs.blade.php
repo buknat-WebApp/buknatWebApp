@@ -209,9 +209,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     
     // Automatically start scanner when page loads
-    setTimeout(() => {
-        startScanner();
-    }, 500); // Small delay to ensure everything is loaded
+    // setTimeout(() => {
+    //     startScanner();
+    // }, 500); // Small delay to ensure everything is loaded
 
     window.startScanner = function() {
         if (!scanner) {
@@ -248,7 +248,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     // Add small delay to ensure sound plays before form submission
                     setTimeout(() => {
                         document.getElementById('form-borrow').submit();
-                    }, 1000);
+                    }, 500);
                     
                 } catch(error) {
                     console.error("Error processing scan:", error);

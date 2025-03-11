@@ -943,6 +943,7 @@ class LibrarianController extends Controller
         try {
             // Find the record by ID
             $record = RecordLogin::find($id);
+            $userName = $record->name;
 
             // Check if the record exists
             if (!$record) {
@@ -956,7 +957,7 @@ class LibrarianController extends Controller
             $record->delete();
 
             // Redirect back with a success message
-            return redirect()->back()->with('success', 'Attendance log deleted successfully.');
+            return redirect()->back()->with('success', 'Attendance log for ' .$userName . ' deleted successfully.');
         } catch (\Exception $e) {
             // Log the error for debugging
             \Log::error('Failed to delete attendance log: ' . $e->getMessage());
@@ -1001,6 +1002,11 @@ class LibrarianController extends Controller
                 'grade_and_section' => $user->grade_and_section,
                 'section' => $user->section
             ]);
+            // Success message
+            return redirect()->back()->with('success', '' .$user->name . ' Login recorded successfully.');
+        } else {
+            // Error message
+            return redirect()->back()->with('error', 'User not found. Please Try again.');
         }
     
         $records = RecordLogin::orderBy('created_at', 'desc')->get();
