@@ -384,6 +384,7 @@ class LibrarianController extends Controller
             'number_of_pages' => $request->number_of_pages,
             'isbn' => $request->isbn,
             'location_id' => $request->location,
+            'date_acquired' => $request->date_acquired,
             'publication_year' => $request->publication_year,
             'book_condition' => $request->book_condition,
             'summary' => $request->summary,
