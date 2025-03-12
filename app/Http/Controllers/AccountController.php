@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use App\Models\User;
+use App\Models\Guest;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use App\Notifications\RegisterUser;
@@ -377,6 +378,27 @@ class AccountController extends Controller
         }
 
 
+    }
+
+    public function guestRecord()
+    {
+        $guests = Guest::all(); //GET ALL GUESTS
+
+        return view('pagesAuth.guestRecord', compact('guests'));
+  
+    }
+    
+    public function formGuest(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'school' => 'nullable|string|max:255',
+            'purpose' => 'required|string|max:255',
+        ]);
+
+        Guest::create($validated);
+
+        return redirect()->back()->with('success', 'Guest information recorded successfully.');
     }
 
     public function logout(Request $request)

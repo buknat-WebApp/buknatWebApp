@@ -50,11 +50,17 @@
                               </li>
 
                             <li class="nav-item">
-                              <a class="nav-link me-2" onclick="openModal()">
+                                <a class="nav-link me-2" href="#" onclick="openModal()">
                                 <i class="fas fa-user-circle opacity-6 text-dark me-1"></i>
-                                Signup
-                              </a>
+                                Sign Up
+                                </a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link me-2" href="{{ route('guestRecord') }}">
+                                  <i class="fas fa-user-circle opacity-6 text-dark me-1"></i>
+                                  Guest Attendance
+                                </a>
+                              </li>
                           </ul>
                           <ul class="navbar-nav d-lg-block d-none">
                           </ul>
@@ -139,7 +145,7 @@
                       <div class="modal-content">
                         <div class="modal-header">
                           <h5 class="modal-title" id="exampleModalLabel">Choose User</h5>
-                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" onclick="closeModal()"></button>
                         </div>
                       <div class="modal-body" style="text-align:center;">
                         <p class="text-center">
@@ -152,75 +158,60 @@
                 </div>
 
     <script>
-    // Get the modal
-    var modal = document.getElementById('signupModal');
+        // Get the modal
+        var modal = document.getElementById('signupModal');
 
-    // Function to open the modal
-    function openModal() {
-        modal.style.display = 'block';
-    }
+        // Function to open the modal
+        function openModal() {
+            modal.style.display = 'block';
+        }
 
-    // Close the modal when user clicks outside of it
-    window.onclick = function(event) {
-        if (event.target == modal) {
+        // Function to close the modal
+        function closeModal() {
             modal.style.display = 'none';
         }
-    }
-</script>
+
+        // Close the modal when user clicks outside of it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+    </script>
 
     
 
     <script>
-        // document.addEventListener('DOMContentLoaded', function() {
-        //     const searchInput = document.getElementById('searchInput');
-        //     const bookTable = document.getElementById('bookTable');
-        //     const tableRows = bookTable.getElementsByTagName('tr');
-
-        //     searchInput.addEventListener('input', function() {
-        //         const searchTerm = searchInput.value.toLowerCase();
-
-        //         for (let i = 1; i < tableRows.length; i++) {
-        //             const row = tableRows[i];
-        //             const rowData = row.textContent.toLowerCase();
-
-        //             if (rowData.includes(searchTerm)) {
-        //                 row.style.display = '';
-        //             } else {
-        //                 row.style.display = 'none';
-        //             }
-        //         }
-        //     });
-        // });
         document.addEventListener('DOMContentLoaded', function() {
-    const searchInput = document.getElementById('searchInput');
-    const bookTable = document.getElementById('bookTable');
-    const tableRows = bookTable.getElementsByTagName('tr');
+            const searchInput = document.getElementById('searchInput');
+            const bookTable = document.getElementById('bookTable');
+            const tableRows = bookTable.getElementsByTagName('tr');
 
-    // Hide the table initially
-    bookTable.style.display = 'none';
-
-    searchInput.addEventListener('input', function() {
-        const searchTerm = searchInput.value.toLowerCase();
-
-        if (searchTerm.trim() === '') {
-            // If the input is empty, hide the table
+            // Hide the table initially
             bookTable.style.display = 'none';
-        } else {
-            // If input is not empty, show the table and filter rows
-            bookTable.style.display = '';
-            for (let i = 1; i < tableRows.length; i++) {
-                const row = tableRows[i];
-                const rowData = row.textContent.toLowerCase();
 
-                if (rowData.includes(searchTerm)) {
-                    row.style.display = '';
+            searchInput.addEventListener('input', function() {
+                const searchTerm = searchInput.value.toLowerCase();
+
+                if (searchTerm.trim() === '') {
+                    // If the input is empty, hide the table
+                    bookTable.style.display = 'none';
                 } else {
-                    row.style.display = 'none';
+                    // If input is not empty, show the table and filter rows
+                    bookTable.style.display = '';
+                    for (let i = 1; i < tableRows.length; i++) {
+                        const row = tableRows[i];
+                        const rowData = row.textContent.toLowerCase();
+
+                        if (rowData.includes(searchTerm)) {
+                            row.style.display = '';
+                        } else {
+                            row.style.display = 'none';
+                        }
+                    }
                 }
-            }
-        }
-    });
-});
+            });
+        });
 
     </script>
 

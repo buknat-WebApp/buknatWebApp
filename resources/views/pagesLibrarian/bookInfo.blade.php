@@ -236,14 +236,6 @@
                                                         Condition</label>
                                                     <select class="form-select form-control" id="book_section"
                                                         name="book_condition">
-
-                                                        {{-- @if ($book->book_condition == 'not-functional')
-                                        <option value="functional">functional</option>
-                                        <option value="not-functional" selected>not-functional</option>
-                                        @else
-                                        <option value="functional" selected>functional</option>
-                                        <option value="not-functional">not-functional</option>
-                                        @endif --}}
                                                         <option value="functional"
                                                             @if ($book->book_condition == 'functional') selected @endif>functional
                                                         </option>
@@ -255,18 +247,16 @@
                                             </div>
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label for="example-text-input"
-                                                        class="form-control-label">No. Of copies</label>
-                                                    <input class="form-control" name="no_of_copies" type="text"
-                                                        value="{{ $book->no_of_copies }}">
+                                                    <label for="example-text-input" class="form-control-label">No. Of copies</label>
+                                                    <input class="form-control" name="no_of_copies" type="number"
+                                                        value="{{ $book->no_of_copies }}" id="noOfCopies" oninput="updateAvailableCopies()">
                                                 </div>
                                             </div>
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label for="example-text-input"
-                                                        class="form-control-label">Available copies</label>
-                                                    <input class="form-control" name="available_copies" type="text"
-                                                        value="{{ $book->available_copies }}">
+                                                    <label for="example-text-input" class="form-control-label">Available copies</label>
+                                                    <input class="form-control" name="available_copies" type="number"
+                                                        value="{{ $book->no_of_copies - $book->borrowed_count }}" id="availableCopies" readonly>
                                                 </div>
                                             </div>
 
@@ -336,6 +326,13 @@
             
         });
             });
+
+    function updateAvailableCopies() {
+        const numberOfCopies = parseInt(document.getElementById('noOfCopies').value) || 0;
+        const borrowedCount = {{ $book->borrowed_count }}; // Now this should be defined
+        const availableCopies = numberOfCopies - borrowedCount;
+        document.getElementById('availableCopies').value = availableCopies >= 0 ? availableCopies : 0; // Ensure it doesn't go negative
+    }
     </script>
     @endsection
 

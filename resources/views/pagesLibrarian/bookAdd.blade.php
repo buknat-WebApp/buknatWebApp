@@ -191,17 +191,15 @@
 
                                                     <div class="col">
                                                         <div class="form-group">
-                                                            <label for="exampleInputText1">Number of Copies Received</label>
-                                                            <input type="text" class="form-control" id="exampleInputText1"
-                                                                   name="no_of_copies">
+                                                            <label for="numberOfCopies">Number of Copies Received</label>
+                                                            <input type="text" class="form-control" id="numberOfCopies" name="no_of_copies" oninput="updateAvailableCopies()">
                                                         </div>
                                                     </div>
 
                                                     <div class="col">
                                                         <div class="form-group">
-                                                            <label for="exampleInputText1">Available Copies</label>
-                                                            <input type="text" class="form-control" id="exampleInputText1"
-                                                                   name="available_copies">
+                                                            <label for="availableCopies">Available Copies</label>
+                                                            <input type="text" class="form-control" id="availableCopies" name="available_copies" readonly>
                                                         </div>
                                                     </div>
 
@@ -370,4 +368,10 @@
             });
         });
         </script>
+        <script>
+        function updateAvailableCopies() {
+            const numberOfCopies = document.getElementById('numberOfCopies').value;
+            document.getElementById('availableCopies').value = numberOfCopies;
+        }
+</script>
         @endsection

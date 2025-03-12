@@ -47,13 +47,17 @@ Route::post('/test',[TestController::class, 'testing'])->name('testing');
 
 Route::get('/inquire/books',[AccountController::class, 'inquireBooks'])->name('inquireBooks');
 
+Route::get('/guest-login', [AccountController::class, 'guestRecord'])->name('guestRecord'); // Route to display the guest form page
+Route::post('/record-guest', [AccountController::class, 'formGuest'])->name('formGuest'); // Route to handle the guest form submission
+
+
 //STUDENT
 Route::prefix('Student')->middleware(['auth', 'isStudent'])->group(function(){
 
-    Route::get('/dashboard', [StudentController::class, 'studentDashboard'])->name('studentDashboard');
-    Route::get('/book/all', [StudentController::class, 'StudentbookLists'])->name('StudentbookLists');
-    Route::get('/transactions/all', [StudentController::class, 'studentBorrowed'])->name('studentBorrowed');
-    Route::get('/book/info/{book}', [StudentController::class, 'bookInfo'])->name('bookInfoStudent');//getting the info of the book
+Route::get('/dashboard', [StudentController::class, 'studentDashboard'])->name('studentDashboard');
+Route::get('/book/all', [StudentController::class, 'StudentbookLists'])->name('StudentbookLists');
+Route::get('/transactions/all', [StudentController::class, 'studentBorrowed'])->name('studentBorrowed');
+Route::get('/book/info/{book}', [StudentController::class, 'bookInfo'])->name('bookInfoStudent');//getting the info of the book
 
 
 });

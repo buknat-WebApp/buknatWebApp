@@ -91,14 +91,14 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                             @foreach($guests->take(15) as $guest)
-                            <tr>
-                                <td>{{ $guest->name }}</td>
-                                <td>{{ $guest->school }}</td>
-                                <td>{{ $guest->purpose }}</td>
-                                <td>{{ $guest->created_at->format('M d, Y h:i A') }}</td>
-                            </tr>
-                            @endforeach
+                                             @foreach($guests->take(50) as $guest)
+                                            <tr>
+                                                <td>{{ $guest->name }}</td>
+                                                <td>{{ $guest->school }}</td>
+                                                <td>{{ $guest->purpose }}</td>
+                                                <td>{{ $guest->created_at->format('M d, Y h:i A') }}</td>
+                                            </tr>
+                                            @endforeach
                                         </tbody>
                                     </table>
                                 </div>

@@ -354,18 +354,21 @@ class LibrarianController extends Controller
         return redirect()->back()->with('success', 'Book deleted successfully.');
     }
 
-    public function bookInfo($book)
-    { //indiv book info
+    public function bookInfo($bookId)
+    {
+        $book = Book::withCount(['bookTransactions as borrowed_count' => function ($query) {
+            $query->whereNull('returned_at');
+        }])->findOrFail($bookId);
 
-        $book = Book::where('id', '=', $book)->first();
         $sections = BookSection::all();
         $locations = BookLocation::all();
-        $authors = Author::all();  // Add this line
+        $authors = Author::all();
+
         return view('pagesLibrarian.bookInfo', [
             'book' => $book,
             'sections' => $sections,
             'locations' => $locations,
-            'authors' => $authors,  // Add this line
+            'authors' => $authors,
         ]);
     }
 

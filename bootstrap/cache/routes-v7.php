@@ -24,7 +24,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::J7lUSbGVhVKrcedg',
+            '_route' => 'generated::CwVGkEe95YJhw9Oi',
           ),
           1 => NULL,
           2 => 
@@ -122,7 +122,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::oE9aSddVDy8UUOL3',
+            '_route' => 'generated::Yezy1RCOTca7Dy47',
           ),
           1 => NULL,
           2 => 
@@ -142,7 +142,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::QAxLpTUoGFzBjRk3',
+            '_route' => 'generated::zXl4f3TsLv0wiHl1',
           ),
           1 => NULL,
           2 => 
@@ -383,7 +383,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::MP1qv8X0592QiZoc',
+            '_route' => 'generated::MlKLAs2kLaEhGOHb',
           ),
           1 => NULL,
           2 => 
@@ -426,6 +426,45 @@ app('router')->setCompiledRoutes(
           array (
             'GET' => 0,
             'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/guest-login' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'guestRecord',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'GET' => 0,
+            'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+      ),
+      '/record-guest' => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'formGuest',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'POST' => 0,
           ),
           3 => NULL,
           4 => false,
@@ -1114,7 +1153,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::relfx9gaP2QZb7ca',
+            '_route' => 'generated::B4ObrTrImwMX99NS',
           ),
           1 => NULL,
           2 => 
@@ -1494,7 +1533,7 @@ app('router')->setCompiledRoutes(
   ),
   'attributes' => 
   array (
-    'generated::J7lUSbGVhVKrcedg' => 
+    'generated::CwVGkEe95YJhw9Oi' => 
     array (
       'methods' => 
       array (
@@ -1510,7 +1549,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
         ),
-        'as' => 'generated::J7lUSbGVhVKrcedg',
+        'as' => 'generated::CwVGkEe95YJhw9Oi',
       ),
       'fallback' => false,
       'defaults' => 
@@ -1672,7 +1711,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::oE9aSddVDy8UUOL3' => 
+    'generated::Yezy1RCOTca7Dy47' => 
     array (
       'methods' => 
       array (
@@ -1689,13 +1728,13 @@ app('router')->setCompiledRoutes(
         ),
         'uses' => 'O:55:"Laravel\\SerializableClosure\\UnsignedSerializableClosure":1:{s:12:"serializable";O:46:"Laravel\\SerializableClosure\\Serializers\\Native":5:{s:3:"use";a:0:{}s:8:"function";s:77:"function (\\Illuminate\\Http\\Request $request) {
     return $request->user();
-}";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"00000000000005550000000000000000";}}',
+}";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"00000000000005f10000000000000000";}}',
         'namespace' => NULL,
         'prefix' => 'api',
         'where' => 
         array (
         ),
-        'as' => 'generated::oE9aSddVDy8UUOL3',
+        'as' => 'generated::Yezy1RCOTca7Dy47',
       ),
       'fallback' => false,
       'defaults' => 
@@ -1711,7 +1750,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::QAxLpTUoGFzBjRk3' => 
+    'generated::zXl4f3TsLv0wiHl1' => 
     array (
       'methods' => 
       array (
@@ -1732,7 +1771,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::QAxLpTUoGFzBjRk3',
+        'as' => 'generated::zXl4f3TsLv0wiHl1',
       ),
       'fallback' => false,
       'defaults' => 
@@ -2185,7 +2224,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::MP1qv8X0592QiZoc' => 
+    'generated::MlKLAs2kLaEhGOHb' => 
     array (
       'methods' => 
       array (
@@ -2206,7 +2245,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::MP1qv8X0592QiZoc',
+        'as' => 'generated::MlKLAs2kLaEhGOHb',
       ),
       'fallback' => false,
       'defaults' => 
@@ -2280,6 +2319,79 @@ app('router')->setCompiledRoutes(
         array (
         ),
         'as' => 'inquireBooks',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'guestRecord' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'guest-login',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+        ),
+        'uses' => 'App\\Http\\Controllers\\AccountController@guestRecord',
+        'controller' => 'App\\Http\\Controllers\\AccountController@guestRecord',
+        'namespace' => NULL,
+        'prefix' => '',
+        'where' => 
+        array (
+        ),
+        'as' => 'guestRecord',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'formGuest' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'POST',
+      ),
+      'uri' => 'record-guest',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+        ),
+        'uses' => 'App\\Http\\Controllers\\AccountController@formGuest',
+        'controller' => 'App\\Http\\Controllers\\AccountController@formGuest',
+        'namespace' => NULL,
+        'prefix' => '',
+        'where' => 
+        array (
+        ),
+        'as' => 'formGuest',
       ),
       'fallback' => false,
       'defaults' => 
@@ -4110,7 +4222,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::relfx9gaP2QZb7ca' => 
+    'generated::B4ObrTrImwMX99NS' => 
     array (
       'methods' => 
       array (
@@ -4133,7 +4245,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::relfx9gaP2QZb7ca',
+        'as' => 'generated::B4ObrTrImwMX99NS',
       ),
       'fallback' => false,
       'defaults' => 

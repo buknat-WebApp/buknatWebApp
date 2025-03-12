@@ -45,14 +45,16 @@
     <div class="container position-sticky z-index-sticky top-0">
       <div class="row">
         <div class="col-12">
+
+
           <!-- Navbar -->
-          <nav class="navbar navbar-expand-lg blur border-radius-lg top-0 z-index-3 shadow position-absolute mt-4 py-2 start-0 end-0 mx-4">
+          <nav class="navbar navbar-expand-lg blur border-radius-lg top-0 z-index-3 shadow position-absolute mt-2 py-1 start-0 end-0 mx-4">
             <div class="container-fluid">
-              <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3 text-wrap" href="">
+              <a class="navbar-brand font-weight-bolder ms-lg-0 text-wrap text-end" href="">
                 Bukidnon National High School Library Management System
               </a>
-              <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon mt-2">
+              <button class="navbar-toggler shadow-none me-1" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon mt-1">
                   <span class="navbar-toggler-bar bar1"></span>
                   <span class="navbar-toggler-bar bar2"></span>
                   <span class="navbar-toggler-bar bar3"></span>
@@ -60,25 +62,30 @@
               </button>
               <div class="collapse navbar-collapse" id="navigation">
                 <ul class="navbar-nav mx-auto">
-
                   <li class="nav-item">
-                    <a class="nav-link me-2" href="{{ route('inquireBooks') }}">
+                    <a class="nav-link me-1" href="{{ route('inquireBooks') }}">
                       <i class="fa fa-book opacity-6 text-dark me-1"></i>
                       Catalog
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link me-2" href="#" onclick="openModal()">
+                    <a class="nav-link me-1" href="#" onclick="openModal()">
                       <i class="fas fa-user-circle opacity-6 text-dark me-1"></i>
                       Sign Up
                     </a>
                   </li>
+                  <li class="nav-item">
+                    <a class="nav-link me-1" href="{{ route('guestRecord') }}">
+                      <i class="fas fa-user-circle opacity-6 text-dark me-1"></i>
+                      Guest Attendance
+                    </a>
+                  </li>
                 </ul>
-               
               </div>
             </div>
           </nav>
           <!-- End Navbar -->
+          
         </div>
       </div>
     </div>
@@ -152,12 +159,12 @@
       </section>
     </main>
 
-    <div id="signupModal" class="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div id="signupModal" class="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" inert>
                     <div class="modal-dialog modal-md" role="document">
                       <div class="modal-content">
                         <div class="modal-header">
                           <h5 class="modal-title" id="exampleModalLabel">Choose User</h5>
-                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" onclick="closeModal()"></button>
                         </div>
                       <div class="modal-body" style="text-align:center;">
                         <p class="text-center">
@@ -176,12 +183,19 @@
     // Function to open the modal
     function openModal() {
         modal.style.display = 'block';
+        modal.removeAttribute('inert'); // Allow focus when modal is open
+    }
+
+    // Function to close the modal
+    function closeModal() {
+        modal.style.display = 'none';
+        modal.setAttribute('inert', ''); // Prevent focus when modal is closed
     }
 
     // Close the modal when user clicks outside of it
     window.onclick = function(event) {
         if (event.target == modal) {
-            modal.style.display = 'none';
+            closeModal();
         }
     }
 </script>
