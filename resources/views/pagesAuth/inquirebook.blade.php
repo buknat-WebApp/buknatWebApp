@@ -22,55 +22,60 @@
 </head>
 
 <body class="">
-    <div class="container position-sticky z-index-sticky top-0">
-        <div class="row">
-            <div class="col-12">
-                <!-- Navbar -->
-                <nav
-                    class="navbar navbar-expand-lg blur border-radius-lg top-0 z-index-3 shadow position-absolute mt-4 py-2 start-0 end-0 mx-4 text-center">
-                    <div class="container-fluid">
-                        <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3 text-wrap " href="">
-                          Bukidnon National High School Library Management System
-                        </a>
-                        <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
-                          <span class="navbar-toggler-icon mt-2">
-                            <span class="navbar-toggler-bar bar1"></span>
-                            <span class="navbar-toggler-bar bar2"></span>
-                            <span class="navbar-toggler-bar bar3"></span>
-                          </span>
-                        </button>
-                        <div class="collapse navbar-collapse" id="navigation">
-                          <ul class="navbar-nav mx-auto">
+<div class="container position-sticky z-index-sticky top-0">
+      <div class="row">
 
-                            <li class="nav-item">
-                                <a class="nav-link me-2" href="{{ route('loginForm') }}">
-                                  <i class="fas fa-user-circle opacity-6 text-dark me-1"></i>
-                                  Login
-                                </a>
-                              </li>
+          <!-- Navbar -->
+          <nav class="navbar navbar-expand-lg blur border-radius-sm z-index-3 shadow position-absolute mt-2 py-1 start-0 end-0">
+            <div class="container-fluid">
+            <button class="navbar-toggler shadow-none me-1" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon mt-1">
+                  <span class="navbar-toggler-bar bar1"></span>
+                  <span class="navbar-toggler-bar bar2"></span>
+                  <span class="navbar-toggler-bar bar3"></span>
+                </span>
+              </button>
 
-                            <li class="nav-item">
-                                <a class="nav-link me-2" href="#" onclick="openModal()">
-                                <i class="fas fa-user-circle opacity-6 text-dark me-1"></i>
-                                Sign Up
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link me-2" href="{{ route('guestRecord') }}">
-                                  <i class="fas fa-user-circle opacity-6 text-dark me-1"></i>
-                                  Guest Attendance
-                                </a>
-                              </li>
-                          </ul>
-                          <ul class="navbar-nav d-lg-block d-none">
-                          </ul>
-                        </div>
-                      </div>
-                </nav>
-                <!-- End Navbar -->
+                <div class="col">
+                  <a class="navbar-brand font-weight-bolder ms-lg-0 text-wrap text-start" href="">
+                    Bukidnon National High School Library Management System
+                  </a>
+                </div>
+              <div class="collapse navbar-collapse" id="navigation">
+                <ul class="navbar-nav mx-auto">
+                <li class="nav-item">
+                    <a class="nav-link me-1" href="{{ route('inquireBooks') }}">
+                        <i class="fa fa-book opacity-6 text-dark me-1"></i>
+                      Catalog
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link me-1" href="{{ route('loginForm') }}">
+                        <i class="fas fa-user-circle opacity-6 text-dark me-1"></i>
+                        Login
+                    </a>
+                </li>
+                  <li class="nav-item">
+                    <a class="nav-link me-1" href="#" onclick="openModal()">
+                      <i class="fas fa-user-circle opacity-6 text-dark me-1"></i>
+                      Sign Up
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link me-1" href="{{ route('guestRecord') }}">
+                      <i class="fas fa-user-circle opacity-6 text-dark me-1"></i>
+                      Guest Attendance
+                    </a>
+                  </li>
+                </ul>
+              </div>
             </div>
-        </div>
+          </nav>
+          <!-- End Navbar -->
+
+      </div>
     </div>
+
     <main class="main-content  mt-0">
         <section>
        <div class="page-header min-vh-100" style="background-image: url('{{ asset('assets/assets/img/catalog_final.jpg') }}'); background-position-y: 50%">

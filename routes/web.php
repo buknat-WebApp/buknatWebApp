@@ -134,7 +134,7 @@ Route::prefix('Librarian')->middleware(['auth', 'isLibrarian'])->group(function(
     
     Route::get('/guest', [LibrarianController::class, 'guestForm'])->name('guestForm'); // Route to display the guest form page
     Route::post('/record-guests', [LibrarianController::class, 'recordGuests'])->name('recordGuests'); // Route to handle the guest form submission
-
+    Route::delete('/record-guests/{guest}', [LibrarianController::class, 'deleteGuest'])->name('deleteGuest');
     
 
 });

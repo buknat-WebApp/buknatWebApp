@@ -44,22 +44,23 @@
 <body class="">
     <div class="container position-sticky z-index-sticky top-0">
       <div class="row">
-        <div class="col-12">
-
 
           <!-- Navbar -->
-          <nav class="navbar navbar-expand-lg blur border-radius-lg top-0 z-index-3 shadow position-absolute mt-2 py-1 start-0 end-0 mx-4">
+          <nav class="navbar navbar-expand-lg blur border-radius-sm z-index-3 shadow position-absolute mt-2 py-1 start-0 end-0">
             <div class="container-fluid">
-              <a class="navbar-brand font-weight-bolder ms-lg-0 text-wrap text-end" href="">
-                Bukidnon National High School Library Management System
-              </a>
-              <button class="navbar-toggler shadow-none me-1" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler shadow-none me-1" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon mt-1">
                   <span class="navbar-toggler-bar bar1"></span>
                   <span class="navbar-toggler-bar bar2"></span>
                   <span class="navbar-toggler-bar bar3"></span>
                 </span>
               </button>
+
+                <div class="col">
+                  <a class="navbar-brand font-weight-bolder ms-lg-0 text-wrap text-start" href="">
+                    Bukidnon National High School Library Management System
+                  </a>
+                </div>
               <div class="collapse navbar-collapse" id="navigation">
                 <ul class="navbar-nav mx-auto">
                   <li class="nav-item">
@@ -85,8 +86,7 @@
             </div>
           </nav>
           <!-- End Navbar -->
-          
-        </div>
+
       </div>
     </div>
     <main class="main-content  mt-0">

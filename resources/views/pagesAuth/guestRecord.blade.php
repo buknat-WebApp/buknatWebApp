@@ -23,53 +23,53 @@
     </head>
 
     <body>
-         <!-- Navbar -->
-        <nav
-            class="navbar navbar-expand-lg blur border-radius-lg top-0 z-index-3 shadow position-absolute mt-4 py-2 start-0 end-0 mx-4 text-center">
+    <div class="container position-sticky z-index-sticky top-0">
+      <div class="row">
+
+          <!-- Navbar -->
+          <nav class="navbar navbar-expand-lg blur border-radius-sm z-index-3 shadow position-absolute mt-2 py-1 start-0 end-0">
             <div class="container-fluid">
-                <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3 text-wrap " href="">
-                  Bukidnon National High School Library Management System
-                </a>
-                <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
-                  <span class="navbar-toggler-icon mt-2">
-                    <span class="navbar-toggler-bar bar1"></span>
-                    <span class="navbar-toggler-bar bar2"></span>
-                    <span class="navbar-toggler-bar bar3"></span>
-                  </span>
-                </button>
-                <div class="collapse navbar-collapse" id="navigation">
-                  <ul class="navbar-nav mx-auto">
-                        <li class="nav-item">
-                            <a class="nav-link me-2" href="{{ route('inquireBooks') }}">
-                            <i class="fa fa-book opacity-6 text-dark me-1"></i>
-                            Catalog
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link me-2" href="{{ route('loginForm') }}">
-                            <i class="fas fa-user-circle opacity-6 text-dark me-1"></i>
-                            Login
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link me-2" href="#" onclick="openModal()">
-                            <i class="fas fa-user-circle opacity-6 text-dark me-1"></i>
-                            Sign Up
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link me-2" href="{{ route('guestRecord') }}">
-                            <i class="fas fa-user-circle opacity-6 text-dark me-1"></i>
-                            Guest Attendance
-                            </a>
-                        </li>
-                    </ul>
-                     <ul class="navbar-nav d-lg-block d-none">
-                    </ul>
+            <button class="navbar-toggler shadow-none me-1" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon mt-1">
+                  <span class="navbar-toggler-bar bar1"></span>
+                  <span class="navbar-toggler-bar bar2"></span>
+                  <span class="navbar-toggler-bar bar3"></span>
+                </span>
+              </button>
+
+                <div class="col">
+                  <a class="navbar-brand font-weight-bolder ms-lg-0 text-wrap text-start" href="">
+                    Bukidnon National High School Library Management System
+                  </a>
                 </div>
+              <div class="collapse navbar-collapse" id="navigation">
+                <ul class="navbar-nav mx-auto">
+                <li class="nav-item">
+                    <a class="nav-link me-1" href="{{ route('inquireBooks') }}">
+                        <i class="fa fa-book opacity-6 text-dark me-1"></i>
+                      Catalog
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link me-1" href="{{ route('loginForm') }}">
+                        <i class="fas fa-user-circle opacity-6 text-dark me-1"></i>
+                        Login
+                    </a>
+                </li>
+                  <li class="nav-item">
+                    <a class="nav-link me-1" href="#" onclick="openModal()">
+                      <i class="fas fa-user-circle opacity-6 text-dark me-1"></i>
+                      Sign Up
+                    </a>
+                  </li>
+                </ul>
+              </div>
             </div>
-        </nav>
-        <!-- End Navbar -->
+          </nav>
+          <!-- End Navbar -->
+
+      </div>
+    </div>
         
         <main class="main-content mt-0">
             <div class="page-header align-items-start min-vh-50 pt-5 pb-11 m-3 border-radius-lg"
@@ -77,8 +77,8 @@
                 <span class="mask bg-gradient-dark opacity-6"></span>
                 <div class="container">
                     <div class="row justify-content-center">
-                        <div class="col-lg-5 text-center mx-auto mt-8">
-                        <h1 class="text-white test-justify mb-2 mt-5">Welcome!</h1>
+                        <div class="col-lg-5 text-center mx-auto mt-4">
+                        <h1 class="text-white test-justify mb-2">Welcome!</h1>
                         <p class="text-lead text-white">Our library warmly welcomes all guests and visitors. We kindly ask you to register upon arrival and follow our library guidelines to ensure a pleasant and enriching experience for everyone.</p>                            
                         </div>
                     </div>
@@ -86,7 +86,7 @@
             </div>
 
             <div class="container">
-                <div class="row mt-lg-n10 mt-md-n11 mt-n10 mb-4 justify-content-center">
+                <div class="row mt-lg-n10 mt-md-n11 mt-n12 mb-4 justify-content-center">
                     <div class="col-xl-6 col-lg-5 col-md-7 mx-auto">
                         <div class="container d-flex justify-content-center align-items-center min-vh-100">
                             <div class="card shadow-lg" style="width: 100%; max-width: 600px;">

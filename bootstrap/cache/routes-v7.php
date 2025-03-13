@@ -24,7 +24,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::CwVGkEe95YJhw9Oi',
+            '_route' => 'generated::2cFGMVByAkekdeD2',
           ),
           1 => NULL,
           2 => 
@@ -122,7 +122,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::Yezy1RCOTca7Dy47',
+            '_route' => 'generated::Ymd2AwimVMYvCD36',
           ),
           1 => NULL,
           2 => 
@@ -142,7 +142,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::zXl4f3TsLv0wiHl1',
+            '_route' => 'generated::x0HTahojXmMlZrdF',
           ),
           1 => NULL,
           2 => 
@@ -383,7 +383,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::MlKLAs2kLaEhGOHb',
+            '_route' => 'generated::HsTIzYdPpvd6V7E1',
           ),
           1 => NULL,
           2 => 
@@ -1153,7 +1153,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::B4ObrTrImwMX99NS',
+            '_route' => 'generated::P5RyYiC5o97WrZZX',
           ),
           1 => NULL,
           2 => 
@@ -1248,7 +1248,7 @@ app('router')->setCompiledRoutes(
     ),
     2 => 
     array (
-      0 => '{^(?|/Student/book/info/([^/]++)(*:34)|/Teacher/book/info/([^/]++)(*:68)|/Librarian/(?|bo(?|rrow/update/([^/]++)(*:114)|ok/(?|delete/([^/]++)(*:143)|info/([^/]++)(*:164)))|all/(?|students/info/(?|([^/]++)(?|(*:209))|regenerate/([^/]++)(*:237))|teachers/info/([^/]++)(?|(*:271)))|Librarian/transaction/([^/]++)(*:311)|transaction/logs/delete/([^/]++)(*:351)))/?$}sDu',
+      0 => '{^(?|/Student/book/info/([^/]++)(*:34)|/Teacher/book/info/([^/]++)(*:68)|/Librarian/(?|bo(?|rrow/update/([^/]++)(*:114)|ok/(?|delete/([^/]++)(*:143)|info/([^/]++)(*:164)))|all/(?|students/info/(?|([^/]++)(?|(*:209))|regenerate/([^/]++)(*:237))|teachers/info/([^/]++)(?|(*:271)))|Librarian/transaction/([^/]++)(*:311)|transaction/logs/delete/([^/]++)(*:351)|record\\-guests/([^/]++)(*:382)))/?$}sDu',
     ),
     3 => 
     array (
@@ -1517,6 +1517,28 @@ app('router')->setCompiledRoutes(
           5 => true,
           6 => NULL,
         ),
+      ),
+      382 => 
+      array (
+        0 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'deleteGuest',
+          ),
+          1 => 
+          array (
+            0 => 'guest',
+          ),
+          2 => 
+          array (
+            'DELETE' => 0,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => true,
+          6 => NULL,
+        ),
         1 => 
         array (
           0 => NULL,
@@ -1533,7 +1555,7 @@ app('router')->setCompiledRoutes(
   ),
   'attributes' => 
   array (
-    'generated::CwVGkEe95YJhw9Oi' => 
+    'generated::2cFGMVByAkekdeD2' => 
     array (
       'methods' => 
       array (
@@ -1549,7 +1571,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 'web',
         ),
-        'as' => 'generated::CwVGkEe95YJhw9Oi',
+        'as' => 'generated::2cFGMVByAkekdeD2',
       ),
       'fallback' => false,
       'defaults' => 
@@ -1711,7 +1733,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::Yezy1RCOTca7Dy47' => 
+    'generated::Ymd2AwimVMYvCD36' => 
     array (
       'methods' => 
       array (
@@ -1728,13 +1750,13 @@ app('router')->setCompiledRoutes(
         ),
         'uses' => 'O:55:"Laravel\\SerializableClosure\\UnsignedSerializableClosure":1:{s:12:"serializable";O:46:"Laravel\\SerializableClosure\\Serializers\\Native":5:{s:3:"use";a:0:{}s:8:"function";s:77:"function (\\Illuminate\\Http\\Request $request) {
     return $request->user();
-}";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"00000000000005f10000000000000000";}}',
+}";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"00000000000005f30000000000000000";}}',
         'namespace' => NULL,
         'prefix' => 'api',
         'where' => 
         array (
         ),
-        'as' => 'generated::Yezy1RCOTca7Dy47',
+        'as' => 'generated::Ymd2AwimVMYvCD36',
       ),
       'fallback' => false,
       'defaults' => 
@@ -1750,7 +1772,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::zXl4f3TsLv0wiHl1' => 
+    'generated::x0HTahojXmMlZrdF' => 
     array (
       'methods' => 
       array (
@@ -1771,7 +1793,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::zXl4f3TsLv0wiHl1',
+        'as' => 'generated::x0HTahojXmMlZrdF',
       ),
       'fallback' => false,
       'defaults' => 
@@ -2224,7 +2246,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::MlKLAs2kLaEhGOHb' => 
+    'generated::HsTIzYdPpvd6V7E1' => 
     array (
       'methods' => 
       array (
@@ -2245,7 +2267,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::MlKLAs2kLaEhGOHb',
+        'as' => 'generated::HsTIzYdPpvd6V7E1',
       ),
       'fallback' => false,
       'defaults' => 
@@ -4222,7 +4244,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::B4ObrTrImwMX99NS' => 
+    'generated::P5RyYiC5o97WrZZX' => 
     array (
       'methods' => 
       array (
@@ -4245,7 +4267,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::B4ObrTrImwMX99NS',
+        'as' => 'generated::P5RyYiC5o97WrZZX',
       ),
       'fallback' => false,
       'defaults' => 
@@ -4399,6 +4421,44 @@ app('router')->setCompiledRoutes(
         array (
         ),
         'as' => 'recordGuests',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'deleteGuest' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'DELETE',
+      ),
+      'uri' => 'Librarian/record-guests/{guest}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'auth',
+          2 => 'isLibrarian',
+        ),
+        'uses' => 'App\\Http\\Controllers\\LibrarianController@deleteGuest',
+        'controller' => 'App\\Http\\Controllers\\LibrarianController@deleteGuest',
+        'namespace' => NULL,
+        'prefix' => '/Librarian',
+        'where' => 
+        array (
+        ),
+        'as' => 'deleteGuest',
       ),
       'fallback' => false,
       'defaults' => 

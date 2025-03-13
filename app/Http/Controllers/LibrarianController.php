@@ -990,6 +990,14 @@ class LibrarianController extends Controller
 
         return redirect()->back()->with('success', 'Guest information recorded successfully.');
     }
+    
+    public function deleteGuest($id)
+    {
+        $guest = Guest::findOrFail($id);
+        $guest->delete();
+
+        return redirect()->back()->with('success', 'Guest deleted successfully.');
+    }
 
 
     public function recordLogins(Request $request)

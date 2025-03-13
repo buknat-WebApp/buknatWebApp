@@ -28,53 +28,59 @@
 </head>
 
 <body class="">
-    <!-- Navbar -->
-    <nav
-            class="navbar navbar-expand-lg blur border-radius-lg top-0 z-index-3 shadow position-absolute mt-4 py-2 start-0 end-0 mx-4 text-center">
+<div class="container position-sticky z-index-sticky top-0">
+      <div class="row">
+
+          <!-- Navbar -->
+          <nav class="navbar navbar-expand-lg blur border-radius-sm z-index-3 shadow position-absolute mt-2 py-1 start-0 end-0">
             <div class="container-fluid">
-                <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3 text-wrap " href="">
-                  Bukidnon National High School Library Management System
-                </a>
-                <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
-                  <span class="navbar-toggler-icon mt-2">
-                    <span class="navbar-toggler-bar bar1"></span>
-                    <span class="navbar-toggler-bar bar2"></span>
-                    <span class="navbar-toggler-bar bar3"></span>
-                  </span>
-                </button>
-                <div class="collapse navbar-collapse" id="navigation">
-                  <ul class="navbar-nav mx-auto">
-                        <li class="nav-item">
-                            <a class="nav-link me-2" href="{{ route('inquireBooks') }}">
-                            <i class="fa fa-book opacity-6 text-dark me-1"></i>
-                            Catalog
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link me-2" href="{{ route('loginForm') }}">
-                            <i class="fas fa-user-circle opacity-6 text-dark me-1"></i>
-                            Login
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link me-2" href="#" onclick="openModal()">
-                            <i class="fas fa-user-circle opacity-6 text-dark me-1"></i>
-                            Sign Up
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link me-2" href="{{ route('guestRecord') }}">
-                            <i class="fas fa-user-circle opacity-6 text-dark me-1"></i>
-                            Guest Attendance
-                            </a>
-                        </li>
-                    </ul>
-                     <ul class="navbar-nav d-lg-block d-none">
-                    </ul>
+            <button class="navbar-toggler shadow-none me-1" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon mt-1">
+                  <span class="navbar-toggler-bar bar1"></span>
+                  <span class="navbar-toggler-bar bar2"></span>
+                  <span class="navbar-toggler-bar bar3"></span>
+                </span>
+              </button>
+
+                <div class="col">
+                  <a class="navbar-brand font-weight-bolder ms-lg-0 text-wrap text-start" href="">
+                    Bukidnon National High School Library Management System
+                  </a>
                 </div>
+              <div class="collapse navbar-collapse" id="navigation">
+                <ul class="navbar-nav mx-auto">
+                <li class="nav-item">
+                    <a class="nav-link me-1" href="{{ route('inquireBooks') }}">
+                        <i class="fa fa-book opacity-6 text-dark me-1"></i>
+                      Catalog
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link me-1" href="{{ route('loginForm') }}">
+                        <i class="fas fa-user-circle opacity-6 text-dark me-1"></i>
+                        Login
+                    </a>
+                </li>
+                  <li class="nav-item">
+                    <a class="nav-link me-1" href="#" onclick="openModal()">
+                      <i class="fas fa-user-circle opacity-6 text-dark me-1"></i>
+                      Sign Up
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link me-1" href="{{ route('guestRecord') }}">
+                      <i class="fas fa-user-circle opacity-6 text-dark me-1"></i>
+                      Guest Attendance
+                    </a>
+                  </li>
+                </ul>
+              </div>
             </div>
-        </nav>
-        <!-- End Navbar -->
+          </nav>
+          <!-- End Navbar -->
+
+      </div>
+    </div>
 
     <main class="main-content mt-0">
         <div class="page-header align-items-start min-vh-50 pt-5 pb-11 m-3 border-radius-lg"
@@ -82,8 +88,8 @@
             <span class="mask bg-gradient-dark opacity-6"></span>
             <div class="container">
                 <div class="row justify-content-center">
-                    <div class="col-lg-5 text-center mx-auto mt-8">
-                        <h1 class="text-white test-justify mb-2 mt-5">Welcome!</h1>
+                    <div class="col-lg-5 text-center mx-auto mt-4">
+                        <h1 class="text-white test-justify mb-2">Welcome!</h1>
                         <p class="text-lead text-white">Student that will use this registration form still needs to wait
                             for the validation of the librarian before the account being created will be used.</p>
                     </div>
@@ -91,12 +97,13 @@
             </div>
         </div>
         <div class="container">
-            <div class="row mt-lg-n10 mt-md-n11 mt-n10 mb-4 justify-content-center">
+            <div class="row mt-lg-n10 mt-md-n11 mt-n11 mb-4 justify-content-center">
                 <div class="col-xl-6 col-lg-5 col-md-7 mx-auto">
                     <div class="card z-index-0">
-                        <div class="card-header text-center pt-4">
-                            <h5>Register with your ID</h5>
-                        </div>
+                            <div class="card-header text-center pt-4">
+                                <h5>Create Your Account</h5>
+                                <p>Please fill in your details to register.</p>
+                            </div>
                         <div class="row px-xl-5 px-sm-4 px-3">
                             <div class="col-3 ms-auto px-1">
 
@@ -107,7 +114,7 @@
                             <div class="col-3 me-auto px-1">
 
                             </div>
-                            <div class="mt-2 position-relative text-center">
+                            <div class="mt-auto position-relative text-center">
                                 @if (session('success'))
                                     <div class="alert-success alert-dismissible fade show" role="alert">
 
@@ -121,7 +128,7 @@
                                         @csrf
 
                                         <div class="mb-3">
-                                            <label for="id">Picture of your ID</label>
+                                            <label for="id">Take a Picture of your ID or Upload a Picture</label>
                                             <input type="file" class="form-control @if ($errors->has('avatar')) is-invalid @endif"
                                                    name="avatar" id="avatar" value="{{ old('avatar') }}">
                                             @if ($errors->has('avatar'))
@@ -376,7 +383,8 @@
                     </div>
                 </div>
 
-    <script>
+
+                <script>
         // Get the modal
         var modal = document.getElementById('signupModal');
 
@@ -416,14 +424,24 @@
     </script>
 
     <!--   Core JS Files   -->
-    <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="{{ url('assets/assets/js/core/popper.min.js') }}"></script>
     <script src="{{ url('assets/assets/js/core/bootstrap.min.js') }}"></script>
-    <script src="{{ url('assets/assets/js/plugins/perfect-scrollbar.min.js') }}"></script>
     <script src="{{ url('assets/assets/js/plugins/smooth-scrollbar.min.js') }}"></script>
-
+    <script>
+        var win = navigator.platform.indexOf('Win') > -1;
+        if (win && document.querySelector('#sidenav-scrollbar')) {
+            var options = {
+                damping: '0.5'
+            }
+            // Only initialize if the element exists
+            const scrollbarElement = document.querySelector('#sidenav-scrollbar');
+            if (scrollbarElement) {
+                Scrollbar.init(scrollbarElement, options);
+            }
+        }
+    </script>
     <!-- Github buttons -->
-    {{-- <script async defer src="https://buttons.github.io/buttons.js"></script> --}}
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
     <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
     
     @vite('resources/js/app.js')

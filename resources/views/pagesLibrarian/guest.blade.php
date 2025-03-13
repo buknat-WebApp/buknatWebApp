@@ -31,7 +31,7 @@
             <div class="container-fluid py-4 mt-2">
                 <div class="row">
                     <!-- Guest Attendance Form -->
-                    <div class="col-md-6">
+                    <div class="col-md-10 m-auto mb-3 ">
                         <div class="card">
                             <div class="card-body">
                                 <p class="text-uppercase text-sm">Guest Attendance</p>
@@ -76,7 +76,7 @@
                     </div>
 
                     <!-- Display Records -->
-                    <div class="col-md-6">
+                    <div class="col-md-15 mt-3">
                         <div class="card">
                             <div class="card-body">
                                 <h5>Recent Logs</h5>
@@ -88,6 +88,7 @@
                                                 <th>School</th>
                                                 <th>Purpose</th>
                                                 <th>Time</th>
+                                                <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -97,6 +98,13 @@
                                                 <td>{{ $guest->school }}</td>
                                                 <td>{{ $guest->purpose }}</td>
                                                 <td>{{ $guest->created_at->format('M d, Y h:i A') }}</td>
+                                                <td>
+                                                    <form action="{{ route('deleteGuest', $guest->id) }}" method="POST" style="display:inline;">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this guest?');">Delete</button>
+                                                    </form>
+                                                </td>
                                             </tr>
                                             @endforeach
                                         </tbody>
