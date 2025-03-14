@@ -131,6 +131,7 @@
                             <table class="table align-items-center ">
                                 <thead>
                                 <tr>
+                                    <th></th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Borrower's Name</th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
@@ -141,7 +142,6 @@
                                         Borrowed Book/s</th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Accession Number</th>
-                                    <th></th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -156,6 +156,14 @@
                                                 $dueCounter++;
                                             @endphp
                                             <tr>
+                                                <td class="text-center">
+                                                    <a href="{{ route('updateBorrow', ['transaction' => $overdueTransaction->id]) }}"
+                                                        ddata-bs-toggle="tooltip" data-bs-placement="top"
+                                                        title="Update Borrow">
+                                                        <span class="fas fa-edit"></span>
+                                                    </a>
+
+                                                </td>
 
                                                 <td>
 
@@ -213,14 +221,6 @@
                                                     @endforeach
                                                 </td>
 
-                                                <td class="text-center">
-                                                    <a href="{{ route('updateBorrow', ['transaction' => $overdueTransaction->id]) }}"
-                                                       ddata-bs-toggle="tooltip" data-bs-placement="top"
-                                                       title="Update Borrow">
-                                                        <span class="fas fa-edit"></span>
-                                                    </a>
-
-                                                </td>
 
                                             </tr>
 
@@ -249,6 +249,7 @@
                             <table class="table align-items-center ">
                                 <thead>
                                 <tr>
+                                    <th></th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Borrower's Name</th>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
@@ -258,8 +259,7 @@
                                     <th class="text-start text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Borrowed Book/s</th>
                                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                        Accession Number</th>
-                                    <th></th>
+                                        Accession Number</th>                                
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -274,6 +274,15 @@
                                                 $dueCounter++;
                                             @endphp
                                             <tr>
+
+                                                <td class="text-center">
+                                                    <a href="{{ route('updateBorrow', ['transaction' => $transaction->id]) }}"
+                                                       ddata-bs-toggle="tooltip" data-bs-placement="top"
+                                                       title="Update Borrow">
+                                                        <span class="fas fa-edit"></span>
+                                                    </a>
+
+                                                </td>
 
                                                 <td>
 
@@ -330,16 +339,6 @@
                                                         @endif
                                                     @endforeach
                                                 </td>
-
-                                                <td class="text-center">
-                                                    <a href="{{ route('updateBorrow', ['transaction' => $transaction->id]) }}"
-                                                       ddata-bs-toggle="tooltip" data-bs-placement="top"
-                                                       title="Update Borrow">
-                                                        <span class="fas fa-edit"></span>
-                                                    </a>
-
-                                                </td>
-
                                             </tr>
 
                                         @endif
