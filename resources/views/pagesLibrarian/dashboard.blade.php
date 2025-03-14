@@ -369,7 +369,7 @@
                             <div class="alert-secondary alert-dismissible fade show" role="alert">
 
                                 <div class="alert text-center alert-success text-white" role="alert">
-                                    Hooray!  No new Accounts are created, and None required Validation..
+                                    Hooray!  No new Students are created, and None required Validation..
                                     </div>
                                 <button type="button" class="btn-close" data-bs-dismiss="alert"
                                     aria-label="Close">x</button>
@@ -379,7 +379,7 @@
                             <div class="alert-secondary alert-dismissible fade show" role="alert">
 
                                 <div class="alert text-center alert-success text-white" role="alert">
-                                    Hooray!  No new Accounts are created, and None required Validation..
+                                    Hooray!  No new Teachers are created, and None required Validation..
                                     </div>
                                 <button type="button" class="btn-close" data-bs-dismiss="alert"
                                     aria-label="Close">x</button>
