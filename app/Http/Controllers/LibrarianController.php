@@ -446,21 +446,63 @@ class LibrarianController extends Controller
         // //Save QR code as image in a specific folder
         $path = public_path('storage/StudentQrCodes/'); // path to folder where image will be saved
 
+         // Check if the QR code already exists
+    if (File::exists($path . $filename)) {
+        return redirect()->back()->with('error', 'QR Code already exists for this student.');
+        }
+
         if (!File::exists($path)) {
             File::makeDirectory($path, $mode = 0777, true, true);
         }
         $filename = $student->id . '.png'; // name of the image file
 
-        QrCode::style('square')
-            ->eye('circle')// Use PNG format for the merged image
-            ->size(800) // Increased size for higher definition
-            ->errorCorrection('H') // High error correction level
-            ->margin(1) // Removed margin around QR code
-            ->color(0, 0, 0)
-            ->backgroundColor(255, 255, 255)
-            ->format('png')
-            ->merge(public_path('logo.png'), 0.12, true) // Merge the cat image with QR code
-            ->generate($file_ID, ($path . $filename));
+        // Generate QR code image and assign it to $qrImage
+        $qrImage = QrCode::style('square')
+        ->eye('circle') // Use PNG format for the merged image
+        ->size(800) // Increased size for higher definition
+        ->errorCorrection('H') // High error correction level
+        ->margin(1) // Removed margin around QR code
+        ->color(0, 0, 0)
+        ->backgroundColor(255, 255, 255)
+        ->format('png')
+        ->merge(public_path('logo.png'), 0.12, true) // Merge the cat image with QR code
+        ->generate($file_ID);
+
+        // Create a new image with space for text
+        $image = imagecreatefromstring($qrImage);
+        $imageWidth = imagesx($image);
+        $imageHeight = imagesy($image);
+        $newHeight = $imageHeight + 60; // Space for text
+
+        $newImage = imagecreatetruecolor($imageWidth, $newHeight);
+        $white = imagecolorallocate($newImage, 255, 255, 255);
+        imagefill($newImage, 0, 0, $white);
+
+        // Copy QR code to new image
+        imagecopy($newImage, $image, 0, 0, 0, 0, $imageWidth, $imageHeight);
+
+        // Add text (ID number and name)
+        $black = imagecolorallocate($newImage, 0, 0, 0);
+        $font = public_path('fonts/arial.ttf'); // Ensure this font exists
+
+        // Prepare text
+        $text = $student->id_number . "\n" . $student->name; // ID number and name
+        $fontSize = 20;
+
+        // Calculate text dimensions for centering
+        $bboxText = imagettfbbox($fontSize, 0, $font, $text);
+        $textWidth = abs($bboxText[4] - $bboxText[0]);
+        $textX = ($imageWidth - $textWidth) / 2;
+        $textY = $imageHeight + 20; // Place text just below the QR code
+
+        // Add centered text
+        imagettftext($newImage, $fontSize, 0, $textX, $textY, $black, $font, $text);
+
+        // Save the final image
+        imagepng($newImage, $path . $filename);
+        imagedestroy($image);
+        imagedestroy($newImage);
+                
     
     return redirect()->back()->with('success', 'Student QR Code Regenerated Successfully.');
    }
@@ -508,7 +550,7 @@ class LibrarianController extends Controller
         }
         $filename = $user->id . '.png'; // name of the image file
 
-        QrCode::style('square')
+            $qrImage = QrCode::style('square')
             ->eye('circle')// Use PNG format for the merged image
             ->size(800) // Increased size for higher definition
             ->errorCorrection('H') // High error correction level
@@ -519,8 +561,65 @@ class LibrarianController extends Controller
             ->merge(public_path('logo.png'), 0.12, true) // Merge the cat image with QR code
             ->generate($file_ID, ($path . $filename));
 
-        return redirect()->back()->with('successApprove', 'Student Approved successfully.');
+         // Generate QR code with given data
+    $file_ID = $user->id_number;
+
+    // Save QR code as image in a specific folder
+    $path = public_path('storage/StudentQrCodes/'); // path to folder where image will be saved
+
+    if (!File::exists($path)) {
+        File::makeDirectory($path, $mode = 0777, true, true);
     }
+    $filename = $user->id . '.png'; // name of the image file
+
+    // Generate QR code image and assign it to $qrImage
+    $qrImage = QrCode::style('square')
+        ->eye('circle') // Use PNG format for the merged image
+        ->size(800) // Increased size for higher definition
+        ->errorCorrection('H') // High error correction level
+        ->margin(1) // Removed margin around QR code
+        ->color(0, 0, 0)
+        ->backgroundColor(255, 255, 255)
+        ->format('png')
+        ->generate($file_ID);
+
+        // Create a new image with space for text
+        $image = imagecreatefromstring($qrImage);
+        $imageWidth = imagesx($image);
+        $imageHeight = imagesy($image);
+        $newHeight = $imageHeight + 60; // Space for text
+
+        $newImage = imagecreatetruecolor($imageWidth, $newHeight);
+        $white = imagecolorallocate($newImage, 255, 255, 255);
+        imagefill($newImage, 0, 0, $white);
+
+        // Copy QR code to new image
+        imagecopy($newImage, $image, 0, 0, 0, 0, $imageWidth, $imageHeight);
+
+        // Add text (ID number and name)
+        $black = imagecolorallocate($newImage, 0, 0, 0);
+        $font = public_path('fonts/arial.ttf'); // Ensure this font exists
+
+        // Prepare text
+        $text = $user->id_number . "\n" . $user->name; // ID number and name
+        $fontSize = 20;
+
+        // Calculate text dimensions for centering
+        $bboxText = imagettfbbox($fontSize, 0, $font, $text);
+        $textWidth = abs($bboxText[4] - $bboxText[0]);
+        $textX = ($imageWidth - $textWidth) / 2;
+        $textY = $imageHeight + 20; // Place text just below the QR code
+
+        // Add centered text
+        imagettftext($newImage, $fontSize, 0, $textX, $textY, $black, $font, $text);
+
+        // Save the final image
+        imagepng($newImage, $path . $filename);
+        imagedestroy($image);
+        imagedestroy($newImage);
+
+        return redirect()->back()->with('successApprove', 'Student Approved successfully.');
+        }
 
     public function confirmAccountTeacher(Request $request)
     {
