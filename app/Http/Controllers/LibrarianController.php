@@ -437,42 +437,46 @@ class LibrarianController extends Controller
         $student = User::findOrFail($student);
         return view('pagesLibrarian.studentinfo', compact('student'));
     }
-   public function regenerateQrCode($student)
-   {
-    $student = User::findOrFail($student);
+    public function regenerateQrCode($student)
+    {
+        $student = User::findOrFail($student);
+        $file_ID = $student->id_number;
 
-    $file_ID = $student->id_number;
+        // Path to folder where image will be saved
+        $path = public_path('storage/StudentQrCodes/');
+        $filename = $student->id . '.png';
 
-        // //Save QR code as image in a specific folder
-        $path = public_path('storage/StudentQrCodes/'); // path to folder where image will be saved
-
-         // Check if the QR code already exists
-    if (File::exists($path . $filename)) {
-        return redirect()->back()->with('error', 'QR Code already exists for this student.');
+        // Check if the QR code already exists
+        if (File::exists($path . $filename)) {
+            return redirect()->back()->with('error', 'QR Code already exists for this student.');
         }
 
+        // Create the directory if it doesn't exist
         if (!File::exists($path)) {
             File::makeDirectory($path, $mode = 0777, true, true);
         }
-        $filename = $student->id . '.png'; // name of the image file
 
         // Generate QR code image and assign it to $qrImage
-        $qrImage = QrCode::style('square')
-        ->eye('circle') // Use PNG format for the merged image
-        ->size(800) // Increased size for higher definition
-        ->errorCorrection('H') // High error correction level
-        ->margin(1) // Removed margin around QR code
-        ->color(0, 0, 0)
-        ->backgroundColor(255, 255, 255)
-        ->format('png')
-        ->merge(public_path('logo.png'), 0.12, true) // Merge the cat image with QR code
-        ->generate($file_ID);
+        try {
+            $qrImage = QrCode::style('square')
+                ->eye('circle')
+                ->size(800)
+                ->errorCorrection('H')
+                ->margin(1)
+                ->color(0, 0, 0)
+                ->backgroundColor(255, 255, 255)
+                ->format('png')
+                ->merge(public_path('logo.png'), 0.12, true)
+                ->generate($file_ID);
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Failed to generate QR Code: ' . $e->getMessage());
+        }
 
         // Create a new image with space for text
         $image = imagecreatefromstring($qrImage);
         $imageWidth = imagesx($image);
         $imageHeight = imagesy($image);
-        $newHeight = $imageHeight + 60; // Space for text
+        $newHeight = $imageHeight + 60;
 
         $newImage = imagecreatetruecolor($imageWidth, $newHeight);
         $white = imagecolorallocate($newImage, 255, 255, 255);
@@ -483,17 +487,17 @@ class LibrarianController extends Controller
 
         // Add text (ID number and name)
         $black = imagecolorallocate($newImage, 0, 0, 0);
-        $font = public_path('fonts/arial.ttf'); // Ensure this font exists
+        $font = public_path('fonts/arial.ttf');
 
         // Prepare text
-        $text = $student->id_number . "\n" . $student->name; // ID number and name
+        $text = $student->id_number . "\n" . $student->name;
         $fontSize = 20;
 
         // Calculate text dimensions for centering
         $bboxText = imagettfbbox($fontSize, 0, $font, $text);
         $textWidth = abs($bboxText[4] - $bboxText[0]);
         $textX = ($imageWidth - $textWidth) / 2;
-        $textY = $imageHeight + 20; // Place text just below the QR code
+        $textY = $imageHeight + 20;
 
         // Add centered text
         imagettftext($newImage, $fontSize, 0, $textX, $textY, $black, $font, $text);
@@ -502,10 +506,9 @@ class LibrarianController extends Controller
         imagepng($newImage, $path . $filename);
         imagedestroy($image);
         imagedestroy($newImage);
-                
-    
-    return redirect()->back()->with('success', 'Student QR Code Regenerated Successfully.');
-   }
+
+        return redirect()->back()->with('success', 'Student QR Code Regenerated Successfully.');
+    }
 
     public function accountListsTeacher()
     {

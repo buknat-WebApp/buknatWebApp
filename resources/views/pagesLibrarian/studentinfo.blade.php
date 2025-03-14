@@ -56,6 +56,19 @@
                                     </div>
                                     @endif
 
+                                    @if (session('error'))
+                                    <div class="alert-danger alert-dismissible fade show"
+                                        role="alert">
+
+                                        <p class="text-center text-white">
+                                            {{ session('error') }}
+                                        </p>
+                                        <button type="button" class="btn-close"
+                                            data-bs-dismiss="alert"
+                                            aria-label="Close">x</button>
+                                    </div>
+                                    @endif
+
                                     <form method="POST" action="{{ route('studentUpdate', ['student' => $student->id]) }}">
                                         @csrf
                                         @method('PUT')
