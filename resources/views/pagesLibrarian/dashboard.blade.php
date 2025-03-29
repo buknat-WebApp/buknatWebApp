@@ -160,7 +160,7 @@
                                                     <a href="{{ route('updateBorrow', ['transaction' => $overdueTransaction->id]) }}"
                                                         ddata-bs-toggle="tooltip" data-bs-placement="top"
                                                         title="Update Borrow">
-                                                        <span class="fas fa-edit"></span>
+                                                        <span class="fas fa-edit fa-lg"></span>
                                                     </a>
 
                                                 </td>
@@ -169,21 +169,32 @@
 
                                                     <div class="d-flex px-2 py-1 text-primary">
                                                         <div class="d-flex flex-column justify-content-center">
-                                                            <h6 class="mb-0 text-sm">
+                                                            <h6 class="mb-0 text-sm" style="color: black;">
                                                                 {{ $overdueTransaction->user->name }}
                                                             </h6>
+
+                                                            @if ($overdueTransaction->user->role == 0)
+                                                                 <p class="text-xs text-secondary mb-0">
+                                                                    <strong>Student</strong>
+                                                                <p class="text-xs text-secondary mb-0">
+                                                                    <strong>LRN No. :</strong>
+                                                                    &nbsp;{{ $overdueTransaction->user->id_number }}</p>
+                                                                </p>
+                                                            @endif
+                                                            @if ($overdueTransaction->user->role == 2)
+                                                                 <p class="text-xs text-secondary mb-0">
+                                                                    <strong>Teacher</strong>
+                                                                <p class="text-xs text-secondary mb-0">
+                                                                    <strong>ID No. :</strong>
+                                                                    &nbsp;{{ $overdueTransaction->user->id_number }}</p>
+                                                                </p>
+                                                            @endif
                                                             <p class="text-xs text-secondary mb-0">
-                                                                <strong>ID No.</strong>
-                                                                {{ $overdueTransaction->user->id_number }}
-                                                            </p>
+                                                                <strong>Contact No. :</strong>
+                                                                &nbsp;{{ $overdueTransaction->user->contact_number }}</p>
                                                             <p class="text-xs text-secondary mb-0">
-                                                                <strong>Contact No. </strong>
-                                                                {{ $overdueTransaction->user->contact_number }}
-                                                            </p>
-                                                            <p class="text-xs text-secondary mb-0">
-                                                                <strong>Email </strong>
-                                                                {{ $overdueTransaction->user->email }}
-                                                            </p>
+                                                                <strong>Email:</strong>
+                                                                &nbsp;{{ $overdueTransaction->user->email }}</p>
                                                         </div>
                                                     </div>
 
@@ -370,19 +381,14 @@
 
                                 <div class="alert text-center alert-success text-white" role="alert">
                                     Hooray!  No new Students are created, and None required Validation..
-                                    </div>
-                                <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                    aria-label="Close">x</button>
-                            </div>
-                        @endif
+                                </div>
+                                                     </div>@endif
                         @if ($noOfPendingTeacher == 2)
                             <div class="alert-secondary alert-dismissible fade show" role="alert">
 
                                 <div class="alert text-center alert-success text-white" role="alert">
                                     Hooray!  No new Teachers are created, and None required Validation..
                                     </div>
-                                <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                    aria-label="Close">x</button>
                             </div>
                         @endif
                         @foreach ($pendingStudents->take(10) as $student)
@@ -404,7 +410,7 @@
                                 <div class="d-flex">
                                     <a href="{{ route('accountPending') }}"> <button
                                             class="btn btn-link btn-icon-only btn-rounded btn-sm text-dark icon-move-right my-auto"><i
-                                                class="ni ni-bold-right" aria-hidden="true"></i></button></a>
+                                                class="ni ni-bold-right text-lg" aria-hidden="true"></i></button></a>
                                 </div>
                             </li>
                         @endforeach
@@ -428,8 +434,8 @@
                                 <div class="d-flex">
                                     <a href="{{ route('accountPendingTeacher') }}"> <button
                                             class="btn btn-link btn-icon-only btn-rounded btn-sm text-dark icon-move-right my-auto"><i
-                                                class="ni ni-bold-right" aria-hidden="true"></i></button></a>
-                                </div>
+                                                class="ni ni-bold-right text-lg" aria-hidden="true"></i></button></a>
+              text-lg           </div>
                             </li>
                         @endforeach
                     </ul>

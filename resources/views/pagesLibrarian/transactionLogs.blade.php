@@ -211,7 +211,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Automatically start scanner when page loads
     setTimeout(() => {
         startScanner();
-    }, 500); // Small delay to ensure everything is loaded
+    }, 1000); // Small delay to ensure everything is loaded
 
     window.startScanner = function() {
         if (!scanner) {

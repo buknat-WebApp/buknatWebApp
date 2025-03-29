@@ -200,7 +200,7 @@
       'file' => 
       array (
         'driver' => 'file',
-        'path' => 'C:\\Users\\Ian Mar Pardo\\Desktop\\laravel_buknat\\storage\\framework/cache/data',
+        'path' => 'C:\\Users\\Ian Mar Pardo\\Downloads\\laravel_buknat\\storage\\framework/cache/data',
       ),
       'memcached' => 
       array (
@@ -373,13 +373,13 @@
       'local' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\Users\\Ian Mar Pardo\\Desktop\\laravel_buknat\\storage\\app',
+        'root' => 'C:\\Users\\Ian Mar Pardo\\Downloads\\laravel_buknat\\storage\\app',
         'throw' => false,
       ),
       'public' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\Users\\Ian Mar Pardo\\Desktop\\laravel_buknat\\storage\\app/public',
+        'root' => 'C:\\Users\\Ian Mar Pardo\\Downloads\\laravel_buknat\\storage\\app/public',
         'url' => 'http://127.0.0.1:8000/storage',
         'visibility' => 'public',
         'throw' => false,
@@ -399,7 +399,7 @@
     ),
     'links' => 
     array (
-      'C:\\Users\\Ian Mar Pardo\\Desktop\\laravel_buknat\\public\\storage' => 'C:\\Users\\Ian Mar Pardo\\Desktop\\laravel_buknat\\storage\\app/public',
+      'C:\\Users\\Ian Mar Pardo\\Downloads\\laravel_buknat\\public\\storage' => 'C:\\Users\\Ian Mar Pardo\\Downloads\\laravel_buknat\\storage\\app/public',
     ),
   ),
   'hashing' => 
@@ -438,14 +438,14 @@
       'single' => 
       array (
         'driver' => 'single',
-        'path' => 'C:\\Users\\Ian Mar Pardo\\Desktop\\laravel_buknat\\storage\\logs/laravel.log',
+        'path' => 'C:\\Users\\Ian Mar Pardo\\Downloads\\laravel_buknat\\storage\\logs/laravel.log',
         'level' => 'debug',
         'replace_placeholders' => true,
       ),
       'daily' => 
       array (
         'driver' => 'daily',
-        'path' => 'C:\\Users\\Ian Mar Pardo\\Desktop\\laravel_buknat\\storage\\logs/laravel.log',
+        'path' => 'C:\\Users\\Ian Mar Pardo\\Downloads\\laravel_buknat\\storage\\logs/laravel.log',
         'level' => 'debug',
         'days' => 14,
         'replace_placeholders' => true,
@@ -510,7 +510,7 @@
       ),
       'emergency' => 
       array (
-        'path' => 'C:\\Users\\Ian Mar Pardo\\Desktop\\laravel_buknat\\storage\\logs/laravel.log',
+        'path' => 'C:\\Users\\Ian Mar Pardo\\Downloads\\laravel_buknat\\storage\\logs/laravel.log',
       ),
     ),
   ),
@@ -576,7 +576,7 @@
       'theme' => 'default',
       'paths' => 
       array (
-        0 => 'C:\\Users\\Ian Mar Pardo\\Desktop\\laravel_buknat\\resources\\views/vendor/mail',
+        0 => 'C:\\Users\\Ian Mar Pardo\\Downloads\\laravel_buknat\\resources\\views/vendor/mail',
       ),
     ),
   ),
@@ -710,7 +710,7 @@
     'lifetime' => '120',
     'expire_on_close' => false,
     'encrypt' => false,
-    'files' => 'C:\\Users\\Ian Mar Pardo\\Desktop\\laravel_buknat\\storage\\framework/sessions',
+    'files' => 'C:\\Users\\Ian Mar Pardo\\Downloads\\laravel_buknat\\storage\\framework/sessions',
     'connection' => NULL,
     'table' => 'sessions',
     'store' => NULL,
@@ -730,9 +730,9 @@
   array (
     'paths' => 
     array (
-      0 => 'C:\\Users\\Ian Mar Pardo\\Desktop\\laravel_buknat\\resources\\views',
+      0 => 'C:\\Users\\Ian Mar Pardo\\Downloads\\laravel_buknat\\resources\\views',
     ),
-    'compiled' => 'C:\\Users\\Ian Mar Pardo\\Desktop\\laravel_buknat\\storage\\framework\\views',
+    'compiled' => 'C:\\Users\\Ian Mar Pardo\\Downloads\\laravel_buknat\\storage\\framework\\views',
   ),
   'flare' => 
   array (
@@ -809,7 +809,7 @@
     array (
     ),
     'enable_runnable_solutions' => NULL,
-    'remote_sites_path' => 'C:\\Users\\Ian Mar Pardo\\Desktop\\laravel_buknat',
+    'remote_sites_path' => 'C:\\Users\\Ian Mar Pardo\\Downloads\\laravel_buknat',
     'local_sites_path' => '',
     'housekeeping_endpoint_prefix' => '_ignition',
     'settings_file_path' => '',

@@ -56,7 +56,7 @@
 
 </head>
 
-<body class="g-sidenav-show bg-gray-100">
+<body class="g-sidenav-show bg-gray-200">
     <div class="min-height-300 position-absolute w-100" style="background-image: url('{{ asset('assets/assets/img/buknat9.jpg') }}'); background-position-y: 60%; background-repeat: no-repeat; background-size: cover;">
         <span class="mask bg-gradient-faded-dark opacity-6"></span>
     </div>
@@ -64,7 +64,7 @@
     @include('layouts.sidenav')
 
 
-    <main class="main-content position-relative border-radius-lg ">
+    <main class="main-content position-relative  ">
         <!-- Navbar -->
         <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl " id="navbarBlur"
             data-scroll="false">
@@ -188,38 +188,6 @@
             @csrf
         </form>
 
-        <!-- The Modal -->
-        <div class="modal" id="myModal">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <!-- Modal Header -->
-                    <div class="modal-header">
-                        <h5 class="modal-title"></h5>
-                        <button type="button" class="close" data-dismiss="modal" id="closeModalBtn">&times;</button>
-                    </div>
-
-                    <!-- Modal body -->
-                    <div class="modal-body">
-                        <p>For pass due books and unreturned books, it can be seen in the dashboard Section</p>
-                    </div>
-
-                    <!-- Modal footer -->
-                    <div class="modal-footer">
-                    @if(Auth::user()->role === 1)
-                        <a type="button" class="btn btn-success" href="/Librarian/dashboard">Go to dashboard</a>
-
-                        @elseif(Auth::user()->role === 0)
-                            <a type="button" class="btn btn-success" href="/Student/dashboard">Go to dashboard</a>
-                        @elseif(Auth::user()->role === 2)
-                            <a type="button" class="btn btn-success" href="/Teacher/dashboard">Go to dashboard</a>
-
-                        @endif
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        
 
         @yield('content')
         
@@ -243,23 +211,6 @@
         function goBack() {
             window.history.back();
         }
-    </script>
-    
-    <script>
-        // Trigger the modal on page load
-        $(document).ready(function () {
-            $("#myModal").modal("hide");
-        });
-
-        // Close the modal when the "Close" button is clicked
-        $("#closeModalBtn").click(function () {
-            $("#myModal").modal("hide");
-        });
-
-        $("#openModalBtn").click(function () {
-            $("#myModal").modal("show");
-        });
-
     </script>
     
     <!--   Core JS Files   -->
