@@ -434,8 +434,8 @@
                                 <div class="d-flex">
                                     <a href="{{ route('accountPendingTeacher') }}"> <button
                                             class="btn btn-link btn-icon-only btn-rounded btn-sm text-dark icon-move-right my-auto"><i
-                                                class="ni ni-bold-right text-lg" aria-hidden="true"></i></button></a>
-              text-lg           </div>
+                                                class="ni ni-bold-right text-lg" aria-hidden="true"></i></button></a> 
+                                </div>
                             </li>
                         @endforeach
                     </ul>
