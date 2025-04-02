@@ -19,26 +19,6 @@
                     </div>
                 </div>
 
-                <div class="col-lg-4 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
-                    <div class="nav-wrapper position-relative end-0">
-                        <ul class="nav nav-pills nav-fill p-1">
-                            <li class="nav-item">
-                                <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center btn"
-                                    href="{{ route('StudentbookLists') }}">
-                                    <i class="ni ni-books"></i>
-                                    <span class="ms-2">All Books</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center disabled">
-                                    <i class="ni ni-books"></i>
-                                    <span class="ms-2">Book Info</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
                 <div class="container-fluid py-4 mt-2">
                     <div class="row">
                         <div class="col-md-12">
@@ -79,16 +59,16 @@
                                                                     <div class="d-flex px-2 py-1">
                                                                         <div
                                                                             class="d-flex flex-column justify-content-center">
-                                                                            <h6 class="mb-0 text-sm">
+                                                                            <h6 class="mb-0 text-sm text-capitalize">
                                                                                 {{ $book->book_title }}
                                                                             </h6>
-                                                                            <p class="text-xs text-secondary mb-0">
+                                                                            <p class="text-xs text-secondary mb-0 text-capitalize">
                                                                                 {{ $book->author ? $book->author->author : '' }}</p>
                                                                         </div>
                                                                     </div>
                                                                 </td>
                                                                 <td>
-                                                                    <p class="text-xs font-weight-bold mb-0">
+                                                                    <p class="text-xs font-weight-bold mb-0 text-capitalize">
                                                                         {{ $book->publisher }}</p>
                                                                     <p class="text-xs text-secondary mb-0">
                                                                         {{ $book->publication_year }}</p>

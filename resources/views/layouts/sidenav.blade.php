@@ -196,7 +196,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('teacherbooklists') ? 'active bg-primary bg-gradient ' : '' }}" href="{{ route('teacherbookLists') }}">
+                    <a class="nav-link {{ request()->routeIs('teacherbookLists') ? 'active bg-primary bg-gradient ' : '' }}" href="{{ route('teacherbookLists') }}">
                         <div
                             class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="ni ni-credit-card text-success text-sm opacity-10"></i>

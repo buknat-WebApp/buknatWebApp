@@ -138,19 +138,13 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="example-text-input" class="form-control-label">Grade Level Teacher</label>
-                                        <select class="form-control" type="text" name="office_or_department" id="office_or_department" value="{{ Auth::user()->office_or_department}}">
-                                    </div>
-                                    <select name="office_or_department" id="cars" class="form-control">
-                                        <option value="Teacher" {{ old('office_or_department') == 'Teacher' ? 'selected' : '' }}>Teacher</option>
-                                    </select>
-                                </div>
-
-                                @else
-
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="example-text-input" class="form-control-label"></label>
-                                        <input class="form-control" type="text" name="office_or_department" id="office_or_department" value="{{ Auth::user()->office_or_department}}">
+                                        <input type="text" name="office_or_department" id="office_or_department" class="form-control" value="{{ Auth::user()->office_or_department }}" disabled>
+                                        
+                                        
+                                        {{-- <select class="form-control" type="text" name="office_or_department" id="office_or_department">
+                                            <option value="Teacher">{{ Auth::user()->office_or_department}}</option>
+                                            <option value="Teacher">Teacher</option>
+                                        </select> --}}
                                     </div>
                                 </div>
                                 @endif

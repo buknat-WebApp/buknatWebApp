@@ -31,31 +31,37 @@
                                                 <thead>
                                                     <tr>
                                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Date Borrowed</th>
-                                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Return Date</th>
+                                                        <th class="text-start text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Expected Return Date</th>
+                                                        <th class="text-start text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Return Date</th>
                                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Borrowed Book/s</th>
-                                                        <th class="text-start text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Borrow Status</th>
+                                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Fines</th>
+                                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Borrow Status</th>
+                                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Note</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     @foreach ($transactions->take(30) as $transaction)
                                                         <tr>
-                                                            <td><p class="mb-1">{{ $transaction->borrowed_at }}</p></td>
-                                                            <td class="align-middle text-center"><p class="mb-1">{{ $transaction->expected_return_date }}</p></td>
+                                                            <td class="text-start"><p>{{ \Carbon\Carbon::parse($transaction->borrowed_at)->format('M d, Y h:i A') }}</p></td>
+                                                            <td class="text-start"><p>{{ \Carbon\Carbon::parse($transaction->expected_return_date)->format('M d, Y') }}</p></td>
+                                                            <td class="text-start"><p>{{ \Carbon\Carbon::parse($transaction->expected_return_date)->format('M d, h:i A') }}</p></td>
                                                             <td class="text-start">
                                                                
                                                                 @foreach ($transaction->bookTransactions as $bookTransaction)
                                                                     @foreach ($books as $book)
                                                                         @if ($bookTransaction->book_id == $book->id)
-                                                                            <p class="mb-1">{{ $book->book_title }}</p>
+                                                                            <p class="text-capitalize text-bold mb-1">{{ $book->book_title }}</p>
+                                                                            <p class="text-capitalize text-sm mb-1">{{ $book->author->author }}</p>
                                                                            
                                                                         @endif
                                                                     @endforeach
                                                                 @endforeach
                                                             </td>
-                                                            <td class="text-start align-middle">
+                                                            <td class="text-start"><p>{{ ($transaction->fines) }}</p></td>
+                                                            <td class="text-start">
                                                                 @foreach ($transaction->bookTransactions as $bookTransaction)
                                                                     @if (!is_null($bookTransaction->returned_at))
-                                                                        <p class="badge badge-pill badge-lg bg-gradient-success" style="font-size: 14px;">RETURNED</p>
+                                                                        <p class="badge badge-pill badge-lg bg-gradient-success" style="font-size: 14px;">ON TIME</p>
                                                                     @else
                                                                         @if (now()->greaterThan($transaction->expected_return_date))
                                                                             <p class="badge badge-pill badge-lg bg-gradient-danger" style="font-size: 14px;">OVERDUE</p>
@@ -65,6 +71,7 @@
                                                                     @endif
                                                                 @endforeach
                                                             </td>
+                                                            <td class="text-start"><p>{{ ($transaction->summary) }}</p></td>
                                                         </tr>
                                                     @endforeach
                                                 </tbody>

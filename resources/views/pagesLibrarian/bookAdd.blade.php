@@ -33,13 +33,6 @@
                                     <span class="ms-2">All Books</span>
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a
-                                    class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center disabled">
-                                    <i class="ni ni-books"></i>
-                                    <span class="ms-2">Book Info</span>
-                                </a>
-                            </li>
                         </ul>
                     </div>
                 </div>

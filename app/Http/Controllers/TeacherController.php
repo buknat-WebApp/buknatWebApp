@@ -6,6 +6,7 @@ use App\Models\Book;
 use App\Models\BookSection;
 use App\Models\Transaction;
 use PharIo\Manifest\Author;
+use App\Models\BookLocation;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
@@ -54,9 +55,11 @@ class TeacherController extends Controller
 
         $book = Book::where('id', '=', $id)->first();
         $sections = BookSection::all();
+        $locations = BookLocation::all();
         return view ('pagesTeacher.bookInfo', [
         'book' =>  $book ,
         'sections' => $sections,
+        'locations' => $locations,
        ]);
     }
 }

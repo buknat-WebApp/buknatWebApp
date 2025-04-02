@@ -86,7 +86,7 @@
                                                 <div class="form-group">
                                                     <label for="example-text-input"
                                                         class="form-control-label">Publisher</label>
-                                                    <input class="form-control" name="publisher" type="text"
+                                                    <input class="form-control text-capitalize" name="publisher" type="text"
                                                         value="{{ $book->publisher }}" readonly>
                                                 </div>
                                             </div>
@@ -145,7 +145,7 @@
                                                             class="form-control-label">Subject/Location</label>
                                                         <select class="form-select form-control" id="gender-select"
                                                             name="location_id" disabled>
-                                                            @foreach ($location as $locate)
+                                                            @foreach ($locations as $locate)
                                                                 @if ($book->location_id == $locate->id)
                                                                     <option value="{{ $locate->id }}" selected>
                                                                         {{ $locate->name }}
@@ -199,9 +199,6 @@
                                                     <textarea rows="4" cols="50" id="summary" name="summary" class="form-control text-justify" readonly>{{ $book->summary }}</textarea>
                                                 </div>
                                             </div>
-                                        
-
-
                                         </div>
 
                                         <div class="row">

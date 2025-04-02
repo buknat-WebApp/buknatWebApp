@@ -18,10 +18,10 @@
                     </div>                                          
                     <div class="col-auto my-auto text-white">
                         <div class="h-100">
-                            <h5 class="mb-1">
+                            <h5 class="mb-1 text-capitalize">
                                 {{ $book->book_title }}
                             </h5>
-                            <p class="mb-0 font-weight-bold text-sm">
+                            <p class="mb-0 font-weight-bold text-sm text-capitalize">
                                 <strong> Authors </strong> : {{ $book->author->author ?? 'No Author' }}.
                             </p>
                         </div>
@@ -32,7 +32,7 @@
                         <ul class="nav nav-pills nav-fill p-1">
                             <li class="nav-item">
                                 <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center"
-                                    href="{{ route('StudentbookLists') }}">
+                                    href="{{ route('teacherbookLists') }}">
                                     <i class="ni ni-books"></i>
                                     <span class="ms-2">All Books</span>
                                 </a>
@@ -86,7 +86,7 @@
                                                 <div class="form-group">
                                                     <label for="example-text-input"
                                                         class="form-control-label">Publisher</label>
-                                                    <input class="form-control" name="publisher" type="text"
+                                                    <input class="form-control text-capitalize" name="publisher" type="text"
                                                         value="{{ $book->publisher }}" readonly>
                                                 </div>
                                             </div>
@@ -145,7 +145,7 @@
                                                             class="form-control-label">Subject/Location</label>
                                                         <select class="form-select form-control" id="gender-select"
                                                             name="location_id" disabled>
-                                                            @foreach ($location as $locate)
+                                                            @foreach ($locations as $locate)
                                                                 @if ($book->location_id == $locate->id)
                                                                     <option value="{{ $locate->id }}" selected>
                                                                         {{ $locate->name }}
@@ -199,21 +199,18 @@
                                                     <textarea rows="4" cols="50" id="summary" name="summary" class="form-control text-justify" readonly>{{ $book->summary }}</textarea>
                                                 </div>
                                             </div>
-                                        
-
-
                                         </div>
 
                                         <div class="row">
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <a href="{{ route('StudentbookLists') }}"
+                                                    <a href="{{ route('teacherbookLists') }}"
                                                         class="btn btn-sm form-control mt-4 btn-secondary">Back</a>
                                                 </div>
                                             </div>
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <a class="btn btn-sm form-control mt-4 btn-success" href="{{ route('studentDashboard') }}"
+                                                    <a class="btn btn-sm form-control mt-4 btn-success" href="{{ route('teacherDashboard') }}"
                                                        >Back to Dashboard</a>
                                                 </div>
                                             </div>

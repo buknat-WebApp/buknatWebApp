@@ -33,13 +33,6 @@
                                     <span class="ms-2">All Book</span>
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a
-                                    class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center disabled">
-                                    <i class="ni ni-books"></i>
-                                    <span class="ms-2">Book Info</span>
-                                </a>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -161,18 +154,19 @@
 
                                                                 <td class="">
                                                                     <a href="{{ route('bookInfo', ['book' => $book->id]) }}"
-                                                                        class=""
+                                                                        class="text-secondary font-weight-bold text-xs btn bg-light bg-gradient"
                                                                         data-bs-toggle="tooltip" data-bs-placement="top"
                                                                         title="Manage Book">
-                                                                        <span class="fas fa-edit">  </span> Book </a>
+                                                                        <span class="fas fa-edit fa-lg text-dark"> Edit Book</span></a>
                                                                 </td>
                                                                 <td class="">
                                                                     <a href="{{ asset('storage/BookQRCodes/' . $book->id.'.png') }}" target="_blank"
+                                                                        class="text-secondary font-weight-bold text-xs btn bg-warning bg-gradient"
                                                                         onclick="printImage('{{ asset('storage/BookQRCodes/' . $book->id.'.png') }}'); return false;">
-                                                                        <span class="fas fa-print"></span> Print QR
+                                                                        <span class="fas fa-print fa-lg text-dark"> Print QR</span> 
                                                                      </a>
-                                                                     <a class="m-3" href="{{ asset('storage/BookQRCodes/' . $book->id.'.png') }}" download>
-                                                                        <span class="fas fa-download"></span> Download QR
+                                                                     <a class="text-secondary font-weight-bold text-xs btn bg-primary bg-gradient" href="{{ asset('storage/BookQRCodes/' . $book->id.'.png') }}" download>
+                                                                        <span class="fas fa-download fa-lg text-dark"> Download QR</span> 
                                                                     </a>
                                                                 </td>
                                                                 <td>
@@ -180,9 +174,9 @@
                                                                         onsubmit="return confirm('Are you sure you want to delete this book?');">
                                                                         @csrf
                                                                         @method('DELETE')
-                                                                        <div class="pt-3">
-                                                                            <button type="submit" class="btn btn-danger btn-sm" title="Delete this Log?">
-                                                                                <i class="fas fa-trash"> Delete</i>
+                                                                        <div class="">
+                                                                            <button type="submit" class="text-secondary font-weight-bold text-xs btn bg-danger bg-gradient" title="Delete this Log?">
+                                                                                <i class="fas fa-trash text-dark"> Delete</i>
                                                                             </button>
                                                                         </div>
                                                                     </form>
