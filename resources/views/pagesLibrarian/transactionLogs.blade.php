@@ -109,9 +109,9 @@
                                             @foreach($records->take(50) as $record)
                                             <tr>
                                                 <td class="text-start">{{ $record->created_at->format('M d, Y h:i A') }}</td>
-                                                <td class="text-start">{{ $record->name }}</td>
+                                                <td class="text-start text-capitalize">{{ $record->name }}</td>
                                                 <td class="text-start">{{ $record->grade_and_section ?? ''}}</td>
-                                                <td class="text-start">{{ $record->section ?? ''}}</td>
+                                                <td class="text-start text-capitalize">{{ $record->section ?? ''}}</td>
                                                 <td class="text-start">
                                                 <form action="{{ route('delete.student.logbook', $record->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this attendance log?');">
                                                     @csrf
@@ -209,9 +209,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     
     // Automatically start scanner when page loads
-    // setTimeout(() => {
-    //     startScanner();
-    // }, 1000); // Small delay to ensure everything is loaded
+    setTimeout(() => {
+        startScanner();
+    }, 1000); // Small delay to ensure everything is loaded
 
     window.startScanner = function() {
         if (!scanner) {

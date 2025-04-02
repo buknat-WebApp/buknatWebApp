@@ -160,7 +160,7 @@
                                                     <a href="{{ route('updateBorrow', ['transaction' => $overdueTransaction->id]) }}"
                                                         ddata-bs-toggle="tooltip" data-bs-placement="top"
                                                         title="Update Borrow">
-                                                        <span class="fas fa-edit"></span>
+                                                        <span class="fas fa-edit fa-lg"></span>
                                                     </a>
 
                                                 </td>
@@ -169,21 +169,28 @@
 
                                                     <div class="d-flex px-2 py-1 text-primary">
                                                         <div class="d-flex flex-column justify-content-center">
-                                                            <h6 class="mb-0 text-sm">
+                                                            <h6 class="mb-0 text-sm text-capitalize">
                                                                 {{ $overdueTransaction->user->name }}
                                                             </h6>
+                                                            @if ($overdueTransaction->user->role == 0)
+                                                                 <p class="text-xs text-secondary mb-0">
+                                                                    <strong>Student</strong></p>
+                                                                <p class="text-xs text-secondary mb-0">
+                                                                    <strong>LRN No. :</strong>
+                                                                    &nbsp;{{ $overdueTransaction->user->id_number }}</p>
+                                                            @else
+                                                                 <p class="text-xs text-secondary mb-0">
+                                                                    <strong>Teacher</strong></p>
+                                                                <p class="text-xs text-secondary mb-0">
+                                                                    <strong>ID No. :</strong>
+                                                                    &nbsp;{{ $overdueTransaction->user->id_number }}</p>
+                                                            @endif
                                                             <p class="text-xs text-secondary mb-0">
-                                                                <strong>ID No.</strong>
-                                                                {{ $overdueTransaction->user->id_number }}
-                                                            </p>
+                                                                <strong>Contact No. :</strong>
+                                                                &nbsp;{{ $overdueTransaction->user->contact_number }}</p>
                                                             <p class="text-xs text-secondary mb-0">
-                                                                <strong>Contact No. </strong>
-                                                                {{ $overdueTransaction->user->contact_number }}
-                                                            </p>
-                                                            <p class="text-xs text-secondary mb-0">
-                                                                <strong>Email </strong>
-                                                                {{ $overdueTransaction->user->email }}
-                                                            </p>
+                                                                <strong>Email:</strong>
+                                                                &nbsp;{{ $overdueTransaction->user->email }}</p>
                                                         </div>
                                                     </div>
 
@@ -279,7 +286,7 @@
                                                     <a href="{{ route('updateBorrow', ['transaction' => $transaction->id]) }}"
                                                        ddata-bs-toggle="tooltip" data-bs-placement="top"
                                                        title="Update Borrow">
-                                                        <span class="fas fa-edit"></span>
+                                                        <span class="fas fa-edit fa-lg"></span>
                                                     </a>
 
                                                 </td>
@@ -288,21 +295,35 @@
 
                                                     <div class="d-flex px-2 py-1 text-primary">
                                                         <div class="d-flex flex-column justify-content-center">
-                                                            <h6 class="mb-0 text-sm">
+                                                            <h6 class="mb-0 text-sm text-capitalize">
                                                                 {{ $transaction->user->name }}
                                                             </h6>
+                                                            @if ($transaction->user->role == 0)
                                                             <p class="text-xs text-secondary mb-0">
-                                                                <strong>ID No.</strong>
-                                                                {{ $transaction->user->id_number }}
-                                                            </p>
+                                                               <strong>Student</strong></p>
+                                                           <p class="text-xs text-secondary mb-0">
+                                                               <strong>LRN No. :</strong>
+                                                               &nbsp;{{ $transaction->user->id_number }}</p>
+                                                       @else
                                                             <p class="text-xs text-secondary mb-0">
-                                                                <strong>Contact No. </strong>
-                                                                {{ $transaction->user->contact_number }}
-                                                            </p>
+                                                               <strong>Teacher</strong></p>
+                                                           <p class="text-xs text-secondary mb-0">
+                                                               <strong>ID No. :</strong>
+                                                               &nbsp;{{ $transaction->user->id_number }}</p>
+                                                       @endif
+                                                       @if ($overdueTransaction->user->role == 0)
+                                                       <p class="text-xs text-secondary mb-0">
+                                                          <strong>Student</strong></p>
+                                                      <p class="text-xs text-secondary mb-0">
+                                                          <strong>LRN No. :</strong>
+                                                          &nbsp;{{ $overdueTransaction->user->id_number }}</p>
+                                                        @else
                                                             <p class="text-xs text-secondary mb-0">
-                                                                <strong>Email </strong>
-                                                                {{ $transaction->user->email }}
-                                                            </p>
+                                                                <strong>Teacher</strong></p>
+                                                            <p class="text-xs text-secondary mb-0">
+                                                                <strong>ID No. :</strong>
+                                                                &nbsp;{{ $overdueTransaction->user->id_number }}</p>
+                                                        @endif
                                                         </div>
                                                     </div>
 
@@ -396,15 +417,16 @@
                                     @endif
                                 </div>
                                     <div class="d-flex flex-column">
-                                        <h6 class="mb-1 text-dark text-sm">{{ $student->name }}</h6>
-                                        <span class="text-xs">{{ $student->grade_and_section }} &nbsp;<span
-                                                class="font-weight-bold">&nbsp;ID Number: {{ $student->id_number }}</span></span>
+                                        <h6 class="mb-1 text-dark text-sm text-capitalize">{{ $student->name }}</h6>
+                                        <span class="text-bold text-xs">Student</span>
+                                        <span class="text-xs">{{ $student->grade_and_section }} <br>
+                                            <span class="font-weight-bold">&nbsp;LRN Number: {{ $student->id_number }}</span></span>
                                     </div>
                                 </div>
                                 <div class="d-flex">
                                     <a href="{{ route('accountPending') }}"> <button
                                             class="btn btn-link btn-icon-only btn-rounded btn-sm text-dark icon-move-right my-auto"><i
-                                                class="ni ni-bold-right" aria-hidden="true"></i></button></a>
+                                                class="ni ni-bold-right text-lg" aria-hidden="true"></i></button></a>
                                 </div>
                             </li>
                         @endforeach
@@ -420,15 +442,16 @@
                                     @endif
                                 </div>
                                     <div class="d-flex flex-column">
-                                        <h6 class="mb-1 text-dark text-sm">{{ $teacher->name }}</h6>
-                                        <span class="text-xs">{{ $teacher->office_or_department }} &nbsp;<span
-                                                class="font-weight-bold">&nbsp;ID Number: {{ $teacher->id_number }}</span></span>
+                                        <h6 class="mb-1 text-dark text-sm text-capitalize">{{ $teacher->name }}</h6>
+                                        <span class="text-bold text-xs">Teacher</span>
+                                        <span class="text-xs">{{ $teacher->office_or_department }} <br>
+                                            <span class="font-weight-bold">&nbsp;ID Number: {{ $teacher->id_number }}</span></span>
                                     </div>
                                 </div>
                                 <div class="d-flex">
                                     <a href="{{ route('accountPendingTeacher') }}"> <button
                                             class="btn btn-link btn-icon-only btn-rounded btn-sm text-dark icon-move-right my-auto"><i
-                                                class="ni ni-bold-right" aria-hidden="true"></i></button></a>
+                                                class="ni ni-bold-right text-lg" aria-hidden="true"></i></button></a>
                                 </div>
                             </li>
                         @endforeach
