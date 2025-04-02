@@ -32,7 +32,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('Studentbooklists') ? 'active bg-primary bg-gradient ' : '' }}" href="{{ route('StudentbookLists') }}">
+                    <a class="nav-link {{ request()->routeIs('StudentbookLists') ? 'active bg-primary bg-gradient ' : '' }}" href="{{ route('StudentbookLists') }}">
                         <div
                             class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="ni ni-credit-card text-success text-sm opacity-10"></i>

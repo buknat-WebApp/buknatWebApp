@@ -58,11 +58,11 @@ class StudentController extends Controller
 
         $book = Book::where('id', '=', $id)->first();
         $sections = BookSection::all();
-        $location = BookLocation::all();
-        return view ('pagesStudent.bookInfo', [
+        $locations = BookLocation::all();
+        return view ('pagesTeacher.bookInfo', [
         'book' =>  $book ,
         'sections' => $sections,
-        'location' => $location,
+        'locations' => $locations,
        ]);
     }
 

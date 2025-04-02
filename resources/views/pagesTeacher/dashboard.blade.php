@@ -13,22 +13,24 @@
                         </div>
                     </div>
                     <div class="table-responsive">
-                        <table class="table align-items-center ">
+                        <table class="table">
                             <thead>
                                 <tr>
                                     <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                         Date Borrowed</th>
-                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                    <th class="text-start text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Due Date</th>
                                     <th class="text-start text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                         Title of Book/s  Borrowed</th>
+                                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        Accession</th>
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @php
                                     $today = date('Y-m-d');
-                                    $dueCounter = 0; $newAccountCounter =0;
+                                    $dueCounter = 0; $newAccountCounter = 0;
                                 @endphp
                                 @if ($transactions)
                                     @foreach ($transactions as $transaction)
@@ -39,33 +41,31 @@
                                             <tr>
                                                 <td>
                                                     <p class="text-xs font-weight-bold mb-2">
-                                                        {{ $transaction->borrowed_at }}</p>
+                                                        {{ \Carbon\Carbon::parse($transaction->borrowed_at)->format('M d, Y h:i A') }}</p>
                                                 </td>
 
-                                                <td class="align-middle text-center text-sm">
-                                                    <p class="text-xs font-weight-bold mb-2">
-                                                        {{ $transaction->expected_return_date }}</p>
+                                                <td class="text-xs font-weight-bold mb-2">
+                                                    <p>
+                                                        {{ \Carbon\Carbon::parse($transaction->expected_return_date)->format('M d, Y') }}</p>
                                                 </td>
 
                                                 <td class="text-start">
-                                                    <?php $count = 1; ?>
                                                     @foreach ($transaction->bookTransactions as $bookTransaction)
                                                         @foreach ($books as $book)
                                                             @if (is_null($bookTransaction->returned_at))
                                                                 @if ($bookTransaction->book_id == $book->id)
                                                                     <p class="text-xs font-weight-bold mb-2">
-                                                                        {{ $count }} .
                                                                         {{ $book->book_title }} </p>
-                                                                    <p class="text-xs text-secondary mb-0"></p>
-                                                                    <?php $count++; ?>
+                                                                    <p class="text-xs text-secondary mb-0">{{ $book->author->author }}</p>
                                                                 @endif
                                                             @endif
                                                         @endforeach
-                                                    @endforeach
-
+                                                    
                                                 </td>
+                                                <td class="text-center"><p>{{ $bookTransaction->books->accession ?? '' }}</p></td>
+                                                @endforeach
                                                 <td class="text-center">
-                                                    <span class="text-sm text-danger">Please Return Books on Time.</span>
+                                                    <span class="text-sm text-danger text-bold">Please Return Books on Time.</span>
                                                 </td>
 
                                             </tr>

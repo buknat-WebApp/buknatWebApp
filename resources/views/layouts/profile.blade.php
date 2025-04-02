@@ -122,7 +122,15 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="example-text-input" class="form-control-label">Grade</label>
-                                        <input class="form-control" type="text" name="grade_and_section" id="grade_and_section" value="{{ Auth::user()->grade_and_section}}">
+                                        <select class="form-control form-select" type="text" name="grade_and_section" id="grade_and_section">
+                                            <option value="{{ Auth::user()->grade_and_section }}" selected>{{ Auth::user()->grade_and_section }}</option>
+                                            <option value="Grade 7">Grade 7</option>
+                                            <option value="Grade 8">Grade 8</option>
+                                            <option value="Grade 9">Grade 9</option>
+                                            <option value="Grade 10">Grade 10</option>
+                                            <option value="Grade 11">Grade 11</option>
+                                            <option value="Grade 12">Grade 12</option>
+                                        </select>
                                     </div>
                                 </div>
 

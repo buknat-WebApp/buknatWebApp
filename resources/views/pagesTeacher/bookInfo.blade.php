@@ -77,7 +77,7 @@
                                             <div class="col">
                                                 <div class="form-group">
                                                     <label for="example-text-input"
-                                                        class="form-control-label">Edition</label>
+                                                        class="form-control-label text-capitalize">Edition</label>
                                                     <input class="form-control" name="edition" type="text"
                                                         value="{{ $book->edition }}" readonly>
                                                 </div>

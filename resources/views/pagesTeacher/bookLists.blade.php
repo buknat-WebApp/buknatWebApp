@@ -91,11 +91,11 @@
                                                                 <td class="align-middle">
                                                                     @if ($book->section_id === 8)
                                                                     <a target="_blank"
-                                                                        class="text-secondary font-weight-bold text-xs btn"
+                                                                        class="text-secondary font-weight-bold text-xs btn bg-light bg-gradient"
                                                                         ddata-bs-toggle="tooltip" data-bs-placement="top" title="View Book"
                                                                         ic  href="{{ Storage::url('UploadedBooks/' . $book->location) }}">
 
-                                                                        <span class="fas fa-eye"> view PDF</span>
+                                                                        <span class="fas fa-eye fa-lg text-dark"> view PDF</span>
                                                                     </a>
 
                                                                     @else
