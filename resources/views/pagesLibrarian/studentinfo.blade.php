@@ -194,12 +194,14 @@
                                         </div>
                                     </form>
 
-                                    <div class="row mt-3">
+                                    <div class="row">
                                         <div class="col">
-                                            <a href="{{ route('regenerateQrCode', ['student' => $student->id]) }}" class="btn btn-primary btn-sm mb-0 bg-primary bg-gradient"
-                                                onclick="return confirm('Are you sure you want this student to regenerate QR Code? This may take a while.');">
-                                                <i class="fas fa-sync"></i> Regenerate QR Code
-                                            </a>
+                                            <div class="form-group">
+                                                <a href="{{ route('regenerateQrCode', ['student' => $student->id]) }}" class="form-control btn btn-primary btn-sm mb-0 bg-primary bg-gradient"
+                                                    onclick="return confirm('Are you sure you want this student to regenerate QR Code? This may take a while.');">
+                                                    <i class="fas fa-sync"></i> Regenerate QR Code
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
