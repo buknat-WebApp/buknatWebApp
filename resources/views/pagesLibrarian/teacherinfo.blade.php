@@ -148,6 +148,33 @@
                                         </div>
                                     </form>
 
+                                    <form method="POST" action="{{ route('librarian.updatePasswordTeacher', ['teacher' => $teacher->id]) }}">
+                                        @csrf
+                                        @method('PUT')
+                                        
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <label for="new-password" class="form-control-label">New Password</label>
+                                                    <input class="form-control" name="password" type="password" id="new-password" placeholder="Enter new password">
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <label for="confirm-password" class="form-control-label">Confirm Password</label>
+                                                    <input class="form-control" name="password_confirmation" type="password" id="confirm-password" placeholder="Confirm new password">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <button type="submit" class="btn btn-sm form-control mt-4 btn-success">Update Password</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+
                                 </div>
                             </div>
 

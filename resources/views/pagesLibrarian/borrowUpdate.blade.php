@@ -10,25 +10,38 @@
                         <h5 class="mb-1">
                             {{ $user->name }}
                         </h5>
+                        @if($user->role == 0)
+                        <p class="mb-0 font-weight-bold text-sm">
+                            Student
+                        </p>
                         <p class="mb-0 font-weight-bold text-sm">
                             {{ $user->id_number }} &nbsp; {{ $user->grade_and_section }}
                         </p>
+                        @else
+                        <p class="mb-0 font-weight-bold text-sm">
+                            Teacher
+                        </p>
+                        <p class="mb-0 font-weight-bold text-sm">
+                            {{ $user->id_number }}
+                        </p>
+                        @endif
                     </div>
-                    <p class="mb-0 font-weight-bold text-sm"><strong> Note: </strong> &nbsp; {{ $user->remarks }}</p>
                 </div>
 
                 <div class="col-lg-6 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
                     <div class="nav-wrapper position-relative end-0">
                         <ul class="nav nav-pills nav-fill p-1">
-                            <div class="dropdown">
-                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Search
-                                </button>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <li><a class="dropdown-item" href="{{ route('borrowingForm') }}">Students</a></li>
-                                        <li><a class="dropdown-item" href="{{ route('borrowingFormTeacher') }}">Teachers</a></li>  
-                                    </ul>
-                            </div>
+                            <li class="nav-item">
+                                <div class="dropdown">
+                                    <button class="btn dropdown-toggle w-100 text-center"  type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Search
+                                    </button>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <li><a class="dropdown-item" href="{{ route('borrowingForm') }}">Students</a></li>
+                                            <li><a class="dropdown-item" href="{{ route('borrowingFormTeacher') }}">Teachers</a></li>  
+                                        </ul>
+                                </div>
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center"
                                     href="{{ route('borrowerLists') }}">

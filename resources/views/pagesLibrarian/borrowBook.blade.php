@@ -104,7 +104,7 @@
                                                     
                                                         <div class="col">
                                                             <!-- Button to open the camera modal -->
-                                                            <button type="button" class="btn btn-primary form-control" onclick="startScanner()" data-bs-toggle="modal" data-bs-target="#cameraBookModal">
+                                                            <button type="button" class="btn btn-primary form-control bg-primary bg-gradient" onclick="startScanner()" data-bs-toggle="modal" data-bs-target="#cameraBookModal">
                                                                 Scan Book QR Code
                                                             </button>
                                                         </div>
@@ -187,7 +187,7 @@
 
                                                         <div class="row">
                                                             <button style="display: block; width: 300px; margin: 0 auto;"
-                                                                    type="button" class="btn btn-success mt-3"
+                                                                    type="button" class="btn btn-success mt-3 bg-success bg-gradient"
                                                                     data-bs-toggle="modal" data-bs-target="#borrowModal">
                                                                 Submit
                                                             </button>
@@ -294,28 +294,47 @@
                         </div>
                     </div>
 
-                    <!-- Audio element -->
-                    <!-- <audio id="scanSound" src="{{ asset('assets/sounds/beep.mp3') }}" preload="auto"></audio>
- -->
 
-
-                <!-- sign up modal -->
-                <div id="signupModal" class="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-md" role="document">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalLabel">Choose User</h5>
-                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                      <div class="modal-body">
-                        <p class="text-center">
-                            Are you a Student or Teacher?
-                        </p>
-                          <a href="{{ route('signupForm') }}" role="button" class="btn btn-primary btn-lg" >Student</a>
-                          <a href="{{ route('signupForms') }}" role="button" class="btn btn-secondary btn-lg">Teacher</a>
-                      </div>
-                    </div>
+        <div id="signupModal" class="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" inert>
+            <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Choose User</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" onclick="closeModal()"></button>
                 </div>
+            <div class="modal-body" style="text-align:center;">
+                <p class="text-center">
+                    Are you a Student or Teacher?
+                </p>
+                <a href="{{ route('signupForm') }}" role="button" class="btn btn-primary btn-lg">Student</a>
+                <a href="{{ route('signupForms') }}" role="button" class="btn btn-secondary btn-lg">Teacher</a>
+            </div>
+            </div>
+        </div>
+
+    <script>
+    // Get the modal
+    var modal = document.getElementById('signupModal');
+
+    // Function to open the modal
+    function openModal() {
+    modal.style.display = 'block';
+    modal.removeAttribute('inert'); // Allow focus when modal is open
+    }
+
+    // Function to close the modal
+    function closeModal() {
+    modal.style.display = 'none';
+    modal.setAttribute('inert', ''); // Prevent focus when modal is closed
+    }
+
+    // Close the modal when user clicks outside of it
+    window.onclick = function(event) {
+    if (event.target == modal) {
+        closeModal();
+    }
+    }
+    </script>
 
                 <style>
                         .scanner-container {

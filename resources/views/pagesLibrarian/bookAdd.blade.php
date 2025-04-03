@@ -266,7 +266,7 @@
 
                                                     </div>
                                                     <hr class="horizontal dark">
-                                                    <input type="submit" class="btn btn-success form-control">
+                                                    <input type="submit" class="btn btn-success form-control bg-success bg-gradient">
 
                                             </div>
                                         </form>

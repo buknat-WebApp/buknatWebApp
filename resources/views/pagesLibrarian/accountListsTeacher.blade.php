@@ -116,27 +116,22 @@
 
                                                             <td class="">
                                                                 <a href="{{ route('teacherDetails', ['teacher' => $teacher->id]) }}"
-                                                                    class="" data-bs-toggle="tooltip" data-bs-placement="top" title="Manage Teacher">
-                                                                    <span class="fas fa-edit"></span>Info</a>
+                                                                    class="" data-bs-placement="top" title="Manage Teacher">
+                                                                    <span class="fas fa-edit btn bg-light bg-gradient"> Info</span></a>
                                                             </td>
 
                                                             <td class="">
                                                                 <a href="{{ asset('storage/TeacherQrCodes/' . $teacher->id.'.png') }}" target="_blank"
                                                                     onclick="printImage('{{ asset('storage/TeacherQrCodes/' . $teacher->id.'.png') }}'); return false;">
-                                                                    <span class="fas fa-print"></span> Print QR
+                                                                    <span class="fas fa-print btn bg-warning bg-gradient"> Print QR</span> 
                                                                  </a>
-
                                                             </td> 
                                                             
                                                             <td class="">
-                                                                <div style="margin-top: 12px;">
                                                                     <a  href="{{ asset('storage/TeacherQrCodes/' . $teacher->id .'.png') }}"
                                                                     onclick="downloadQR('{{ asset('storage/TeacherQrCodes/' . $teacher->id .'.png') }}'); return false;">
-                                                                    <p class="fas fa-download"></p> Download QR
+                                                                    <p class="fas fa-download btn bg-primary bg-gradient">Download QR</p> 
                                                                 </a>
-
-                                                                </div>
-                                                                
                                                             </td> 
 
                                                         </tr>

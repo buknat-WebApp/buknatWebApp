@@ -128,7 +128,7 @@ Route::prefix('Librarian')->middleware(['auth', 'isLibrarian'])->group(function(
     Route::get('/transactions', [LibrarianController::class, 'studentTransactions'])->name('studentTransactions');
     Route::get('/Librarian/transaction/{id}', [LibrarianController::class, 'studentTransaction'])->name('transaction');
 
-    Route::get('/transaction/logs', [LibrarianController::class, 'studentLogbook']);
+    Route::get('/transaction/logs', [LibrarianController::class, 'studentLogbook'])->name('studentLogbooks');
     Route::post('records/recordLogins', [LibrarianController::class, 'recordLogins'])->name('recordLogins');
     Route::delete('/transaction/logs/delete/{id}', [LibrarianController::class, 'deleteStudentLogbook'])->name('delete.student.logbook');
     
@@ -136,6 +136,8 @@ Route::prefix('Librarian')->middleware(['auth', 'isLibrarian'])->group(function(
     Route::post('/record-guests', [LibrarianController::class, 'recordGuests'])->name('recordGuests'); // Route to handle the guest form submission
     Route::delete('/record-guests/{guest}', [LibrarianController::class, 'deleteGuest'])->name('deleteGuest');
     
+    Route::put('/students/{student}/update-password', [LibrarianController::class, 'updatePassword'])->name('librarian.updatePassword');
+    Route::put('/students/{teacher}/update-password', [LibrarianController::class, 'updatePasswordTeacher'])->name('librarian.updatePasswordTeacher');
 
 });
 

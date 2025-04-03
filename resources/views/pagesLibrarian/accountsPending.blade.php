@@ -147,7 +147,7 @@
                                                             </td>                                                         
                                                             <td class="">
 
-                                                                <a type="button" class="btn btn-success btn-sm"
+                                                                <a type="button" class="btn btn-success bg-success bg-gradient btn-sm"
                                                                     title="Approve Student?" href="#approve"
                                                                     data-bs-toggle="modal" onclick="approveStudent(this)"
                                                                     data-ID="{{ $student->id }}"
@@ -236,7 +236,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-success ">Confirm</button>
+                    <button type="submit" class="btn btn-success bg-success bg-gradient">Confirm</button>
                 </div>
                 </form>
                 </div>

@@ -63,7 +63,6 @@
                                                             <option value="Grade 9" selected>Grade 9</option>
                                                             <option value="Grade 10" selected>Grade 10</option>
                                                             <option value="Grade 11" selected>Grade 11</option>
-                                                            <option value="Grade 12" selected>Grade 12</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -71,7 +70,7 @@
                                             <div class="col">
                                                 <div class="form-group">
                                                     <label for="gender-select">Grade Level Update:</label>
-                                                    <select class="form-select form-control" id="grade_levelB" name="grade_levelB" disabled>
+                                                    <select class="form-select form-control" id="grade_levelB" name="grade_levelB" readonly>
                                                         <option value="Grade 7" selected>Grade 7</option>
                                                         <option value="Grade 8" selected>Grade 8</option>
                                                         <option value="Grade 9" selected>Grade 9</option>
@@ -82,7 +81,7 @@
                                                 </div>
                                             </div>
                                                 <div class="d-flex justify-content-between">
-                                                    <button type="submit" class="btn btn-primary form-control" onclick="return confirm('Are you sure you want to update grade level?')">Update Grade Level</button>
+                                                    <button type="submit" class="btn btn-primary form-control bg-primary bg-gradient" onclick="return confirm('Are you sure you want to update grade level?')">Update Grade Level</button>
                                                 </div>
                                                 
                                             </form>
@@ -90,7 +89,7 @@
                                                     @csrf
                                                     @method('DELETE')
                                                     <div class="d-flex justify-content-between">
-                                                        <button type="submit" class="btn btn-danger form-control" onclick="return confirm('Are you sure you want to mark all Grade 12 students as graduated? This action cannot be undone.')">
+                                                        <button type="submit" class="btn btn-danger form-control bg-danger bg-gradient" onclick="return confirm('Are you sure you want to mark all Grade 12 students as graduated? This action cannot be undone.')">
                                                             Mark Grade 12 Students as Graduated
                                                         </button>
                                                     </div>
@@ -112,8 +111,19 @@
             var gradeLevelA = document.getElementById('grade_levelA');
             var gradeLevelB = document.getElementById('grade_levelB');
 
-            // Enable or disable Grade Level to be Promoted based on the selected Grade Level
-            gradeLevelB.disabled = (gradeLevelA.value === 'Grade 12');
+            // Define the next grade levels
+            const nextGrades = {
+                "Grade 7": "Grade 8",
+                "Grade 8": "Grade 9",
+                "Grade 9": "Grade 10",
+                "Grade 10": "Grade 11",
+                "Grade 11": "Grade 12",
+            };
+
+            // Automatically set the Grade Level Update to the next grade level
+            if (nextGrades[gradeLevelA.value]) {
+                gradeLevelB.value = nextGrades[gradeLevelA.value];
+            }
         }
     </script>
 

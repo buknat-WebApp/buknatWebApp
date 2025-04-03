@@ -32,7 +32,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('StudentbookLists') ? 'active bg-primary bg-gradient ' : '' }}" href="{{ route('StudentbookLists') }}">
+                    <a class="nav-link {{ request()->routeIs(['StudentbookLists', 'bookInfoStudent']) ? 'active bg-primary bg-gradient ' : '' }}" href="{{ route('StudentbookLists') }}">
                         <div
                             class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="ni ni-credit-card text-success text-sm opacity-10"></i>
@@ -78,7 +78,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('addBook') ? 'active bg-primary bg-gradient ' : '' }}" href="{{ route('addBook') }}">
+                    <a class="nav-link {{ request()->routeIs(['addBook','bookLists', 'bookInfo']) ? 'active bg-primary bg-gradient ' : '' }}" href="{{ route('addBook') }}">
                         <div
                             class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="ni ni-books text-warning text-sm opacity-10"></i>
@@ -87,7 +87,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('borrowingForm') ? 'active bg-primary bg-gradient ' : '' }}" href="{{ route('borrowingForm') }}">
+                    <a class="nav-link {{ request()->routeIs(['borrowingForm', 'borrowingFormTeacher', 'borrowerLists', 'returnedBook', 'updateBorrow']) ? 'active bg-primary bg-gradient ' : '' }}" href="{{ route('borrowingForm') }}">
                         <div
                             class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="ni ni-credit-card text-success text-sm opacity-10"></i>
@@ -97,7 +97,7 @@
                 </li>
                 <hr>
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('accountPending') ? 'active bg-primary bg-gradient ' : '' }}" href="{{ route('accountPending') }}">
+                    <a class="nav-link {{ request()->routeIs(['accountPending', 'accountPendingTeacher', 'accountLists', 'accountListsTeacher', 'studentDetails', 'teacherDetails']) ? 'active bg-primary bg-gradient ' : '' }}" href="{{ route('accountPending') }}">
                         <div
                             class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="ni ni-app text-info text-sm opacity-10"></i>
@@ -117,7 +117,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('studentTransactions') ? 'active bg-primary bg-gradient ' : '' }}" href="{{ route('studentTransactions') }}">
+                    <a class="nav-link {{ request()->routeIs(['studentTransactions', 'transaction', 'studentLogbooks', 'guestForm']) ? 'active bg-primary bg-gradient ' : '' }}" href="{{ route('studentTransactions') }}">
                         <div
                             class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="ni ni-single-copy-04 text-info text-sm opacity-10"></i>
@@ -156,16 +156,16 @@
             </ul>
         </div>
         <div class="sidenav-footer mx-3 ">
-            <div class="card card-background shadow-none card-background-mask-secondary" id="sidenavCard">
+            <div class="card card-background shadow-none card-background-mask-warning border-light" id="sidenavCard">
                 <div class="card-body text-start p-3 w-100">
                     <div class="icon icon-shape icon-sm bg-white shadow text-center mb-3 d-flex align-items-center justify-content-center border-radius-md">
-                        <img class="w-65 mx-auto"
+                        <img class="w-80 mx-auto"
                              src="{{asset("assets/assets/img/qr.png")}}"
                              alt="sidebar_illustration">
                     </div>
                     <div class="docs-info">
                         <p class="text-xs font-weight-bold">Use the Scanner for Record Keeping of the Library Visitors.</p>
-                        <a href="/Librarian/transaction/logs" target=""
+                        <a class="text-white btn bg-dark bg-gradient w-90" href="{{ route('studentLogbooks') }}" target=""
                            data-toggle="tooltip" data-placement="top"
                            title="Use the Scanner for Record Keeping of the Library Visitors." class="btn btn-white btn-sm bg-white w-100 mb-0">Scan User QR</a>
                     </div>
@@ -196,7 +196,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('teacherbookLists') ? 'active bg-primary bg-gradient ' : '' }}" href="{{ route('teacherbookLists') }}">
+                    <a class="nav-link {{ request()->routeIs(['teacherbookLists', 'bookInfoteacher']) ? 'active bg-primary bg-gradient ' : '' }}" href="{{ route('teacherbookLists') }}">
                         <div
                             class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="ni ni-credit-card text-success text-sm opacity-10"></i>

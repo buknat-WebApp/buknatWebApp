@@ -275,12 +275,12 @@
                                             <div class="col">
                                                 <div class="form-group">
                                                     <a href="{{ route('bookLists') }}"
-                                                        class="btn btn-sm form-control mt-4 btn-secondary">Cancel</a>
+                                                        class="btn btn-sm form-control mt-4 btn-secondary bg-secondary bg-gradient">Cancel</a>
                                                 </div>
                                             </div>
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <a class="btn btn-sm form-control mt-4 btn-success" href="#updateBook"
+                                                    <a class="btn btn-sm form-control mt-4 btn-success bg-success bg-gradient" href="#updateBook"
                                                         data-bs-toggle="modal">Update</a>
                                                 </div>
                                             </div>

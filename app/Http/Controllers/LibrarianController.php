@@ -2135,6 +2135,19 @@ class LibrarianController extends Controller
         return redirect()->back();
     }
 
+    public function updatePassword(Request $request, $studentId)
+    {
+        $request->validate([
+            'password' => 'required|min:6|confirmed', // Ensure the password is at least 6 characters and matches the confirmation
+        ]);
+
+        $student = User::findOrFail($studentId); // Find the student by ID
+        $student->password = Hash::make($request->password); // Hash the new password
+        $student->save(); // Save the updated password
+
+        return redirect()->back()->with('success', 'Password updated successfully.');
+    }
+
     public function studentUpdate(Request $request, $student)
     {
         // Validate the request input
@@ -2142,6 +2155,7 @@ class LibrarianController extends Controller
     $validated = $request->validate([
         'name' => 'required|string|max:255',
         'id_number' => 'required|string|max:255',
+        'contact_number' => 'nullable|string|max:255',
         'grade_and_section' => 'nullable|string|max:255',
         'status' => 'required|string|in:active,graduated,inactive',
     ]);
@@ -2152,6 +2166,7 @@ class LibrarianController extends Controller
     // Update basic info
     $student->name = $validated['name'];
     $student->id_number = $validated['id_number'];
+    $student->contact_number = $validated['contact_number'];
 
         if (isset($validated['grade_and_section'])) {
             $student->grade_and_section = $validated['grade_and_section'];
@@ -2183,42 +2198,55 @@ class LibrarianController extends Controller
         return redirect()->back()->with('success', 'Student information updated successfully.', compact('student'));
     }
 
-    public function teacherUpdate(Request $request, $teacher)
-{
-    try {
-        // Validate the request input
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'id_number' => 'required|string|max:255',
-            'office_or_department' => 'nullable|string|max:255',
-            'status' => 'required|string|in:active,inactive',
+    public function updatePasswordTeacher(Request $request, $teachertId)
+    {
+        $request->validate([
+            'password' => 'required|min:6|confirmed', // Ensure the password is at least 6 characters and matches the confirmation
         ]);
 
-        // Find the teacher record
-        $teacher = User::findOrFail($teacher);
+        $teacher = User::findOrFail($studentId); // Find the Teacher by ID
+        $teacher->password = Hash::make($request->password); // Hash the new password
+        $teacher->save(); // Save the updated password
 
-        // Update teacher fields
-        $teacher->name = $validated['name'];
-        $teacher->id_number = $validated['id_number'];
-        $teacher->office_or_department = $validated['office_or_department'];
-        
-        // Update role and status based on status input
-        if ($validated['status'] === 'active') {
-            $teacher->role = 2;
-            $teacher->status = 'active';
-        } else {
-            $teacher->role = 4;
-            $teacher->status = 'inactive';
-        }
-
-        // Save the updated teacher record
-        $teacher->save();
-
-        return redirect()->back()->with('success', 'Teacher information updated successfully.');
-    } catch (\Exception $e) {
-        \Log::error('Teacher update failed: ' . $e->getMessage());
-        return redirect()->back()->with('error', 'Failed to update teacher information. Please try again.');
+        return redirect()->back()->with('success', 'Password updated successfully.');
     }
-}
+
+    public function teacherUpdate(Request $request, $teacher)
+    {
+        try {
+            // Validate the request input
+            $validated = $request->validate([
+                'name' => 'required|string|max:255',
+                'id_number' => 'required|string|max:255',
+                'office_or_department' => 'nullable|string|max:255',
+                'status' => 'required|string|in:active,inactive',
+            ]);
+
+            // Find the teacher record
+            $teacher = User::findOrFail($teacher);
+
+            // Update teacher fields
+            $teacher->name = $validated['name'];
+            $teacher->id_number = $validated['id_number'];
+            $teacher->office_or_department = $validated['office_or_department'];
+            
+            // Update role and status based on status input
+            if ($validated['status'] === 'active') {
+                $teacher->role = 2;
+                $teacher->status = 'active';
+            } else {
+                $teacher->role = 4;
+                $teacher->status = 'inactive';
+            }
+
+            // Save the updated teacher record
+            $teacher->save();
+
+            return redirect()->back()->with('success', 'Teacher information updated successfully.');
+        } catch (\Exception $e) {
+            \Log::error('Teacher update failed: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Failed to update teacher information. Please try again.');
+        }
+    }
 
 }

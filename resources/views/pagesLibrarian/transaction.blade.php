@@ -21,9 +21,12 @@
                 <!-- User Info Section -->
                 <div class="col-auto my-auto">
                     <div class="h-100">
-                        <h5 class="mb-1">{{ $transactions->first()->user->name }}</h5>
-                        <p class="mb-0 font-weight-bold text-sm">
-                            Transactions from {{ $transactions->first()->user->grade_and_section }}
+                        <h5 class="mb-1 font-weight-bold">{{ $transactions->first()->user->name }}</h5>
+                        <p class="mb-0 text-sm">
+                         {{ $transactions->first()->user->grade_and_section }}
+                        </p>
+                        <p class="mb-0 text-sm">
+                           <strong>Section:</strong> {{ $transactions->first()->user->section }}
                         </p>
                     </div>
                 </div>
@@ -49,6 +52,8 @@
                                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                 Expected Return</th>
                                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                Returned Date</th>
+                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                 Status</th>
                                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                 Remarks</th>
@@ -70,7 +75,7 @@
                                                     </td>
                                                     <td class="text-center">
                                                         <p class="text-xs font-weight-bold mb-0">
-                                                            {{ \Carbon\Carbon::parse($transaction->borrowed_at)->format('M d, Y') }}
+                                                            {{ \Carbon\Carbon::parse($transaction->borrowed_at)->format('M d, Y h:i A') }}
                                                         </p>
                                                     </td>
                                                     <td class="text-center">
@@ -79,15 +84,27 @@
                                                         </p>
                                                     </td>
                                                     <td class="text-center">
-                                                         @php
+                                                        <p class="text-xs font-weight-bold mb-0">
+                                                            {{ \Carbon\Carbon::parse($transaction->returned_at ?? '')->format('M d, Y h:i A') }}
+                                                        </p>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        @php
                                                             $bookTransaction = $transaction->bookTransactions->where('book_id', $book->id)->first();
-                                                            $isReturned = $bookTransaction && $bookTransaction->returned_at;
-                                                            $isOverdue = !$isReturned && \Carbon\Carbon::parse($transaction->expected_return_date)->endOfDay()->isPast();
+                                                            $expectedReturnDate = \Carbon\Carbon::parse($transaction->expected_return_date);
+                                                            $returnedAt = $bookTransaction ? \Carbon\Carbon::parse($bookTransaction->returned_at) : null;
+                                                    
+                                                            // Conditions
+                                                            $isReturned = $returnedAt !== null;
+                                                            $isOverdue = !$isReturned && $expectedReturnDate->isPast();
+                                                            $wasOverdue = $isReturned && $returnedAt->greaterThan($expectedReturnDate);
                                                         @endphp
-                                                        <span class="badge badge-sm {{ $isReturned ? 'bg-gradient-success' : ($isOverdue ? 'bg-gradient-danger' : 'bg-gradient-warning') }}">
-                                                            {{ $isReturned ? 'Returned' : ($isOverdue ? 'Overdue' : 'Borrowed') }}
+                                                        <span class="badge badge-sm 
+                                                            {{ $isReturned ? ($wasOverdue ? 'bg-gradient-danger' : 'bg-gradient-success') : ($isOverdue ? 'bg-gradient-danger' : 'bg-gradient-warning') }}">
+                                                            {{ $isReturned ? ($wasOverdue ? 'Overdue' : 'Returned') : ($isOverdue ? 'Overdue' : 'Borrowed') }}
                                                         </span>
                                                     </td>
+                                                    
                                                     <td class="text-center">
                                                         <p class="text-xs font-weight-bold mb-0">
                                                             {{ $bookTransaction->remarks ?? 'No remarks' }}

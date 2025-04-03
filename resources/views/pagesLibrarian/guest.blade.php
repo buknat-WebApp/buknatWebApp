@@ -84,25 +84,28 @@
                                     <table class="table">
                                         <thead>
                                             <tr>
+                                                <th>Time</th>
                                                 <th>Name</th>
                                                 <th>School</th>
                                                 <th>Purpose</th>
-                                                <th>Time</th>
+                                                
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                              @foreach($guests->take(50) as $guest)
                                             <tr>
+                                                <td>{{ $guest->created_at->format('M d, Y h:i A') }}</td>
                                                 <td>{{ $guest->name }}</td>
                                                 <td>{{ $guest->school }}</td>
                                                 <td>{{ $guest->purpose }}</td>
-                                                <td>{{ $guest->created_at->format('M d, Y h:i A') }}</td>
+                                                
                                                 <td>
                                                     <form action="{{ route('deleteGuest', $guest->id) }}" method="POST" style="display:inline;">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this guest?');">Delete</button>
+                                                        <button type="submit" class="btn btn-danger btn-sm bg-danger bg-gradient" onclick="return confirm('Are you sure you want to delete this guest?');">
+                                                           <span class="fas fa-trash"> Delete</span></button>
                                                     </form>
                                                 </td>
                                             </tr>

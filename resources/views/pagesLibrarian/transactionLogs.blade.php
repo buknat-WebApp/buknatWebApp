@@ -77,7 +77,7 @@
                                             
                                             <div class="row">
                                             
-                                                    <button class="btn btn-primary form-control" onclick="startScanner()">
+                                                    <button class="btn btn-primary form-control bg-primary bg-gradient" onclick="startScanner()">
                                                         Scan User QR Code
                                                     </button>
                                             </div>
@@ -116,8 +116,8 @@
                                                 <form action="{{ route('delete.student.logbook', $record->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this attendance log?');">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm" title="Delete this Log?">
-                                                        <i class="fas fa-trash"></i> Delete
+                                                    <button type="submit" class="btn btn-danger btn-sm bg-danger bg-gradient" title="Delete this Log?">
+                                                        <i class="fas fa-trash"> Delete</i> 
                                                     </button>
                                                 </form>
                                                 </td>
@@ -294,29 +294,4 @@ function submitForm() {
     document.getElementById('form-borrow').submit();
 }
 </script>
-
-<button onclick="deleteRecord({{ $record->id }})" class="btn btn-danger btn-sm" title="Delete this Log?">
-    <i class="fas fa-trash"></i> Delete
-</button>
-
-<script>
-function deleteRecord(id) {
-    if (confirm('Are you sure you want to delete this attendance log?')) {
-        fetch(`/transaction/logs/delete/${id}`, {
-            method: 'DELETE',
-            headers: {
-                'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                'Content-Type': 'application/json'
-            }
-        })
-        .then(response => {
-            if (response.redirected) {
-                window.location.href = response.url;
-            }
-        })
-        .catch(error => console.error('Error:', error));
-    }
-}
-</script>
-
 @endsection

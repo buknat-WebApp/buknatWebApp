@@ -27,12 +27,12 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 </head>
 
-<body class="">
+<body class="dark-version bg-gray-600">
 <div class="container position-sticky z-index-sticky top-0">
       <div class="row">
 
           <!-- Navbar -->
-          <nav class="navbar navbar-expand-lg blur border-radius-sm z-index-3 shadow position-absolute mt-2 py-1 start-0 end-0">
+          <nav class="navbar navbar-expand-lg navbar-light border-radius-sm z-index-3 shadow position-absolute mt-2 py-1 start-0 end-0">
             <div class="container-fluid">
             <button class="navbar-toggler shadow-none me-1" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon mt-1">
@@ -43,8 +43,8 @@
               </button>
 
                 <div class="col">
-                  <a class="navbar-brand font-weight-bolder ms-lg-0 text-wrap text-start" href="">
-                    Bukidnon National High School Library Management System
+                  <a class="navbar-brand font-weight-bolder ms-lg-0 text-wrap text-start" href="{{ route('loginForm') }}">
+                    <span class="text-dark">Bukidnon National High School Library Management System</span>
                   </a>
                 </div>
               <div class="collapse navbar-collapse" id="navigation">
@@ -366,22 +366,22 @@
         </div>
     </main>
 
-    <div id="signupModal" class="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-md" role="document">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalLabel">Choose User</h5>
-                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" onclick="closeModal()"></button>
-                        </div>
-                      <div class="modal-body" style="text-align:center;">
-                        <p class="text-center">
-                            Are you a Student or Teacher?
-                        </p>
-                          <a href="{{ route('signupForm') }}" role="button" class="btn btn-primary btn-lg">Student</a>
-                          <a href="{{ route('signupForms') }}" role="button" class="btn btn-secondary btn-lg">Teacher</a>
-                      </div>
-                    </div>
-                </div>
+    <div id="signupModal" class="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" inert>
+        <div class="modal-dialog modal-md" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel"><span class="text-dark">Choose User</span> </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" onclick="closeModal()"></button>
+            </div>
+          <div class="modal-body" style="text-align:center; color:black;">
+            <p class="text-center">
+                Are you a Student or Teacher?
+            </p>
+              <a href="{{ route('signupForm') }}" role="button" class="btn btn-primary btn-lg">Student</a>
+              <a href="{{ route('signupForms') }}" role="button" class="btn btn-secondary btn-lg">Teacher</a>
+          </div>
+        </div>
+      </div>
 
 
                 <script>

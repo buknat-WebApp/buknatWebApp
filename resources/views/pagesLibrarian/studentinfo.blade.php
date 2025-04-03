@@ -69,6 +69,16 @@
                                     </div>
                                     @endif
 
+                                    @if ($errors->any())
+                                        <div class="alert alert-danger">
+                                            <ul>
+                                                @foreach ($errors->all() as $error)
+                                                    <li>{{ $error }}</li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                    @endif
+
                                     <form method="POST" action="{{ route('studentUpdate', ['student' => $student->id]) }}">
                                         @csrf
                                         @method('PUT')
@@ -121,10 +131,10 @@
                                             <div class="col">
                                                 <div class="form-group">
                                                     <label for="example-text-input" class="form-control-label">Contact Number</label>
-                                                    <input class="form-control" name="contact_number" type="text" value="{{ $student->contact_number }}" disabled>
+                                                    <input class="form-control" name="contact_number" type="text" value="{{ $student->contact_number }}">
                                                 </div>
                                             </div>
-                                            
+
                                             <div class="col">
                                                 <div class="form-group">
                                                     <label for="example-text-input" class="form-control-label">Birthdate</label>
@@ -133,7 +143,7 @@
                                             </div>
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label for="example-text-input" class="form-control-label">Status:</label>
+                                                    <label for="example-text-input" class="form-control-label">Status</label>
                                                     <select class="form-select form-control" id="status" name="status">
                                                         <option value="active" {{ $student->status == 'active' ? 'selected' : '' }}>Active</option>
                                                         <option value="inactive" {{ $student->status == 'inactive' ? 'selected' : '' }}>Inactive</option>
@@ -142,8 +152,6 @@
                                                 </div>
                                             </div>
                                         </div>
-
-                                        
 
                                         <div class="row">
                                             <div class="col">
@@ -157,14 +165,43 @@
                                                 </div>
                                             </div>
                                         </div>
+                                    </form>
+
+                                    <form method="POST" action="{{ route('librarian.updatePassword', ['student' => $student->id]) }}">
+                                        @csrf
+                                        @method('PUT')
+                                        
                                         <div class="row">
-                                            <a href="{{ route('regenerateQrCode', ['student' => $student->id]) }}" class="btn btn-primary btn-sm mb-0"
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <label for="new-password" class="form-control-label">New Password</label>
+                                                    <input class="form-control" name="password" type="password" id="new-password" placeholder="Enter new password">
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <label for="confirm-password" class="form-control-label">Confirm Password</label>
+                                                    <input class="form-control" name="password_confirmation" type="password" id="confirm-password" placeholder="Confirm new password">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <button type="submit" class="btn btn-sm form-control mt-4 btn-success">Update Password</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                    <div class="row mt-3">
+                                        <div class="col">
+                                            <a href="{{ route('regenerateQrCode', ['student' => $student->id]) }}" class="btn btn-primary btn-sm mb-0 bg-primary bg-gradient"
                                                 onclick="return confirm('Are you sure you want this student to regenerate QR Code? This may take a while.');">
                                                 <i class="fas fa-sync"></i> Regenerate QR Code
                                             </a>
                                         </div>
-                                    </form>
-
+                                    </div>
                                 </div>
                             </div>
 

@@ -155,7 +155,7 @@
                                                                 <td class="">
                                                                     <a href="{{ route('bookInfo', ['book' => $book->id]) }}"
                                                                         class="text-secondary font-weight-bold text-xs btn bg-light bg-gradient"
-                                                                        data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                        data-bs-placement="top"
                                                                         title="Manage Book">
                                                                         <span class="fas fa-edit fa-lg text-dark"> Edit Book</span></a>
                                                                 </td>

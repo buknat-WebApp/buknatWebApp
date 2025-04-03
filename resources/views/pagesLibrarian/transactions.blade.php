@@ -134,7 +134,7 @@
                                                             </td> --}}
                                                             <td class="">
                                                                 <a href="{{ route('transaction', ['id' => $student->id]) }}">
-                                                                    <span class="fas fa-eye"></span> Transaction
+                                                                    <span class="fas fa-eye btn bg-light bg-gradient"> Transaction</span> 
                                                                 </a>
                                                             </td>
                                                         </tr>

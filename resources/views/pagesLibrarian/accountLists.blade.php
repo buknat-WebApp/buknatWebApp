@@ -61,13 +61,13 @@
                                                             class="text-start text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                             ID Number</th>
                                                         <th
-                                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                                             Name</th>
                                                         <th
                                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                             Grade</th>
                                                         <th
-                                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
                                                             Section</th>
 
                                                         <th
@@ -137,31 +137,26 @@
                                                                     {{ $student->isGraduated() ? 'Graduated' : ($student->isInactive() ? 'Inactive' : 'Active') }}
                                                                 </span>
                                                             </td>
-
                                                             
                                                             <td class="">
                                                                 <a href="{{ route('studentDetails', ['student' => $student->id]) }}"
-                                                                    class="" data-bs-toggle="tooltip" data-bs-placement="top" title="Manage Student">
-                                                                    <span class="fas fa-edit"></span>Info</a>
+                                                                    class="" data-bs-placement="top" title="Manage Student">
+                                                                    <span class="fas fa-edit btn bg-light bg-gradient"> Info</span></a>
                                                             </td>
 
                                                             <td class="">
                                                                 <a href="{{ asset('storage/StudentQrCodes/' . $student->id.'.png') }}" target="_blank"
                                                                     onclick="printImage('{{ asset('storage/StudentQrCodes/' . $student->id.'.png') }}'); return false;">
-                                                                    <span class="fas fa-print"></span> Print QR
+                                                                    <span class="fas fa-print btn bg-warning bg-gradient"> Print QR</span> 
                                                                  </a>
 
                                                             </td> 
-                                                            
-                                                            <td class="">
-                                                                <div style="margin-top: 12px;">
+
+                                                            <td class="">                                         
                                                                     <a  href="{{ asset('storage/StudentQrCodes/' . $student->id .'.png') }}"
                                                                     onclick="downloadQR('{{ asset('storage/StudentQrCodes/' . $student->id .'.png') }}'); return false;">
-                                                                    <p class="fas fa-download"></p> Download QR
-                                                                </a>
-
-                                                                </div>
-                                                                
+                                                                    <p class="fas fa-download btn bg-primary bg-gradient"> Download QR</p> 
+                                                                </a>    
                                                             </td> 
 
                                                         </tr>

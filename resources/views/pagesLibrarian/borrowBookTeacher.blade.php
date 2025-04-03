@@ -571,54 +571,62 @@
                             });
                         </script>
 
-                        <script>
-                            document.addEventListener('DOMContentLoaded', function () {
-                            const today = new Date();
-                            
-                            // Function to set date limits for teachers (10 days for all books)
-                            function updateDateLimits() {
-                                const dd = String(today.getDate()).padStart(2, '0');
-                                const mm = String(today.getMonth() + 1).padStart(2, '0');
-                                const yyyy = today.getFullYear();
-                                
-                                const minDate = yyyy + '-' + mm + '-' + dd;
-                                
-                                // Set max date to 10 days from today for teachers
-                                const maxDays = 10; // 10 days for all teacher borrowings
-                                const maxDate = new Date(today);
-                                maxDate.setDate(today.getDate() + maxDays);
-                                const maxDD = String(maxDate.getDate()).padStart(2, '0');
-                                const maxMM = String(maxDate.getMonth() + 1).padStart(2, '0');
-                                const maxYYYY = maxDate.getFullYear();
-                                
-                                const dateInput = document.getElementById('recipient-name');
-                                dateInput.setAttribute('min', minDate);
-                                dateInput.setAttribute('max', `${maxYYYY}-${maxMM}-${maxDD}`);
-                                
-                                // Optionally, set the default value to the max date (10 days from today)
-                                dateInput.value = `${maxYYYY}-${maxMM}-${maxDD}`;
-                            }
-
-                            // Initial setup when page loads
-                            updateDateLimits();
-                        </script>
-
-                    <script>
-                        // Get the modal
-                        var modal = document.getElementById('signupModal');
-
-                        // Function to open the modal
-                        function openModal() {
-                            modal.style.display = 'block';
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                const today = new Date();
+                
+                // Define fiction section IDs - replace these with your actual fiction section IDs
+                const fictionSectionIds = ['3']; // Example: sections with IDs 1 and 3 are fiction
+                
+                // Function to set date limits based on book section
+                function updateDateLimits() {
+                    const selectedBooks = document.querySelectorAll('input[name="books[]"]:checked');
+                    if (selectedBooks.length === 0) return;
+                    
+                    const dd = String(today.getDate()).padStart(2, '0');
+                    const mm = String(today.getMonth() + 1).padStart(2, '0');
+                    const yyyy = today.getFullYear();
+                    
+                    const minDate = yyyy + '-' + mm + '-' + dd;
+                    
+                    // Check if any selected book is in a fiction section
+                    let hasFiction = false;
+                    selectedBooks.forEach(book => {
+                        const sectionId = book.getAttribute('data-section');
+                        
+                        if (fictionSectionIds.includes(sectionId)) {
+                            hasFiction = true;
                         }
+                    });
+                    
+                    // Calculate max date based on section
+                    // Fiction books: 15 days, All other books: 10 days
+                    let maxDays = hasFiction ? 15 : 10;
+                    
+                    const maxDate = new Date(today);
+                    maxDate.setDate(today.getDate() + maxDays);
+                    const maxDD = String(maxDate.getDate()).padStart(2, '0');
+                    const maxMM = String(maxDate.getMonth() + 1).padStart(2, '0');
+                    const maxYYYY = maxDate.getFullYear();
+                    
+                    const dateInput = document.getElementById('recipient-name');
+                    dateInput.setAttribute('min', minDate);
+                    dateInput.setAttribute('max', `${maxYYYY}-${maxMM}-${maxDD}`);
+                    
+                    // Set default value to the max allowed date
+                    dateInput.value = `${maxYYYY}-${maxMM}-${maxDD}`;
+                }
 
-                        // Close the modal when user clicks outside of it
-                        window.onclick = function(event) {
-                            if (event.target == modal) {
-                                modal.style.display = 'none';
-                            }
-                        }
-                    </script>  
+                // Add event listeners to book checkboxes
+                const bookCheckboxes = document.querySelectorAll('input[name="books[]"]');
+                bookCheckboxes.forEach(checkbox => {
+                    checkbox.addEventListener('change', updateDateLimits);
+                });
+
+                // Initial setup
+                updateDateLimits();
+            });
+            </script>
 
                     <script>
                         document.addEventListener('DOMContentLoaded', function() {

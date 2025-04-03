@@ -19,15 +19,17 @@
                 <div class="col-lg-6 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
                     <div class="nav-wrapper position-relative end-0">
                         <ul class="nav nav-pills nav-fill p-1">
-                            <div class="dropdown">
-                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Search
-                                </button>
-                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <li><a class="dropdown-item" href="{{ route('borrowingForm') }}">Students</a></li>
-                                        <li><a class="dropdown-item" href="{{ route('borrowingFormTeacher') }}">Teachers</a></li>  
-                                    </ul>
-                            </div>
+                            <li class="nav-item">
+                                <div class="dropdown">
+                                    <button class="btn dropdown-toggle w-100 text-center"  type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Search
+                                    </button>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                            <li><a class="dropdown-item" href="{{ route('borrowingForm') }}">Students</a></li>
+                                            <li><a class="dropdown-item" href="{{ route('borrowingFormTeacher') }}">Teachers</a></li>  
+                                        </ul>
+                                </div>
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center"
                                     href="{{ route('borrowerLists') }}">
@@ -100,10 +102,23 @@
                                                                             {{ $transaction->user->name }}
 
                                                                         </h6>
+                                                                        @if($transaction->user->role == 0)
+                                                                        <p class="text-xs text-secondary mb-0">
+                                                                            <strong>Student</strong>
+                                                                        </p>
+                                                                        <p class="text-xs text-secondary mb-0">
+                                                                            <strong>LRN No.</strong>
+                                                                            {{ $transaction->user->id_number }}
+                                                                        </p>
+                                                                        @else
+                                                                        <p class="text-xs text-secondary mb-0">
+                                                                            <strong>Teacher</strong>
+                                                                        </p>
                                                                         <p class="text-xs text-secondary mb-0">
                                                                             <strong>ID No.</strong>
                                                                             {{ $transaction->user->id_number }}
                                                                         </p>
+                                                                        @endif
 
                                                                     </div>
                                                                 </div>
@@ -112,13 +127,13 @@
 
                                                             <td>
                                                                 <p class="text-xs font-weight-bold mb-2">
-                                                                    {{ $transaction->borrowed_at }}</p>
+                                                                    {{ \Carbon\Carbon::parse($transaction->borrowed_at)->format('M d, Y h:i A') }}</p>
                                                             </td>
 
                                                             <td class="align-middle text-center text-sm">
                                                                 @foreach ($transaction->bookTransactions as $bookTransaction)
                                                                     <p class="text-xs font-weight-bold mb-2">
-                                                                        {{ $bookTransaction->returned_at }}</p>
+                                                                        {{ \Carbon\Carbon::parse($bookTransaction->returned_at)->format('M d, Y h:i A') }}</p>
                                                                 @endforeach
                                                             </td>
 
@@ -130,6 +145,8 @@
                                                                             @if ($bookTransaction->book_id == $book->id)
                                                                                 <p class="text-xs font-weight-bold mb-2">
                                                                                     {{ $book->book_title }} </p>
+                                                                                    <p class="text-xs mb-2">
+                                                                                        {{ $book->author->author }} </p>
                                                                                     {{-- <p class="text-xs text-secondary mb-0">
                                                                                     <strong>Author:</strong> {{ $bookTransaction->book->author->author ?? ' No Author' }}
                                                                                 </p>
