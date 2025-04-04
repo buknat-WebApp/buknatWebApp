@@ -937,7 +937,7 @@ class LibrarianController extends Controller
             ->whereHas('bookTransactions', function ($query) {
                 $query->whereNotNull('returned_at');
             })
-            ->orderBy('borrowed_at', 'asc')
+            ->orderBy('borrowed_at', 'desc')
             ->get();
 
         $books = Book::all();

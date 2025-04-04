@@ -65,7 +65,7 @@
                                     <div class="card mb-4 p-2">
                                         <div class="card-body pb-2">
                                             <div class="table-responsive ">
-                                            <table class="table align-items-center mb-0"  id="mytable">
+                                            <table class="table align-items-center mb-0">
                                                 <thead>
                                                     <tr>
                                                         <th
@@ -87,7 +87,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @foreach ($transactions as $transaction)
+                                                    @foreach ($transactions->take(50) as $transaction)
                                                         <tr>
                                                             <td>
                                                                 <div class="d-flex px-2 py-1">
