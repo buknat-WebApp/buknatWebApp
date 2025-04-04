@@ -311,7 +311,7 @@
                                                                <strong>ID No. :</strong>
                                                                &nbsp;{{ $transaction->user->id_number }}</p>
                                                        @endif
-                                                       @if ($overdueTransaction->user->role == 0)
+                                                       @if ($overdueTransaction->user->role == 0 ?? '')
                                                        <p class="text-xs text-secondary mb-0">
                                                           <strong>Student</strong></p>
                                                       <p class="text-xs text-secondary mb-0">
