@@ -311,19 +311,6 @@
                                                                <strong>ID No. :</strong>
                                                                &nbsp;{{ $transaction->user->id_number }}</p>
                                                        @endif
-                                                       @if ($overdueTransaction->user->role == 0 ?? '')
-                                                       <p class="text-xs text-secondary mb-0">
-                                                          <strong>Student</strong></p>
-                                                      <p class="text-xs text-secondary mb-0">
-                                                          <strong>LRN No. :</strong>
-                                                          &nbsp;{{ $overdueTransaction->user->id_number }}</p>
-                                                        @else
-                                                            <p class="text-xs text-secondary mb-0">
-                                                                <strong>Teacher</strong></p>
-                                                            <p class="text-xs text-secondary mb-0">
-                                                                <strong>ID No. :</strong>
-                                                                &nbsp;{{ $overdueTransaction->user->id_number }}</p>
-                                                        @endif
                                                         </div>
                                                     </div>
 
