@@ -92,7 +92,7 @@
                                                     </td>
                                                     <td class="text-center">
                                                         <p class="text-xs font-weight-bold mb-0">
-                                                            {{ ($transaction->fines ?? '') }}
+                                                            {{ $transaction->fines ?? 'No fines' }}
                                                         </p>
                                                     </td>
                                                     <td class="text-center">
@@ -108,7 +108,7 @@
                                                         @endphp
                                                         <span class="badge badge-sm 
                                                             {{ $isReturned ? ($wasOverdue ? 'bg-gradient-danger' : 'bg-gradient-success') : ($isOverdue ? 'bg-gradient-danger' : 'bg-gradient-warning') }}">
-                                                            {{ $isReturned ? ($wasOverdue ? 'Overdue' : 'Returned') : ($isOverdue ? 'Overdue' : 'Borrowed') }}
+                                                            {{ $isReturned ? ($wasOverdue ? 'Overdue' : 'On Time') : ($isOverdue ? 'Overdue' : 'Borrowed') }}
                                                         </span>
                                                     </td>
                                                     

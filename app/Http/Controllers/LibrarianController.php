@@ -1016,7 +1016,10 @@ class LibrarianController extends Controller
             foreach ($transaction->bookTransactions as $bookTransaction) {
                 $book = Book::with('author')->where('id', $bookTransaction->book_id)->first();
                 if ($book) {
-                    $books[$transaction->id][] = $book;
+                    $books[$transaction->id][] =  [
+                        'book' => $book,
+                        'fines' => $bookTransaction->fines // Include fines
+                    ];
                 }
             }
         }
