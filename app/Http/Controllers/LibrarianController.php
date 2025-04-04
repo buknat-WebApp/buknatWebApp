@@ -1109,6 +1109,21 @@ class LibrarianController extends Controller
         $user = User::where('id_number', $qrID)->first();
     
         if ($user) {
+            // Check last login time
+            $lastLogin = RecordLogin::where('id_number', $qrID)
+                ->orderBy('created_at', 'desc')
+                ->first();
+
+            if ($lastLogin) {
+                $timeSinceLastLogin = now()->diffInMinutes($lastLogin->created_at);
+                
+                // If less than 2 hours (120 minutes) have passed
+                if ($timeSinceLastLogin < 120) {
+                    $minutesRemaining = 120 - $timeSinceLastLogin;
+                    return redirect()->back()->with('error', 'Please wait ' . $minutesRemaining . ' minutes before Attendance again.');
+                }
+            }
+
             RecordLogin::create([
                 'id_number' => $request->input('qr_code'),  
                 'name' => $user->name,
@@ -1121,10 +1136,6 @@ class LibrarianController extends Controller
             // Error message
             return redirect()->back()->with('error', 'User not found. Please Try again.');
         }
-    
-        $records = RecordLogin::orderBy('created_at', 'desc')->get();
-    
-        return view('pagesLibrarian.transactionLogs', compact('records'));
     }
 
     public function updateStudentsRecord(Request $request)
