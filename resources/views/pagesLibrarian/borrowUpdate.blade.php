@@ -134,7 +134,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="fines">Fines</label>
-                                                <input type="hidden" name="fines[]" value="0">
+                                                <input type="hidden" name="fines[]" value="0" readonly>
                                                 <p class="text-info">No Fines for Teachers</p>
                                             </div>
                                         </div>
