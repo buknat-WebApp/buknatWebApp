@@ -96,13 +96,8 @@
                                                         </p>
                                                     </td>
                                                     <td class="text-center">
-                                                        <p class="text-xs font-weight-bold mb-0">
-                                                            {{ $bookTransaction->remarks ?? 'No remarks' }}
-                                                        </p>
-                                                    </td>
-                                                    <td class="text-center">
                                                         @php
-                                                            $bookTransaction = $transaction->bookTransactions->where('book_id', $book->id)->first();
+                                                            $bookTransaction = $transaction->bookTransactions->where('book_id', $bookData['book']->id)->first();
                                                             $expectedReturnDate = \Carbon\Carbon::parse($transaction->expected_return_date);
                                                             $returnedAt = $bookTransaction ? \Carbon\Carbon::parse($bookTransaction->returned_at) : null;
                                                     
