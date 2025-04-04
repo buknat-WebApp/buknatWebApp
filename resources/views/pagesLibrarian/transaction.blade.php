@@ -114,11 +114,8 @@
                                                     </td>
                                                     
                                                     <td class="text-center">
-                                                        @php
-                                                            $bookTransaction = $transaction->bookTransactions->where('book_id', $bookData['book']->id)->first(); // Fetch the specific book transaction
-                                                        @endphp
                                                         <p class="text-xs font-weight-bold mb-0">
-                                                            {{ $bookTransaction->remarks ?? 'No remarks' }} <!-- Fetch remarks from bookTransaction -->
+                                                            {{ $bookData['remarks'] ?? 'No remarks' }}
                                                         </p>
                                                     </td>
                                                 </tr>

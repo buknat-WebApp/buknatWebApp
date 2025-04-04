@@ -1006,12 +1006,12 @@ class LibrarianController extends Controller
     {
         // Get all transactions for the user
         $transactions = Transaction::with(['bookTransactions' => function($query) {
-            $query->select('id', 'transaction_id', 'book_id', 'fines'); // Ensure fines are selected
+            $query->select('id', 'transaction_id', 'book_id', 'fines', 'remarks'); // Added remarks
         }, 'user'])
         ->where('user_id', $id)
         ->orderBy('borrowed_at', 'desc')
         ->get();
-    
+
         if ($transactions->isNotEmpty()) {
             $books = [];
             foreach ($transactions as $transaction) {
@@ -1020,18 +1020,19 @@ class LibrarianController extends Controller
                     if ($book) {
                         $books[$transaction->id][] = [
                             'book' => $book,
-                            'fines' => $bookTransaction->fines // Include fines
+                            'fines' => $bookTransaction->fines,
+                            'remarks' => $bookTransaction->remarks // Include remarks
                         ];
                     }
                 }
             }
-    
+
             return view('pagesLibrarian.transaction', [
                 'transactions' => $transactions,
                 'booksMap' => $books,
             ]);
         }
-    
+
         return back()->with('error', 'No transactions found for this user.');
     }
 
