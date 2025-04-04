@@ -21,11 +21,11 @@
                 <!-- User Info Section -->
                 <div class="col-auto my-auto">
                     <div class="h-100">
-                        <h5 class="mb-1 font-weight-bold">{{ $transactions->first()->user->name }}</h5>
+                        <h5 class="mb-1 font-weight-bold text-capitalize">{{ $transactions->first()->user->name }}</h5>
                         <p class="mb-0 text-sm">
                          {{ $transactions->first()->user->grade_and_section }}
                         </p>
-                        <p class="mb-0 text-sm">
+                        <p class="mb-0 text-sm text-capitalize">
                            <strong>Section:</strong> {{ $transactions->first()->user->section }}
                         </p>
                     </div>
@@ -53,6 +53,8 @@
                                                 Expected Return</th>
                                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                 Returned Date</th>
+                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                                Fines</th>
                                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                                 Status</th>
                                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
@@ -86,6 +88,11 @@
                                                     <td class="text-center">
                                                         <p class="text-xs font-weight-bold mb-0">
                                                             {{ \Carbon\Carbon::parse($transaction->returned_at ?? '')->format('M d, Y h:i A') }}
+                                                        </p>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <p class="text-xs font-weight-bold mb-0">
+                                                            {{ ($transaction->fines ?? '') }}
                                                         </p>
                                                     </td>
                                                     <td class="text-center">
