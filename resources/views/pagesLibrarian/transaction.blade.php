@@ -95,6 +95,7 @@
                                                             {{ $bookData['fines'] ?? 'No fines' }} <!-- Display fines -->
                                                         </p>
                                                     </td>
+    
                                                     <td class="text-center">
                                                         @php
                                                             $bookTransaction = $transaction->bookTransactions->where('book_id', $bookData['book']->id)->first();
@@ -114,7 +115,7 @@
                                                     
                                                     <td class="text-center">
                                                         <p class="text-xs font-weight-bold mb-0">
-                                                            {{ $bookTransaction->remarks ?? 'No remarks' }}
+                                                            {{ $transaction->remarks ?? 'No remarks' }}
                                                         </p>
                                                     </td>
                                                 </tr>
