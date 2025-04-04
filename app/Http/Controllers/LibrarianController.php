@@ -1003,35 +1003,37 @@ class LibrarianController extends Controller
     }
     
     public function studentTransaction($id)
-{
-    // Get all transactions for the user
-    $transactions = Transaction::where('user_id', $id)
-        ->with(['bookTransactions', 'user'])
+    {
+        // Get all transactions for the user
+        $transactions = Transaction::with(['bookTransactions' => function($query) {
+            $query->select('id', 'transaction_id', 'book_id', 'fines'); // Ensure fines are selected
+        }, 'user'])
+        ->where('user_id', $id)
         ->orderBy('borrowed_at', 'desc')
         ->get();
-
-    if ($transactions->isNotEmpty()) {
-        $books = [];
-        foreach ($transactions as $transaction) {
-            foreach ($transaction->bookTransactions as $bookTransaction) {
-                $book = Book::with('author')->where('id', $bookTransaction->book_id)->first();
-                if ($book) {
-                    $books[$transaction->id][] =  [
-                        'book' => $book,
-                        'fines' => $bookTransaction->fines // Include fines
-                    ];
+    
+        if ($transactions->isNotEmpty()) {
+            $books = [];
+            foreach ($transactions as $transaction) {
+                foreach ($transaction->bookTransactions as $bookTransaction) {
+                    $book = Book::with('author')->where('id', $bookTransaction->book_id)->first();
+                    if ($book) {
+                        $books[$transaction->id][] = [
+                            'book' => $book,
+                            'fines' => $bookTransaction->fines // Include fines
+                        ];
+                    }
                 }
             }
+    
+            return view('pagesLibrarian.transaction', [
+                'transactions' => $transactions,
+                'booksMap' => $books,
+            ]);
         }
-
-        return view('pagesLibrarian.transaction', [
-            'transactions' => $transactions,
-            'booksMap' => $books,
-        ]);
+    
+        return back()->with('error', 'No transactions found for this user.');
     }
-
-    return back()->with('error', 'No transactions found for this user.');
-}
 
     public function updateStudents()
     {

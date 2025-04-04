@@ -63,18 +63,18 @@
                                     </thead>
                                     <tbody>
                                         @foreach($transactions as $transaction)
-                                            @foreach($booksMap[$transaction->id] ?? [] as $book)
+                                        @foreach($booksMap[$transaction->id] ?? [] as $bookData)
                                                 <tr>
                                                     <td class="ps-3">
                                                         <p class="text-xs font-weight-bold mb-0">
-                                                            {{ $book->book_title }}
+                                                            {{ $bookData['book']->book_title }}
                                                         </p>
                                                     </td>
                                                     <td class="ps-3">
                                                         <p class="text-xs font-weight-bold mb-0">
-                                                            {{ $book->author->author ?? 'N/A' }}
+                                                            {{ $bookData['book']->author->author ?? 'N/A' }}
                                                         </p>
-                                                    </td>
+                                                    </td> 
                                                     <td class="text-center">
                                                         <p class="text-xs font-weight-bold mb-0">
                                                             {{ \Carbon\Carbon::parse($transaction->borrowed_at)->format('M d, Y h:i A') }}
@@ -92,7 +92,12 @@
                                                     </td>
                                                     <td class="text-center">
                                                         <p class="text-xs font-weight-bold mb-0">
-                                                            {{ $transaction->fines ?? 'No fines' }}
+                                                            {{ $bookData['fines'] ?? 'No fines' }} <!-- Display fines -->
+                                                        </p>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <p class="text-xs font-weight-bold mb-0">
+                                                            {{ $bookTransaction->remarks ?? 'No remarks' }}
                                                         </p>
                                                     </td>
                                                     <td class="text-center">
